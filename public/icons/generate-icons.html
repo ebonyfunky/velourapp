@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Velour Icons</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+
+        sizes.forEach(size => {
+            const canvas = document.getElementById('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#12102a';
+            ctx.fillRect(0, 0, size, size);
+
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#c9a84c');
+            gradient.addColorStop(1, '#e8c96a');
+
+            const padding = size * 0.2;
+            const letterSize = size - (padding * 2);
+
+            ctx.fillStyle = gradient;
+            ctx.font = `bold ${letterSize * 0.8}px Cormorant Garamond, serif`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('V', size / 2, size / 2);
+
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-${size}x${size}.png`;
+                a.click();
+            });
+        });
+    </script>
+</body>
+</html>

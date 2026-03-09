@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c9a84c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e8c96a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" fill="#12102a" rx="80"/>
+
+  <text
+    x="256"
+    y="256"
+    font-family="Cormorant Garamond, serif"
+    font-size="380"
+    font-weight="700"
+    fill="url(#goldGradient)"
+    text-anchor="middle"
+    dominant-baseline="central">V</text>
+</svg>
