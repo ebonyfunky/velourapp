@@ -469,6 +469,8 @@ export interface CampaignStore {
   reset: () => void;
   resetMode: () => void;
   resetSection: (section: string) => void;
+  resetContentCreatorFlow: () => void;
+  resetUGCFlow: () => void;
 }
 
 const initialState = {
@@ -739,6 +741,52 @@ export const useCampaignStore = (() => {
 
           reset: () => set(initialState),
           resetMode: () => set({ creatorMode: '' }),
+
+          resetContentCreatorFlow: () =>
+            set((s) => ({
+              ...s,
+              creatorMode: 'content-creator',
+              creatorIdentityPersona: '',
+              creatorIdentityStyle: '',
+              creatorIdentityNiche: '',
+              creatorIdentityStory: '',
+              creatorIdentityStoryUsedTo: '',
+              creatorIdentityStoryUntilI: '',
+              creatorIdentityStoryNowIShow: '',
+              creatorIdentityCard: null,
+              audienceAvatar: null,
+              contentCreatorProfession: '',
+              contentCreatorProfessionOther: '',
+              contentCreatorFaceType: '',
+              contentCreatorAudienceEmotions: [],
+              contentCreatorAudienceWants: [],
+              contentCreatorAudienceTriedOptions: [],
+              contentCreatorAudienceFear: '',
+              contentCreatorAudienceAges: [],
+              contentCreatorAudienceLife: [],
+              contentCreatorAudiencePainPoints: [],
+              contentCreatorAudienceStatement: '',
+              contentCreatorProjectTypes: [],
+              contentCreatorProjectOther: '',
+              contentCreatorContentTypes: [],
+              contentCreatorContentTypesOther: '',
+              contentCreatorPostingFrequency: '',
+              contentCreatorScriptBatchSize: '',
+              contentCreatorGeneratedScripts: [],
+              contentCreatorNicheHooks: [],
+              contentCreatorCalendarSlots: [],
+            })),
+
+          resetUGCFlow: () =>
+            set((s) => ({
+              ...s,
+              ugcCurrentSection: 'ugc-dashboard',
+              ugcNicheResult: '',
+              ugcNicheAnswers: {},
+              ugcSelectedNiche: '',
+              ugcPortfolioChecklist: [],
+              ugcPitches: [],
+            })),
 
           resetSection: (section: string) => {
             switch (section) {

@@ -71,7 +71,7 @@ export default function UGCHub() {
   const ugcCurrentSection = isValidUgcSection(rawSection) ? rawSection : DEFAULT_UGC_SECTION;
   const setField = store?.setField ?? (() => {});
   const resetMode = store?.resetMode ?? (() => {});
-  const reset = store?.reset ?? (() => {});
+  const resetUGCFlow = store?.resetUGCFlow ?? (() => {});
   const [activeSection, setActiveSection] = useState(ugcCurrentSection);
   const [showResetModal, setShowResetModal] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
@@ -87,8 +87,9 @@ export default function UGCHub() {
   };
 
   const handleGlobalReset = () => {
-    reset();
-    window.location.href = '/';
+    resetUGCFlow();
+    setActiveSection('ugc-dashboard');
+    setShowResetModal(false);
   };
 
   const renderContent = () => {

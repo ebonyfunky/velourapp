@@ -89,7 +89,17 @@ function App() {
       }}
     >
       {showWelcome && <WelcomeScreen onDismiss={() => setShowWelcome(false)} />}
-      <ContentCreatorSidebar currentStep={currentStep} onStepClick={handleStepClick} completedSteps={completedSteps} />
+      <ContentCreatorSidebar
+        currentStep={currentStep}
+        onStepClick={handleStepClick}
+        completedSteps={completedSteps}
+        onResetContentCreator={() => {
+          setCurrentStep(1);
+          setCompletedSteps([]);
+          setSubProgress(0);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
       <div
         style={{
           flex: 1,

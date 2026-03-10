@@ -17,10 +17,11 @@ interface ContentCreatorSidebarProps {
   currentStep: number;
   onStepClick: (step: number) => void;
   completedSteps: number[];
+  onResetContentCreator?: () => void;
 }
 
-export default function ContentCreatorSidebar({ currentStep, onStepClick, completedSteps }: ContentCreatorSidebarProps) {
-  const { resetMode, reset } = useCampaignStore();
+export default function ContentCreatorSidebar({ currentStep, onStepClick, completedSteps, onResetContentCreator }: ContentCreatorSidebarProps) {
+  const { resetMode, resetContentCreatorFlow } = useCampaignStore();
   const [showResetModal, setShowResetModal] = useState(false);
 
   const handleBackToHome = () => {
@@ -28,8 +29,9 @@ export default function ContentCreatorSidebar({ currentStep, onStepClick, comple
   };
 
   const handleGlobalReset = () => {
-    reset();
-    window.location.href = '/';
+    resetContentCreatorFlow();
+    onResetContentCreator?.();
+    setShowResetModal(false);
   };
 
   return (
