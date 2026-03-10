@@ -94,22 +94,22 @@ export default function Sidebar({ currentStep, onStepClick, completedSteps }: Si
           style={{
             background: 'transparent',
             border: 'none',
-            color: '#9b8fb5',
+            color: '#f0ebff',
             fontSize: '12px',
             fontWeight: 600,
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
+            gap: '8px',
             padding: '8px 0',
             marginTop: '12px',
             transition: 'color 0.2s',
             marginLeft: '0',
           }}
           onMouseOver={(e) => (e.currentTarget.style.color = '#e8c96a')}
-          onMouseOut={(e) => (e.currentTarget.style.color = '#9b8fb5')}
+          onMouseOut={(e) => (e.currentTarget.style.color = '#f0ebff')}
         >
-          <ArrowLeft size={14} />
+          <ArrowLeft size={14} style={{ color: '#c9a84c', filter: 'drop-shadow(0 0 4px rgba(201,168,76,0.5))', flexShrink: 0 }} />
           Back to Home
         </button>
       </div>
@@ -264,17 +264,27 @@ export default function Sidebar({ currentStep, onStepClick, completedSteps }: Si
                 setField('creatorMode', 'ugc-creator');
               }}
               style={{
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.08)',
+                background: 'rgba(201,168,76,0.06)',
+                border: '1px solid rgba(201,168,76,0.5)',
                 borderRadius: '8px',
                 padding: '8px 12px',
-                fontSize: '10px',
+                fontSize: '11px',
                 fontWeight: 700,
-                color: '#6a5f80',
+                color: '#e8c96a',
                 cursor: 'pointer',
                 textAlign: 'center',
                 width: '100%',
                 marginBottom: '12px',
+                boxShadow: '0 0 12px rgba(201,168,76,0.25), inset 0 0 20px rgba(201,168,76,0.04)',
+                transition: 'box-shadow 0.2s, border-color 0.2s',
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 16px rgba(201,168,76,0.4), inset 0 0 20px rgba(201,168,76,0.06)';
+                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.7)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 12px rgba(201,168,76,0.25), inset 0 0 20px rgba(201,168,76,0.04)';
+                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.5)';
               }}
             >
               Switch to UGC Hub
@@ -312,20 +322,30 @@ export default function Sidebar({ currentStep, onStepClick, completedSteps }: Si
             <button
               onClick={() => setShowResetModal(true)}
               style={{
-                background: 'transparent',
-                border: 'none',
-                color: '#6a5f80',
-                fontSize: '10px',
-                fontWeight: 500,
+                background: 'rgba(180,80,80,0.08)',
+                border: '1px solid rgba(200,100,100,0.4)',
+                borderRadius: '8px',
+                color: '#e8a0a0',
+                fontSize: '11px',
+                fontWeight: 600,
                 cursor: 'pointer',
-                padding: '8px 0',
+                padding: '8px 12px',
                 marginTop: '16px',
                 textAlign: 'center',
                 width: '100%',
-                transition: 'color 0.2s',
+                transition: 'color 0.2s, box-shadow 0.2s, border-color 0.2s',
+                boxShadow: '0 0 10px rgba(180,80,80,0.2)',
               }}
-              onMouseOver={(e) => (e.currentTarget.style.color = '#c9a84c')}
-              onMouseOut={(e) => (e.currentTarget.style.color = '#6a5f80')}
+              onMouseOver={(e) => {
+                e.currentTarget.style.color = '#f0b0b0';
+                e.currentTarget.style.boxShadow = '0 0 14px rgba(180,80,80,0.35)';
+                e.currentTarget.style.borderColor = 'rgba(200,100,100,0.6)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.color = '#e8a0a0';
+                e.currentTarget.style.boxShadow = '0 0 10px rgba(180,80,80,0.2)';
+                e.currentTarget.style.borderColor = 'rgba(200,100,100,0.4)';
+              }}
             >
               Reset / Start Fresh
             </button>
