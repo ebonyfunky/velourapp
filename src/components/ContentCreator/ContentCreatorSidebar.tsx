@@ -1,3 +1,8 @@
+/**
+ * CONTENT CREATOR FLOW SIDEBAR - 7 steps.
+ * This is the ONLY sidebar used when creatorMode === 'content-creator'.
+ * Used by App.tsx. Do not replace with components/Sidebar (4-step UGC) or Layout/Sidebar.
+ */
 import { Check, ArrowLeft } from 'lucide-react';
 import { useCampaignStore } from '../../store/campaignStore';
 import { useState } from 'react';

@@ -1,3 +1,8 @@
+/**
+ * DEPRECATED FOR APP.TSX - DO NOT USE.
+ * This sidebar has 7 steps (Content Creator) but App.tsx must use ContentCreatorSidebar from
+ * components/ContentCreator/ContentCreatorSidebar instead. Do not import this in App.tsx.
+ */
 import { Check, ArrowLeft } from 'lucide-react';
 import { useCampaignStore } from '../../store/campaignStore';
 import { useState } from 'react';

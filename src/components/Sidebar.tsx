@@ -1,3 +1,9 @@
+/**
+ * DEPRECATED - DO NOT USE FOR CONTENT CREATOR FLOW.
+ * This is the OLD UGC/Campaign sidebar (4 steps: Campaign Identity, Character & Assets, Style & Aesthetics, Review & Launch).
+ * For Content Creator flow, use ContentCreatorSidebar from components/ContentCreator/ContentCreatorSidebar.
+ * This file is kept for legacy reference only. App.tsx MUST NOT import this.
+ */
 import { Diamond } from 'lucide-react';
 
 interface SidebarProps {

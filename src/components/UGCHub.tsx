@@ -125,7 +125,7 @@ export default function UGCHub() {
 
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-      {/* UGC Sidebar */}
+      {/* UGC Creator flow sidebar - Dashboard, Find Your Niche, Rate Card, etc. ONLY used when creatorMode === 'ugc-creator'. Never used in Content Creator flow. */}
       <div
         style={{
           width: '280px',

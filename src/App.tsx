@@ -1,6 +1,13 @@
-// Content Creator flow: 7 steps (Creator Identity, Audience Avatar, Niche, Content Type, Faceless/Face, Script Generator, 30 Day Calendar).
+/**
+ * SIDEBAR ROUTING - DO NOT CHANGE:
+ * - Content Creator flow (creatorMode === 'content-creator'): Uses ContentCreatorSidebar ONLY (7 steps).
+ * - UGC Creator flow (creatorMode === 'ugc-creator'): Uses UGCHub which has its own UGC sidebar.
+ * - NEVER use components/Sidebar.tsx (4-step UGC/Campaign) or Layout/Sidebar.tsx here.
+ * - Content Creator = ContentCreatorSidebar from ./components/ContentCreator/ContentCreatorSidebar
+ */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useCampaignStore } from './store/campaignStore';
+// Content Creator flow ONLY - 7 steps: Creator Identity, Audience Avatar, Niche, Content Type, Faceless/Face, Script Generator, 30 Day Calendar
 import ContentCreatorSidebar from './components/ContentCreator/ContentCreatorSidebar';
 import ProgressBar from './components/Layout/ProgressBar';
 import ContentCreatorFlow from './components/ContentCreator/ContentCreatorFlow';
@@ -76,6 +83,12 @@ function App() {
     );
   }
 
+  // Content Creator flow ONLY - creatorMode === 'content-creator'
+  // Renders ContentCreatorSidebar (7 steps). UGC Sidebar and Layout/Sidebar are NEVER used here.
+  if (creatorMode !== 'content-creator') {
+    return <ModeSelector />;
+  }
+
   return (
     <ErrorBoundary>
     <div
@@ -89,6 +102,7 @@ function App() {
       }}
     >
       {showWelcome && <WelcomeScreen onDismiss={() => setShowWelcome(false)} />}
+      {/* Content Creator flow sidebar - 7 steps. DO NOT replace with Sidebar or Layout/Sidebar. */}
       <ContentCreatorSidebar
         currentStep={currentStep}
         onStepClick={handleStepClick}
