@@ -1,11 +1,12 @@
-// Content Creator flow: Step 1 (Who Are You), Step 2 (Audience Avatar), Step 3 (Content Project), then Creator Identity, etc.
-import { useState, useEffect, useCallback } from 'react';
+// Content Creator flow: Step 1 (Who Are You), Step 2 (Audience Avatar), Step 3 (Content Project), Step 4 (Creator Identity), Step 5 (AI Twin Studio), Step 6 (Product & Offer), Step 7 (Campaign Pack).
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useCampaignStore } from './store/campaignStore';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Layout/Sidebar';
 import ProgressBar from './components/Layout/ProgressBar';
 import ContentCreatorStep1 from './components/Steps/ContentCreatorStep1';
 import ContentCreatorStep2 from './components/Steps/ContentCreatorStep2';
 import ContentCreatorStep3 from './components/Steps/ContentCreatorStep3';
+import CreatorIdentity from './components/Steps/CreatorIdentity';
 import CreatorPlatform from './components/Steps/CreatorPlatform';
 import Step3 from './components/Steps/Step3';
 import Step9 from './components/Steps/Step9';
@@ -20,6 +21,7 @@ function App() {
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [showWelcome, setShowWelcome] = useState(false);
   const [subProgress, setSubProgress] = useState(0);
+  const prevCreatorModeRef = useRef<string>(creatorMode || '');
 
   useEffect(() => {
     const hasSeenWelcome = localStorage.getItem('velour_welcomed');
@@ -27,6 +29,16 @@ function App() {
       setShowWelcome(true);
     }
   }, []);
+
+  // When user clicks "Start Creating", always start at Step 1.
+  useEffect(() => {
+    if (creatorMode === 'content-creator' && prevCreatorModeRef.current !== 'content-creator') {
+      setCurrentStep(1);
+      setCompletedSteps([]);
+      setSubProgress(0);
+    }
+    prevCreatorModeRef.current = creatorMode || '';
+  }, [creatorMode]);
 
   const handleStepClick = (step: number) => {
     if (completedSteps.includes(step) || step < currentStep) {
@@ -89,7 +101,7 @@ function App() {
           minHeight: '100vh',
         }}
       >
-        <ProgressBar currentStep={currentStep} totalSteps={6} subProgress={subProgress} />
+        <ProgressBar currentStep={currentStep} totalSteps={7} subProgress={subProgress} />
 
         <div
           style={{
@@ -129,12 +141,15 @@ function App() {
               <ContentCreatorStep3 onNext={handleNext} onBack={handleBack} />
             </div>
             <div style={{ display: currentStep === 4 ? 'block' : 'none' }}>
-              <CreatorPlatform onNext={handleNext} onBack={handleBack} />
+              <CreatorIdentity onNext={handleNext} onBack={handleBack} />
             </div>
             <div style={{ display: currentStep === 5 ? 'block' : 'none' }}>
-              <Step3 onNext={handleNext} onBack={handleBack} />
+              <CreatorPlatform onNext={handleNext} onBack={handleBack} />
             </div>
             <div style={{ display: currentStep === 6 ? 'block' : 'none' }}>
+              <Step3 onNext={handleNext} onBack={handleBack} />
+            </div>
+            <div style={{ display: currentStep === 7 ? 'block' : 'none' }}>
               <Step9
                 onNext={() => {
                   setCurrentStep(1);
