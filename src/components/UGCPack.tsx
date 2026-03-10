@@ -25,10 +25,11 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
   } = useCampaignStore();
 
   const niche = ugcSelectedNiche || portfolioNiche || contentCategory || '';
-  const photosCount = portfolioPhotos.filter(p => p && p.url).length;
-  const videosCount = portfolioVideoLinks.filter(v => v && v.link).length;
-  const hasRates = rateCardPlatformRates.some(r => r.videoRate);
-  const latestScript = portfolioScripts.length > 0 ? portfolioScripts[portfolioScripts.length - 1] : null;
+  const photosCount = (portfolioPhotos ?? []).filter(p => p && p.url).length;
+  const videosCount = (portfolioVideoLinks ?? []).filter(v => v && v.link).length;
+  const hasRates = (rateCardPlatformRates ?? []).some(r => r && r.videoRate);
+  const scripts = portfolioScripts ?? [];
+  const latestScript = scripts.length > 0 ? scripts[scripts.length - 1] : null;
 
   const autoPitch = niche && portfolioLink
     ? `I am a ${niche} UGC creator specialising in authentic scroll-stopping content. I create ${contentStyle || 'engaging'} videos that feel natural and drive real results for brands. My portfolio is available here: ${portfolioLink}. I would love to create content for your brand and can turn around a first video within 7 days of receiving the product.`
@@ -47,8 +48,8 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
       id: 'rates',
       title: 'Your Rates',
       data: hasRates
-        ? rateCardPlatformRates
-            .filter(r => r.videoRate)
+        ? (rateCardPlatformRates ?? [])
+            .filter(r => r && r.videoRate)
             .map(r => `${r.platform}: $${r.videoRate}`)
             .join(' | ')
         : '',
@@ -129,24 +130,24 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     lines.push('YOUR RATES');
     lines.push('-----------------------------');
     if (hasRates) {
-      rateCardPlatformRates.forEach(r => {
-        if (r.videoRate) {
+      (rateCardPlatformRates ?? []).forEach(r => {
+        if (r && r.videoRate) {
           lines.push(`${r.platform}: $${r.videoRate}`);
         }
       });
-      if (rateCardPackages.length > 0) {
+      if ((rateCardPackages ?? []).length > 0) {
         lines.push('');
         lines.push('Packages:');
-        rateCardPackages.forEach(pkg => {
+        (rateCardPackages ?? []).forEach(pkg => {
           if (pkg.name) {
             lines.push(`${pkg.name}: $${pkg.price}`);
           }
         });
       }
-      if (rateCardAddOns.length > 0) {
+      if ((rateCardAddOns ?? []).length > 0) {
         lines.push('');
         lines.push('Add-ons:');
-        rateCardAddOns.forEach(addon => {
+        (rateCardAddOns ?? []).forEach(addon => {
           if (addon.name) {
             lines.push(`${addon.name}: $${addon.price}`);
           }
@@ -265,7 +266,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
               </div>
               {section.data ? (
                 <div style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.5', wordBreak: 'break-word' }}>
-                  {section.data.length > 100 ? section.data.substring(0, 100) + '...' : section.data}
+                  {(section.data ?? '').length > 100 ? String(section.data).substring(0, 100) + '...' : section.data}
                 </div>
               ) : (
                 <>

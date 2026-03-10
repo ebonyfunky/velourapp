@@ -973,6 +973,42 @@ export const useCampaignStore = (() => {
               if (!state.rateCardConnectHeading) {
                 state.rateCardConnectHeading = 'Connect With Me';
               }
+              if (!Array.isArray(s.contentCreatorContentTypes)) {
+                s.contentCreatorContentTypes = [];
+              }
+              if (typeof s.contentCreatorContentTypesOther !== 'string') {
+                s.contentCreatorContentTypesOther = '';
+              }
+              if (typeof s.contentCreatorPostingFrequency !== 'string') {
+                s.contentCreatorPostingFrequency = '';
+              }
+              if (typeof s.contentCreatorScriptBatchSize !== 'string') {
+                s.contentCreatorScriptBatchSize = '';
+              }
+              if (!Array.isArray(s.contentCreatorGeneratedScripts)) {
+                s.contentCreatorGeneratedScripts = [];
+              }
+              if (!Array.isArray(s.contentCreatorNicheHooks)) {
+                s.contentCreatorNicheHooks = [];
+              }
+              if (!Array.isArray(s.contentCreatorCalendarSlots)) {
+                s.contentCreatorCalendarSlots = [];
+              }
+              if (typeof s.creatorIdentityStoryUsedTo !== 'string') {
+                s.creatorIdentityStoryUsedTo = '';
+              }
+              if (typeof s.creatorIdentityStoryUntilI !== 'string') {
+                s.creatorIdentityStoryUntilI = '';
+              }
+              if (typeof s.creatorIdentityStoryNowIShow !== 'string') {
+                s.creatorIdentityStoryNowIShow = '';
+              }
+              if (!Array.isArray(s.ugcPortfolioChecklist)) {
+                s.ugcPortfolioChecklist = [];
+              }
+              if (!Array.isArray(s.ugcPitches)) {
+                s.ugcPitches = [];
+              }
             }
           },
         }

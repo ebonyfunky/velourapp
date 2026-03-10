@@ -1,16 +1,20 @@
 // Content Creator flow: 7 steps (Creator Identity, Audience Avatar, Niche, Content Type, Faceless/Face, Script Generator, 30 Day Calendar).
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useCampaignStore } from './store/campaignStore';
-import Sidebar from './components/Layout/Sidebar';
+import ContentCreatorSidebar from './components/ContentCreator/ContentCreatorSidebar';
 import ProgressBar from './components/Layout/ProgressBar';
 import ContentCreatorFlow from './components/ContentCreator/ContentCreatorFlow';
 import WelcomeScreen from './components/WelcomeScreen';
 import ModeSelector from './components/ModeSelector';
 import UGCHub from './components/UGCHub';
 import Toast from './components/Toast';
+import ErrorBoundary from './components/ErrorBoundary';
+
+const VALID_CREATOR_MODES = ['content-creator', 'ugc-creator'] as const;
 
 function App() {
   const { creatorMode, setField } = useCampaignStore();
+  const isInvalidMode = !creatorMode || !VALID_CREATOR_MODES.includes(creatorMode as typeof VALID_CREATOR_MODES[number]);
   const [currentStep, setCurrentStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [showWelcome, setShowWelcome] = useState(false);
@@ -59,20 +63,21 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentStep]);
 
-  if (!creatorMode) {
+  if (isInvalidMode) {
     return <ModeSelector />;
   }
 
   if (creatorMode === 'ugc-creator') {
     return (
-      <>
+      <ErrorBoundary>
         <UGCHub />
         <Toast />
-      </>
+      </ErrorBoundary>
     );
   }
 
   return (
+    <ErrorBoundary>
     <div
       style={{
         display: 'flex',
@@ -84,7 +89,7 @@ function App() {
       }}
     >
       {showWelcome && <WelcomeScreen onDismiss={() => setShowWelcome(false)} />}
-      <Sidebar currentStep={currentStep} onStepClick={handleStepClick} completedSteps={completedSteps} />
+      <ContentCreatorSidebar currentStep={currentStep} onStepClick={handleStepClick} completedSteps={completedSteps} />
       <div
         style={{
           flex: 1,
@@ -137,6 +142,7 @@ function App() {
         </div>
       </div>
     </div>
+    </ErrorBoundary>
   );
 }
 

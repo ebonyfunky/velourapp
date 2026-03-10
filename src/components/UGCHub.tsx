@@ -58,16 +58,28 @@ const PORTFOLIO_TYPES = [
   'Lifestyle Integration',
 ];
 
+const UGC_SECTION_IDS = UGC_SECTIONS.map((s) => s.id);
+const DEFAULT_UGC_SECTION = 'ugc-dashboard';
+
+function isValidUgcSection(id: unknown): id is string {
+  return typeof id === 'string' && UGC_SECTION_IDS.includes(id);
+}
+
 export default function UGCHub() {
   const store = useCampaignStore();
-  const { ugcCurrentSection, setField, resetMode, reset } = store;
-  const [activeSection, setActiveSection] = useState(ugcCurrentSection || 'ugc-dashboard');
+  const rawSection = store?.ugcCurrentSection ?? DEFAULT_UGC_SECTION;
+  const ugcCurrentSection = isValidUgcSection(rawSection) ? rawSection : DEFAULT_UGC_SECTION;
+  const setField = store?.setField ?? (() => {});
+  const resetMode = store?.resetMode ?? (() => {});
+  const reset = store?.reset ?? (() => {});
+  const [activeSection, setActiveSection] = useState(ugcCurrentSection);
   const [showResetModal, setShowResetModal] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
 
   const handleSectionChange = (sectionId: string) => {
-    setActiveSection(sectionId);
-    setField('ugcCurrentSection', sectionId);
+    const next = isValidUgcSection(sectionId) ? sectionId : DEFAULT_UGC_SECTION;
+    setActiveSection(next);
+    setField('ugcCurrentSection', next);
   };
 
   const handleBackToHome = () => {
@@ -430,15 +442,14 @@ export default function UGCHub() {
 }
 
 function DashboardPage({ onNavigate }: { onNavigate: (section: string) => void }) {
-  const {
-    ugcSelectedNiche,
-    ugcExperience,
-    ugcRatePerVideo,
-    ugcPortfolioChecklist,
-    ugcPitches,
-    rateCardPortfolioPieces,
-    setField,
-  } = useCampaignStore();
+  const store = useCampaignStore();
+  const ugcSelectedNiche = store?.ugcSelectedNiche ?? '';
+  const ugcExperience = store?.ugcExperience ?? '';
+  const ugcRatePerVideo = store?.ugcRatePerVideo ?? '';
+  const ugcPortfolioChecklist = Array.isArray(store?.ugcPortfolioChecklist) ? store.ugcPortfolioChecklist : [];
+  const ugcPitches = Array.isArray(store?.ugcPitches) ? store.ugcPitches : [];
+  const rateCardPortfolioPieces = store?.rateCardPortfolioPieces ?? '0';
+  const setField = store?.setField ?? (() => {});
 
   const [showRatesModal, setShowRatesModal] = useState(false);
   const [showPortfolioModal, setShowPortfolioModal] = useState(false);
@@ -539,13 +550,13 @@ function DashboardPage({ onNavigate }: { onNavigate: (section: string) => void }
           },
           {
             label: 'Portfolio Progress',
-            value: `${ugcPortfolioChecklist.length} / 10`,
+            value: `${ugcPortfolioChecklist?.length ?? 0} / 10`,
             button: 'Build Portfolio',
             onClick: () => setShowPortfolioModal(true),
           },
           {
             label: 'Pitches Sent',
-            value: ugcPitches.length.toString(),
+            value: String(ugcPitches?.length ?? 0),
             button: '+ Add One',
             onClick: () => setShowPitchModal(true),
           },
@@ -807,8 +818,10 @@ function RatesModal({ show, onClose }: { show: boolean; onClose: () => void }) {
 }
 
 function PortfolioModal({ show, onClose }: { show: boolean; onClose: () => void }) {
-  const { ugcPortfolioChecklist, setField } = useCampaignStore();
-  const [checklist, setChecklist] = useState<string[]>(ugcPortfolioChecklist || []);
+  const store = useCampaignStore();
+  const ugcPortfolioChecklist = Array.isArray(store?.ugcPortfolioChecklist) ? store.ugcPortfolioChecklist : [];
+  const setField = store?.setField ?? (() => {});
+  const [checklist, setChecklist] = useState<string[]>(ugcPortfolioChecklist);
 
   if (!show) return null;
 
@@ -955,7 +968,9 @@ function PortfolioModal({ show, onClose }: { show: boolean; onClose: () => void 
 }
 
 function PitchModal({ show, onClose }: { show: boolean; onClose: () => void }) {
-  const { ugcPitches, setField } = useCampaignStore();
+  const store = useCampaignStore();
+  const ugcPitches = Array.isArray(store?.ugcPitches) ? store.ugcPitches : [];
+  const setField = store?.setField ?? (() => {});
   const [brandName, setBrandName] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [platform, setPlatform] = useState('');
@@ -1211,7 +1226,7 @@ function PitchModal({ show, onClose }: { show: boolean; onClose: () => void }) {
 
 // Placeholder pages
 function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
-  const { ugcNicheQ1, ugcNicheQ2, ugcNicheQ3, ugcNicheQ4, ugcNicheQ5, ugcNicheResult, ugcSelectedNiche, setField } = useCampaignStore();
+  const { ugcNicheQ1, ugcNicheQ2, ugcNicheQ3, ugcNicheQ4, ugcNicheQ5, ugcNicheResult, ugcSelectedNiche, setField, resetMode } = useCampaignStore();
   const [currentStep, setCurrentStep] = useState(1);
   const [q1, setQ1] = useState<string[]>(ugcNicheQ1 || []);
   const [q2, setQ2] = useState<string[]>(Array.isArray(ugcNicheQ2) ? ugcNicheQ2 : ugcNicheQ2 ? [ugcNicheQ2] : []);
@@ -1306,7 +1321,9 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
     },
   ];
 
-  const currentQuestion = questions[currentStep - 1];
+  const TOTAL_NICHE_STEPS = 5;
+  const FINAL_STEP_RESULT = 6;
+  const currentQuestion = (currentStep >= 1 && currentStep <= TOTAL_NICHE_STEPS) ? questions[currentStep - 1] ?? null : null;
 
   const toggleMultipleChoice = (option: string, setter: React.Dispatch<React.SetStateAction<string[]>>, current: string[], maxSelections?: number) => {
     if (current.includes(option)) {
@@ -1339,6 +1356,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
   };
 
   const canProceed = () => {
+    if (currentStep >= FINAL_STEP_RESULT) return false;
     if (currentStep === 1) return q1.length > 0;
     if (currentStep === 2) return q2.length > 0;
     if (currentStep === 3) return q3.length > 0;
@@ -1348,16 +1366,17 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
   };
 
   const handleNext = () => {
-    if (currentStep < 5) {
-      setCurrentStep(currentStep + 1);
+    if (currentStep >= FINAL_STEP_RESULT) return;
+    if (currentStep < TOTAL_NICHE_STEPS) {
+      setCurrentStep((prev) => Math.min(prev + 1, TOTAL_NICHE_STEPS));
     } else {
       generateResult();
     }
   };
 
   const handleBack = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+    if (currentStep > 1 && currentStep <= FINAL_STEP_RESULT) {
+      setCurrentStep((prev) => Math.max(1, prev - 1));
     }
   };
 
@@ -1377,7 +1396,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
     setField('ugcNicheResult', generatedResult);
     setResult(generatedResult);
 
-    setCurrentStep(6);
+    setCurrentStep(FINAL_STEP_RESULT);
   };
 
   const handleSaveNiche = () => {
@@ -1402,10 +1421,10 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
         Find Your UGC Niche
       </h1>
       <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#c9a84c', marginBottom: '8px' }}>
-        {currentStep < 6 ? 'Answer 5 quick questions to discover your ideal UGC niche' : 'Your personalized niche recommendation'}
+        {currentStep < FINAL_STEP_RESULT ? 'Answer 5 quick questions to discover your ideal UGC niche' : 'Your personalized niche recommendation'}
       </p>
 
-      {currentStep < 6 && (
+      {currentStep < FINAL_STEP_RESULT && (
         <div style={{
           background: 'rgba(201,168,76,0.08)',
           border: '1px solid rgba(201,168,76,0.2)',
@@ -1419,7 +1438,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
         </div>
       )}
 
-      {currentStep < 6 && (
+      {currentStep < FINAL_STEP_RESULT && (
         <div style={{ marginBottom: '32px' }}>
           <div style={{ display: 'flex', gap: '4px', marginBottom: '12px' }}>
             {[1, 2, 3, 4, 5].map((step) => (
@@ -1451,7 +1470,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
           boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
         }}
       >
-        {currentStep < 6 ? (
+        {currentStep < FINAL_STEP_RESULT && currentQuestion ? (
           <>
             <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px', lineHeight: '1.5' }}>
               {currentQuestion.title}
@@ -1482,7 +1501,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
             )}
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '12px', marginBottom: '32px' }}>
-              {currentQuestion.options.map((option) => {
+              {(currentQuestion.options ?? []).map((option) => {
                 let isSelected = false;
                 let onClick = () => {};
                 let isDisabled = false;
@@ -1604,32 +1623,55 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '12px' }}>
-              <button
-                onClick={handleReset}
-                style={{
-                  flex: 1,
-                  padding: '16px',
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  color: '#9b8fb5',
-                  borderRadius: '100px',
-                  fontSize: '14px',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                }}
-              >
-                Start Over
-              </button>
-              <button
-                onClick={handleSaveNiche}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => { resetMode(); }}
+                  style={{
+                    padding: '16px 24px',
+                    background: 'transparent',
+                    border: '1px solid rgba(201,168,76,0.4)',
+                    color: '#e8c96a',
+                    borderRadius: '100px',
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = 'rgba(201,168,76,0.1)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  Back to Home
+                </button>
+                <button
+                  onClick={handleReset}
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    background: 'rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    color: '#9b8fb5',
+                    borderRadius: '100px',
+                    fontSize: '14px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                  }}
+                >
+                  Start Over
+                </button>
+                <button
+                  onClick={handleSaveNiche}
                 style={{
                   flex: 2,
                   padding: '16px',
@@ -1658,6 +1700,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
               >
                 Save My Niche
               </button>
+              </div>
             </div>
           </>
         )}
