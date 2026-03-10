@@ -40,7 +40,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
       title: 'Your Creator Identity',
       data: niche,
       emptyText: 'Not defined yet',
-      linkText: '→ Define Your Niche',
+      linkText: ' Define Your Niche',
       link: 'ugc-niche',
     },
     {
@@ -53,7 +53,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
             .join(' | ')
         : '',
       emptyText: 'Not completed yet',
-      linkText: '→ Complete Your Rate Card',
+      linkText: ' Complete Your Rate Card',
       link: 'ugc-rates',
     },
     {
@@ -61,7 +61,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
       title: 'Your Portfolio',
       data: photosCount > 0 || videosCount > 0 ? `${photosCount} photos | ${videosCount} videos${portfolioLink ? ' | Portfolio link: ' + portfolioLink : ''}` : '',
       emptyText: 'No portfolio content yet',
-      linkText: '→ Add Your Portfolio',
+      linkText: ' Add Your Portfolio',
       link: 'ugc-portfolio-photos',
     },
     {
@@ -69,7 +69,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
       title: 'Your Best Script',
       data: latestScript ? (latestScript.hooks?.[0] || 'Script saved') : '',
       emptyText: 'No scripts saved yet',
-      linkText: '→ Generate a Script',
+      linkText: ' Generate a Script',
       link: 'ugc-portfolio-videos',
       beforeNavigate: () => setField('portfolioVideosTabState', 'script-builder'),
     },
@@ -78,7 +78,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
       title: 'Your Pitch',
       data: autoPitch,
       emptyText: 'Save your portfolio link first',
-      linkText: '→ Save Portfolio Link',
+      linkText: ' Save Portfolio Link',
       link: 'ugc-portfolio',
     },
     {
@@ -86,7 +86,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
       title: 'Your Portfolio Statement',
       data: portfolioStatement,
       emptyText: 'Not generated yet',
-      linkText: '→ Go To Organise Your Portfolio',
+      linkText: ' Go To Organise Your Portfolio',
       link: 'ugc-portfolio',
     },
   ];
@@ -96,13 +96,13 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
 
   const getReadinessMessage = () => {
     if (completedCount <= 2) {
-      return "Your pack is not ready yet — complete the sections above before downloading";
+      return "Your pack is not ready yet - complete the sections above before downloading";
     } else if (completedCount <= 4) {
-      return "Almost ready — a few more sections will make your pack much stronger";
+      return "Almost ready - a few more sections will make your pack much stronger";
     } else if (completedCount === 5) {
-      return "Strong pack — you can download now or complete all 6 for maximum impact";
+      return "Strong pack - you can download now or complete all 6 for maximum impact";
     } else {
-      return "Your pack is fully loaded — download it and start sending to brands today";
+      return "Your pack is fully loaded - download it and start sending to brands today";
     }
   };
 
@@ -110,12 +110,12 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     const date = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
     const lines: string[] = [];
 
-    lines.push(`VELOUR UGC PACK — ${rateCardCreatorName || 'Your Name'} — ${date}`);
+    lines.push(`VELOUR UGC PACK - ${rateCardCreatorName || 'Your Name'} - ${date}`);
     lines.push('velour-app.com');
     lines.push('');
-    lines.push('─────────────────────────────');
+    lines.push('-----------------------------');
     lines.push('YOUR CREATOR IDENTITY');
-    lines.push('─────────────────────────────');
+    lines.push('-----------------------------');
     if (niche) {
       lines.push(niche);
     }
@@ -125,9 +125,9 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     lines.push('');
     lines.push('');
 
-    lines.push('─────────────────────────────');
+    lines.push('-----------------------------');
     lines.push('YOUR RATES');
-    lines.push('─────────────────────────────');
+    lines.push('-----------------------------');
     if (hasRates) {
       rateCardPlatformRates.forEach(r => {
         if (r.videoRate) {
@@ -158,9 +158,9 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     lines.push('');
     lines.push('');
 
-    lines.push('─────────────────────────────');
+    lines.push('-----------------------------');
     lines.push('YOUR PORTFOLIO');
-    lines.push('─────────────────────────────');
+    lines.push('-----------------------------');
     lines.push(`Photos: ${photosCount} pieces`);
     lines.push(`Videos: ${videosCount} pieces`);
     if (portfolioLink) {
@@ -175,9 +175,9 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     lines.push('');
 
     if (latestScript) {
-      lines.push('─────────────────────────────');
+      lines.push('-----------------------------');
       lines.push('YOUR BEST SCRIPT');
-      lines.push('─────────────────────────────');
+      lines.push('-----------------------------');
       if (latestScript.videoType) {
         lines.push(`Video Type: ${latestScript.videoType}`);
       }
@@ -190,10 +190,10 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
       lines.push('');
     }
 
-    lines.push('─────────────────────────────');
+    lines.push('-----------------------------');
     lines.push('YOUR PITCH TEMPLATE');
-    lines.push('─────────────────────────────');
-    lines.push('Subject: UGC Creator — [Niche] Content For [Brand Name]');
+    lines.push('-----------------------------');
+    lines.push('Subject: UGC Creator - [Niche] Content For [Brand Name]');
     lines.push('');
     lines.push('Hi [Brand Name] team,');
     lines.push('');
@@ -205,9 +205,9 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
       lines.push(portfolioStatement);
       lines.push('');
     }
-    lines.push('velour-app.com — Created with Velour');
+    lines.push('velour-app.com - Created with Velour');
     lines.push('');
-    lines.push('─────────────────────────────');
+    lines.push('-----------------------------');
 
     const content = lines.join('\n');
     const blob = new Blob([content], { type: 'text/plain' });
@@ -227,7 +227,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
         Your UGC Pack
       </h1>
       <p style={{ fontSize: '14px', color: '#9b8fb5', marginBottom: '32px', fontStyle: 'italic' }}>
-        Everything a brand needs to hire you — compiled and ready to send
+        Everything a brand needs to hire you - compiled and ready to send
       </p>
 
       <div
@@ -374,7 +374,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
         }}
       >
         <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-          Pack downloaded — here is exactly what to do now
+          Pack downloaded - here is exactly what to do now
         </h2>
 
         <div style={{ display: 'grid', gap: '16px', marginTop: '24px' }}>
@@ -408,8 +408,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
                 gap: '6px',
               }}
             >
-              Where To Find Brands →
-            </button>
+              Where To Find Brands             </button>
           </div>
 
           <div
@@ -442,8 +441,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
                 gap: '6px',
               }}
             >
-              Go To Brand Outreach →
-            </button>
+              Go To Brand Outreach             </button>
           </div>
 
           <div
@@ -476,8 +474,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
                 gap: '6px',
               }}
             >
-              Income Command Centre →
-            </button>
+              Income Command Centre             </button>
           </div>
         </div>
       </div>
@@ -517,7 +514,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
         </button>
 
         <div style={{ fontSize: '13px', color: '#9b8fb5', fontWeight: 600 }}>
-          Step 8 of 13 — UGC Pack
+          Step 8 of 13 - UGC Pack
         </div>
 
         <button

@@ -43,7 +43,7 @@ const scriptFormats = [
   },
   {
     id: 'problem-solution',
-    name: 'Problem → Solution',
+    name: 'Problem to Solution',
     description: 'Show the pain point, reveal your product as the answer',
   },
   {
@@ -118,9 +118,9 @@ A brand brief has been uploaded. The following requirements must be invisibly wo
 
 Key messages to include: ${uploadedBrief.keyMessages.join(', ')}
 Dos: ${uploadedBrief.dos.join(', ')}
-Don'ts: ${uploadedBrief.donts.join(', ')} — never include these in the script
+Don'ts: ${uploadedBrief.donts.join(', ')} - never include these in the script
 Product to feature: ${uploadedBrief.productToFeature}
-Deliverables: ${uploadedBrief.deliverables} — match script length and format to these
+Deliverables: ${uploadedBrief.deliverables} - match script length and format to these
 
 The creator must be able to film this script and deliver it to the brand feeling completely confident that every requirement has been met. The brand should watch the finished video and feel that the creator read their brief carefully and understood exactly what they needed.
 `;
@@ -151,7 +151,7 @@ HOOKS: Hooks must be maximum 8 words. Punchy. Curiosity-driven. No long sentence
 DETECT FACELESS VS FACE FORWARD VIDEO TYPES:
 
 For FACELESS video types (if format suggests voiceover or text-based content):
-- Voiceover scripts should be conversational spoken word only with no face or body directions. Stage directions should only describe what the camera shows — the product, the background, close up shots.
+- Voiceover scripts should be conversational spoken word only with no face or body directions. Stage directions should only describe what the camera shows - the product, the background, close up shots.
 
 For FACE FORWARD video types (direct-to-camera content):
 - Include full body and face stage directions in brackets
@@ -159,52 +159,52 @@ For FACE FORWARD video types (direct-to-camera content):
 
 Never write a face forward style script for a faceless video type.
 
-CTAs: Generate 3 CTAs that feel like the creator is naturally continuing the conversation with their viewer — not selling to them. Each CTA must be a complete sentence with energy, personality and a clear next step. Use these as style guides but always make them specific to the product and category:
+CTAs: Generate 3 CTAs that feel like the creator is naturally continuing the conversation with their viewer - not selling to them. Each CTA must be a complete sentence with energy, personality and a clear next step. Use these as style guides but always make them specific to the product and category:
 
-Soft CTA — curiosity and community focused:
+Soft CTA - curiosity and community focused:
 "Comment READY below and I will send you everything you need to get started"
 "Drop a YES in the comments if you want me to do a full review of this"
 "Comment LINK and I will personally DM you where to get this right now"
-"Save this video — future you will be so glad you did"
+"Save this video - future you will be so glad you did"
 
-Medium CTA — warm and personal with clear direction:
+Medium CTA - warm and personal with clear direction:
 "For the full details and where to get yours visit the link in my bio right now"
 "Everything you need to know including the link is waiting for you in my bio"
-"I have left all the details in my bio — go check it out and thank me later"
-"Head to my bio for the link — I promise it is worth the click"
+"I have left all the details in my bio - go check it out and thank me later"
+"Head to my bio for the link - I promise it is worth the click"
 
-Strong CTA — urgent, benefit-driven and impossible to ignore:
-"Use my code [CODE] at checkout for 10% off — link in my bio and it expires soon"
-"My exclusive discount is in my bio right now — grab it before it disappears"
-"The deal I negotiated for you is in my bio — link is live right now go go go"
-"Bio link is live — use code [CODE] and get yours before stock runs out again"
+Strong CTA - urgent, benefit-driven and impossible to ignore:
+"Use my code [CODE] at checkout for 10% off - link in my bio and it expires soon"
+"My exclusive discount is in my bio right now - grab it before it disappears"
+"The deal I negotiated for you is in my bio - link is live right now go go go"
+"Bio link is live - use code [CODE] and get yours before stock runs out again"
 
 Rules for every CTA:
 - Must be a complete sentence that makes total sense on its own
 - Must feel like the creator is talking TO the viewer not AT them
-- Must have energy — use dashes, natural pauses and conversational language
+- Must have energy - use dashes, natural pauses and conversational language
 - Must tell the viewer exactly what to do AND what they will get by doing it
-- Never end flat — end with momentum, urgency or warmth
+- Never end flat - end with momentum, urgency or warmth
 - Maximum 20 words
-- Always specific to the product being featured — never generic
+- Always specific to the product being featured - never generic
 
 SCRIPT LENGTH: Generate scripts that match these exact word counts based on video length:
-15 second video — maximum 30 words for the full script body
-30 second video — maximum 60 words for the full script body
-60 second video — maximum 120 words for the full script body
+15 second video - maximum 30 words for the full script body
+30 second video - maximum 60 words for the full script body
+60 second video - maximum 120 words for the full script body
 
 Rules for every script regardless of length:
 No waffle. No filler words. No slow intros.
-Every sentence must earn its place — if it does not sell, educate or entertain cut it
-The script body does not include the hook or CTA — those are separate
+Every sentence must earn its place - if it does not sell, educate or entertain cut it
+The script body does not include the hook or CTA - those are separate
 Stage directions in brackets do not count toward the word limit
-Read the script out loud — if it takes longer than the target video length rewrite it shorter
+Read the script out loud - if it takes longer than the target video length rewrite it shorter
 Aim for short punchy sentences. Maximum 10 words per sentence.
 No sentence should start with "I just wanted to" or "So basically" or "Hi guys"
 Get to the point in the first sentence after the hook. Every time.
 
 SCRIPT TONE AND AUTHENTICITY:
-Make every generated script sound genuinely interesting, entertaining, relatable and human. Scripts must never sound like an advertisement. They must sound like a real person excitedly telling their best friend about something they discovered. Use natural language, contractions, personality and emotion. The viewer should feel something — curiosity, excitement, relatability or inspiration — within the first 5 seconds of the script.
+Make every generated script sound genuinely interesting, entertaining, relatable and human. Scripts must never sound like an advertisement. They must sound like a real person excitedly telling their best friend about something they discovered. Use natural language, contractions, personality and emotion. The viewer should feel something - curiosity, excitement, relatability or inspiration - within the first 5 seconds of the script.
 
 Make it conversational, authentic, and optimized for ${scriptStudioVideoLength}. The body should feel natural, not salesy. Use the ${scriptStudioTone.toLowerCase()} tone throughout.
 
@@ -336,7 +336,7 @@ ESTIMATED READ TIME:
         Brand Deal Script Studio
       </h1>
       <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#c9a84c', marginBottom: '16px' }}>
-        For when brands hire you. Generate scripts for paid brand deals — whether the brand gives you a brief or gives you full creative freedom.
+        For when brands hire you. Generate scripts for paid brand deals - whether the brand gives you a brief or gives you full creative freedom.
       </p>
 
       <div
@@ -679,7 +679,7 @@ ESTIMATED READ TIME:
           }}
         >
           <Sparkles size={20} />
-          {scriptStudioIsGenerating ? 'Generating Script...' : 'Generate My UGC Script →'}
+          {scriptStudioIsGenerating ? 'Generating Script...' : 'Generate My UGC Script'}
         </button>
         {!canGenerate && (
           <div style={{ marginTop: '12px', fontSize: '13px', color: '#ff6b6b' }}>
@@ -893,7 +893,7 @@ ESTIMATED READ TIME:
                   ) : (
                     <>
                       <Copy size={16} />
-                      CTA Selected — Copy It
+                      CTA Selected - Copy It
                     </>
                   )}
                 </button>
@@ -1061,7 +1061,7 @@ ESTIMATED READ TIME:
                         {script.brandName} - {script.productName}
                       </div>
                       <div style={{ fontSize: '13px', color: '#9b8fb5' }}>
-                        {formatObj?.name} • Saved {new Date(script.savedAt).toLocaleDateString()}
+                        {formatObj?.name} - Saved {new Date(script.savedAt).toLocaleDateString()}
                       </div>
                     </div>
                     <button

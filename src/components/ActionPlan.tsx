@@ -20,12 +20,12 @@ const baseWeekPlan: Record<number, DayAction[]> = {
     { day: 7, title: 'Rest & Review', description: 'Celebrate your progress and plan for Week 2' },
   ],
   2: [
-    { day: 8, title: 'Film Tutorial Video', description: 'Create your second portfolio video — tutorial or how-to' },
+    { day: 8, title: 'Film Tutorial Video', description: 'Create your second portfolio video - tutorial or how-to' },
     { day: 9, title: 'Send First Pitches', description: 'Send your first 3 brand pitches using your templates' },
     { day: 10, title: 'Engage With Brands', description: 'Engage with 5 brand accounts on TikTok or Instagram', isDynamic: true, dynamicKey: 'niche' },
-    { day: 11, title: 'Lifestyle Showcase', description: 'Film your third portfolio video — lifestyle showcase' },
+    { day: 11, title: 'Lifestyle Showcase', description: 'Film your third portfolio video - lifestyle showcase' },
     { day: 12, title: 'Follow Up', description: 'Follow up on Day 9 pitches professionally' },
-    { day: 13, title: 'Join UGC Platform', description: 'Apply to one UGC platform — Billo or Insense' },
+    { day: 13, title: 'Join UGC Platform', description: 'Apply to one UGC platform - Billo or Insense' },
     { day: 14, title: 'Film Voiceover Video', description: 'Create a voiceover or text-on-screen video' },
   ],
   3: [
@@ -35,7 +35,7 @@ const baseWeekPlan: Record<number, DayAction[]> = {
     { day: 18, title: 'Share Your Work', description: 'Post a portfolio highlight to your social media' },
     { day: 19, title: 'Join TikTok Shop', description: 'Apply to 2 TikTok Shop affiliate products', isDynamic: true, dynamicKey: 'niche' },
     { day: 20, title: 'Before & After Video', description: 'Film a transformation or before/after video' },
-    { day: 21, title: 'Track Responses', description: 'Review all pitches sent — log responses in tracker' },
+    { day: 21, title: 'Track Responses', description: 'Review all pitches sent - log responses in tracker' },
   ],
   4: [
     { day: 22, title: 'Pitch Dream Brands', description: 'Send your strongest pitch to your top 3 dream brands', isDynamic: true, dynamicKey: 'niche' },
@@ -242,7 +242,7 @@ export default function ActionPlan() {
                     fontFamily: 'Cormorant Garamond, serif',
                   }}
                 >
-                  Week {weekNum} — {weekTitles[weekNum]}
+                  Week {weekNum} - {weekTitles[weekNum]}
                 </h2>
                 <div style={{ fontSize: '13px', color: '#9b8fb5' }}>
                   Days {baseWeekPlan[weekNum][0].day}-

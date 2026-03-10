@@ -11,22 +11,22 @@ interface Step3Props {
 
 const currencies: { value: Currency; label: string; symbol: string }[] = [
   { value: 'USD', label: 'US Dollar', symbol: '$' },
-  { value: 'GBP', label: 'British Pound', symbol: '£' },
-  { value: 'EUR', label: 'Euro', symbol: '€' },
-  { value: 'NGN', label: 'Nigerian Naira', symbol: '₦' },
+  { value: 'GBP', label: 'British Pound', symbol: 'GBP' },
+  { value: 'EUR', label: 'Euro', symbol: 'EUR' },
+  { value: 'NGN', label: 'Nigerian Naira', symbol: 'NGN' },
   { value: 'CAD', label: 'Canadian Dollar', symbol: 'C$' },
   { value: 'AUD', label: 'Australian Dollar', symbol: 'A$' },
   { value: 'ZAR', label: 'South African Rand', symbol: 'R' },
   { value: 'KES', label: 'Kenyan Shilling', symbol: 'KES' },
   { value: 'GHS', label: 'Ghanaian Cedi', symbol: 'GHS' },
-  { value: 'INR', label: 'Indian Rupee', symbol: '₹' },
-  { value: 'PHP', label: 'Philippine Peso', symbol: '₱' },
+  { value: 'INR', label: 'Indian Rupee', symbol: 'INR' },
+  { value: 'PHP', label: 'Philippine Peso', symbol: 'PHP' },
   { value: 'OTHER', label: 'Other', symbol: '' },
 ];
 
 const productTypes = [
   { value: 'high-ticket', label: 'High-Ticket', desc: '$500+, premium offer' },
-  { value: 'mid-ticket', label: 'Mid-Ticket', desc: '$50–$500, considered purchase' },
+  { value: 'mid-ticket', label: 'Mid-Ticket', desc: '$50-$500, considered purchase' },
   { value: 'low-ticket', label: 'Low-Ticket', desc: 'Under $50, impulse buy' },
   { value: 'tiktok-shop', label: 'TikTok Shop', desc: 'Physical product for shop' },
   { value: 'free-lead-magnet', label: 'Free Lead Magnet', desc: 'Freebie to build your list' },
@@ -137,7 +137,7 @@ export default function Step3({ onNext, onBack }: Step3Props) {
       <div>
         <h1 className="gradient-text mb-2">Product & Offer</h1>
         <p className="text-gold text-[14px] font-semibold italic">
-          This powers everything — your scripts, your scenes, your strategy
+          This powers everything - your scripts, your scenes, your strategy
         </p>
       </div>
 
@@ -457,7 +457,7 @@ export default function Step3({ onNext, onBack }: Step3Props) {
                 fontStyle: 'italic',
               }}
             >
-              Never lead with the link. Lead with the transformation — the link is just how they access it. Velour scripts are written this way automatically.
+              Never lead with the link. Lead with the transformation - the link is just how they access it. Velour scripts are written this way automatically.
             </div>
           </motion.div>
         )}
@@ -504,7 +504,7 @@ Bonus: 10 Canva templates included"
 
             <div>
               <label className="input-label">WHAT WILL THEY BE ABLE TO DO AFTER?</label>
-              <p className="text-xs text-text-dim mb-2 italic">The transformation — what changes for them</p>
+              <p className="text-xs text-text-dim mb-2 italic">The transformation - what changes for them</p>
               <textarea
                 value={digitalProductTransformation}
                 onChange={(e) => setField('digitalProductTransformation', e.target.value)}
@@ -543,7 +543,7 @@ Bonus: 10 Canva templates included"
 
             <div>
               <label className="input-label">YOUR VALUE STACK</label>
-              <p className="text-xs text-text-dim mb-2 italic">List everything they get with individual values — this is what makes the price feel like a steal</p>
+              <p className="text-xs text-text-dim mb-2 italic">List everything they get with individual values - this is what makes the price feel like a steal</p>
               <textarea
                 value={digitalProductValueStack}
                 onChange={(e) => setField('digitalProductValueStack', e.target.value)}
@@ -570,7 +570,7 @@ Total value: $161 - your price: $27"
                 marginTop: '16px',
               }}
             >
-              Always show the total value BEFORE you reveal the price. Velour scripts use price anchoring automatically — your audience will see $161 worth of value before they ever hear $27.
+              Always show the total value BEFORE you reveal the price. Velour scripts use price anchoring automatically - your audience will see $161 worth of value before they ever hear $27.
             </div>
           </motion.div>
         )}

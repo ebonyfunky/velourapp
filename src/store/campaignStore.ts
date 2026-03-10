@@ -126,7 +126,7 @@ export interface CampaignStore {
     } | null;
   } | null;
 
-  // Content Creator Onboarding (Steps 1–3)
+  // Content Creator Onboarding (Steps 1-3)
   contentCreatorProfession: string;
   contentCreatorProfessionOther: string;
   contentCreatorFaceType: '' | 'faceless' | 'face-forward';

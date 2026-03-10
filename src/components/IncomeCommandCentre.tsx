@@ -32,9 +32,9 @@ export default function IncomeCommandCentre() {
   ).length;
 
   const getMotivationalMessage = (amount: number) => {
-    if (amount === 0) return "Your first payment is coming — keep pitching";
+    if (amount === 0) return "Your first payment is coming - keep pitching";
     if (amount < 500) return "You are a paid creator now. This is just the start.";
-    if (amount < 1000) return "Real momentum — stay consistent";
+    if (amount < 1000) return "Real momentum - stay consistent";
     if (amount < 2500) return "Four figures. You built this.";
     if (amount < 5000) return "This is a serious income stream now";
     return "This is a business. Treat it like one.";
@@ -125,8 +125,8 @@ export default function IncomeCommandCentre() {
     const dealsNeeded = Math.ceil(remaining / avgDealValue);
 
     if (monthProgress >= 100) return "You smashed your goal. Raise it for next month.";
-    if (monthProgress >= 80) return "You are on track — stay consistent and do not let up now";
-    return `You need $${remaining.toFixed(0)} more this month to hit your goal — that is ${dealsNeeded} more brand deals at your average rate. Get pitching today.`;
+    if (monthProgress >= 80) return "You are on track - stay consistent and do not let up now";
+    return `You need $${remaining.toFixed(0)} more this month to hit your goal - that is ${dealsNeeded} more brand deals at your average rate. Get pitching today.`;
   };
 
   const getDaysSinceInvoice = (invoiceDate: string) => {
@@ -590,7 +590,7 @@ export default function IncomeCommandCentre() {
               ))}
             {topNiche && (
               <p style={{ fontSize: '12px', color: '#9b8fb5', marginTop: '12px', fontStyle: 'italic' }}>
-                Your highest earning niche is {topNiche[0]} — consider pitching more brands in this category
+                Your highest earning niche is {topNiche[0]} - consider pitching more brands in this category
               </p>
             )}
           </div>
@@ -627,7 +627,7 @@ export default function IncomeCommandCentre() {
               ))}
             {topPlatform && (
               <p style={{ fontSize: '12px', color: '#9b8fb5', marginTop: '12px', fontStyle: 'italic' }}>
-                {topPlatform[0]} is your best performing outreach channel — prioritise it this week
+                {topPlatform[0]} is your best performing outreach channel - prioritise it this week
               </p>
             )}
           </div>
@@ -643,7 +643,7 @@ export default function IncomeCommandCentre() {
                 </div>
               ))}
             <p style={{ fontSize: '12px', color: '#9b8fb5', marginTop: '12px', fontStyle: 'italic' }}>
-              Retainers pay more per hour of work — aim to convert one-off clients into retainer relationships
+              Retainers pay more per hour of work - aim to convert one-off clients into retainer relationships
             </p>
           </div>
         </div>
@@ -688,7 +688,7 @@ export default function IncomeCommandCentre() {
                     {deal.brandName || 'Unnamed Brand'}
                   </div>
                   <div style={{ fontSize: '12px', color: '#9b8fb5' }}>
-                    ${deal.dealValue.toFixed(0)} • Invoiced {deal.invoiceDate} • {daysSince} days ago
+                    ${deal.dealValue.toFixed(0)} - Invoiced {deal.invoiceDate} - {daysSince} days ago
                   </div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -726,7 +726,7 @@ export default function IncomeCommandCentre() {
                     }}
                   >
                     <Mail size={14} />
-                    Send Chase Email →
+                    Send Chase Email
                   </button>
                 </div>
               </div>
@@ -859,7 +859,7 @@ export default function IncomeCommandCentre() {
           }}
         >
           <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-            🏆 Your Wins — Every Single One
+            Your Wins - Every Single One
           </h2>
           <div style={{ fontSize: '14px', color: '#c9a84c', marginBottom: '24px' }}>
             Total paid deals: {paidDeals.length} | Total earned to date: ${totalEarnedAllTime.toFixed(0)}

@@ -178,7 +178,7 @@ export default function BriefRequirementsChecklist({ brief }: BriefRequirementsC
         >
           <Check size={24} style={{ color: '#22c55e', flexShrink: 0 }} />
           <p style={{ fontSize: '14px', fontWeight: 600, color: '#f0ebff', margin: 0 }}>
-            All brief requirements covered — you are ready to deliver
+            All brief requirements covered - you are ready to deliver
           </p>
         </div>
       )}

@@ -41,17 +41,17 @@ export default function PortfolioVideos() {
 
   const getReadinessMessage = () => {
     if (totalPortfolioPieces === 0) {
-      return "Let's get started — brands need to see your work before they hire you";
+      return "Let's get started - brands need to see your work before they hire you";
     } else if (totalPortfolioPieces >= 1 && totalPortfolioPieces <= 2) {
-      return "Let's get started — brands need to see your work before they hire you";
+      return "Let's get started - brands need to see your work before they hire you";
     } else if (totalPortfolioPieces >= 3 && totalPortfolioPieces <= 5) {
-      return "Good start — keep adding more variety to strengthen your portfolio";
+      return "Good start - keep adding more variety to strengthen your portfolio";
     } else if (totalPortfolioPieces >= 6 && totalPortfolioPieces <= 9) {
-      return "Strong portfolio — you are ready to start reaching out to brands";
+      return "Strong portfolio - you are ready to start reaching out to brands";
     } else if (totalPortfolioPieces >= 10 && totalPortfolioPieces <= 15) {
-      return "Excellent portfolio — you have what it takes to land brand deals";
+      return "Excellent portfolio - you have what it takes to land brand deals";
     } else {
-      return "Outstanding — your portfolio is complete and you are ready to pitch any brand with full confidence";
+      return "Outstanding - your portfolio is complete and you are ready to pitch any brand with full confidence";
     }
   };
 

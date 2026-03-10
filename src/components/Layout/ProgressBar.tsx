@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 interface ProgressBarProps {
   currentStep: number;
   totalSteps: number;
-  /** 0–1 fraction through the current step (e.g. sub-screens within Step 2) */
+  /** 0-1 fraction through the current step (e.g. sub-screens within Step 2) */
   subProgress?: number;
 }
 

@@ -47,7 +47,7 @@ export function UGCBreadcrumb({ currentSection }: { currentSection: string }) {
         letterSpacing: '0.5px',
       }}
     >
-      Step {current.stepNumber} of 13 — {current.label}
+      Step {current.stepNumber} of 13 - {current.label}
     </div>
   );
 }

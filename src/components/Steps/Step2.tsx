@@ -75,7 +75,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
           marginBottom: '32px',
         }}
       >
-        Your content speaks to ONE person — not everyone. Define them here and every Velour script will speak directly to their soul.
+        Your content speaks to ONE person - not everyone. Define them here and every Velour script will speak directly to their soul.
       </p>
 
       <div className="space-y-6">
@@ -93,7 +93,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
             WHO WERE YOU BEFORE YOU FIGURED THIS OUT?
           </label>
           <p className="text-[11px] text-text-dim mb-3">
-            Your avatar is one real person — a past version of you, or someone you deeply understand. Not a group. One specific person.
+            Your avatar is one real person - a past version of you, or someone you deeply understand. Not a group. One specific person.
           </p>
           <textarea
             value={avatarRealPerson}
@@ -150,7 +150,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
           >
             DEFINE THEIR INNER WORLD
           </label>
-          <p className="text-[11px] text-text-dim mb-4">Emotions only — not age, gender or location</p>
+          <p className="text-[11px] text-text-dim mb-4">Emotions only - not age, gender or location</p>
 
           <div className="space-y-3">
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -349,7 +349,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
             GIVE YOUR AVATAR A VOICE
           </label>
           <p className="text-[11px] text-text-dim mb-3">
-            Write one sentence your ideal person would say out loud — emotional and natural, not salesy
+            Write one sentence your ideal person would say out loud - emotional and natural, not salesy
           </p>
           <textarea
             value={avatarVoice}
@@ -411,7 +411,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
             <div className="space-y-4">
               <div>
                 <label className="text-[11px] font-bold text-gold-light block mb-1">
-                  01 — How do they feel RIGHT NOW?
+                  01 - How do they feel RIGHT NOW?
                 </label>
                 <p className="text-[10px] text-text-dim mb-2">
                   Not what they think. How do they FEEL when they wake up in the morning before they check their phone.
@@ -438,7 +438,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
 
               <div>
                 <label className="text-[11px] font-bold text-gold-light block mb-1">
-                  02 — What do they secretly wish for?
+                  02 - What do they secretly wish for?
                 </label>
                 <p className="text-[10px] text-text-dim mb-2">
                   The thing they dream about at 2am that they have never said out loud to anyone.
@@ -465,10 +465,10 @@ export default function Step2({ onNext, onBack }: Step2Props) {
 
               <div>
                 <label className="text-[11px] font-bold text-gold-light block mb-1">
-                  03 — What keeps stopping them?
+                  03 - What keeps stopping them?
                 </label>
                 <p className="text-[10px] text-text-dim mb-2">
-                  They have tried before. What always gets in the way? Be honest — this is what your content will solve.
+                  They have tried before. What always gets in the way? Be honest - this is what your content will solve.
                 </p>
                 <textarea
                   value={guidedBarrier}
@@ -523,7 +523,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                 className="text-center mb-3"
                 style={{ color: '#4ade80', fontSize: '11px', fontWeight: 600 }}
               >
-                Your statement has been built — refine it below until it feels exactly right
+                Your statement has been built - refine it below until it feels exactly right
               </motion.div>
             )}
           </AnimatePresence>
@@ -839,7 +839,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                   className="text-center mt-2"
                   style={{ color: '#4ade80', fontSize: '11px', fontWeight: 600 }}
                 >
-                  Example applied — now edit the fields above to make it completely yours
+                  Example applied - now edit the fields above to make it completely yours
                 </motion.div>
               )}
             </AnimatePresence>
@@ -925,7 +925,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
               marginTop: '8px',
             }}
           >
-            Before you post anything — ask this. If the answer is no, go back and rewrite it.
+            Before you post anything - ask this. If the answer is no, go back and rewrite it.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', marginTop: '12px' }}>
             <button
@@ -941,7 +941,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                 cursor: 'default',
               }}
             >
-              Yes — post it
+              Yes - post it
             </button>
             <button
               type="button"
@@ -956,7 +956,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                 cursor: 'default',
               }}
             >
-              No — rewrite it
+              No - rewrite it
             </button>
           </div>
         </div>
@@ -1003,7 +1003,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                 marginTop: '8px',
               }}
             >
-              Every Velour script, every Live show, and every day of your 30-day content calendar will now be written specifically for this person — their language, their fears, their secret hope.
+              Every Velour script, every Live show, and every day of your 30-day content calendar will now be written specifically for this person - their language, their fears, their secret hope.
             </p>
           </motion.div>
         )}

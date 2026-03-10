@@ -121,7 +121,7 @@ export default function PortfolioPhotosTab({ onNavigateToScriptBuilder, onNaviga
                   margin: '0 0 12px 0',
                 }}
               >
-                Before you upload a single photo — you need two videos first
+                Before you upload a single photo - you need two videos first
               </h3>
               <p
                 style={{
@@ -150,8 +150,7 @@ export default function PortfolioPhotosTab({ onNavigateToScriptBuilder, onNaviga
                     gap: '8px',
                   }}
                 >
-                  Generate My Introduction Script →
-                </button>
+                  Generate My Introduction Script                 </button>
                 <button
                   onClick={onNavigateToPitchScript}
                   style={{
@@ -168,8 +167,7 @@ export default function PortfolioPhotosTab({ onNavigateToScriptBuilder, onNaviga
                     gap: '8px',
                   }}
                 >
-                  Generate My Pitch Video Script →
-                </button>
+                  Generate My Pitch Video Script                 </button>
               </div>
             </div>
           </div>
@@ -206,7 +204,7 @@ export default function PortfolioPhotosTab({ onNavigateToScriptBuilder, onNaviga
               color: uploadedCount >= 5 ? '#22c55e' : '#c9a84c',
             }}
           >
-            Photos uploaded: {uploadedCount} / 10 — aim for at least 5 different photo types
+            Photos uploaded: {uploadedCount} / 10 - aim for at least 5 different photo types
           </div>
         </div>
 

@@ -197,7 +197,7 @@ export default function UGCHub() {
             e.currentTarget.style.borderColor = 'rgba(201,168,76,0.2)';
           }}
         >
-          ← Switch to Content Creator
+          Switch to Content Creator
         </button>
 
         <div style={{ flex: 1, overflowY: 'auto' }}>
@@ -476,8 +476,8 @@ function DashboardPage({ onNavigate }: { onNavigate: (section: string) => void }
           What is UGC and why do brands pay for it?
         </h3>
         <p style={{ fontSize: '13px', color: '#9b8fb5', lineHeight: '1.8', marginBottom: '16px' }}>
-          UGC stands for User Generated Content. Brands pay everyday creators — people with no massive
-          following — to make authentic videos and photos featuring their products. Why? Because real
+          UGC stands for User Generated Content. Brands pay everyday creators - people with no massive
+          following - to make authentic videos and photos featuring their products. Why? Because real
           people trust real people. A genuine video from someone who looks like their customer converts
           10x better than a polished ad. You do not need 10,000 followers. You do not need expensive
           equipment. You need a phone, good lighting and the ability to talk about a product naturally.
@@ -485,7 +485,7 @@ function DashboardPage({ onNavigate }: { onNavigate: (section: string) => void }
         </p>
         <div style={{ display: 'flex', gap: '12px' }}>
           {[
-            { num: '$150–$500', label: 'avg pay per video' },
+            { num: '$150-$500', label: 'avg pay per video' },
             { num: '0', label: 'followers needed' },
             { num: '72hrs', label: 'avg brand response' },
           ].map((stat, i) => (
@@ -528,19 +528,19 @@ function DashboardPage({ onNavigate }: { onNavigate: (section: string) => void }
           {
             label: 'Your Niche',
             value: ugcSelectedNiche || 'Not set',
-            button: 'Define Now →',
+            button: 'Define Now',
             onClick: () => onNavigate('ugc-niche'),
           },
           {
             label: 'Portfolio Pieces',
             value: rateCardPortfolioPieces || '0',
-            button: 'Set Rates →',
+            button: 'Set Rates',
             onClick: () => onNavigate('ugc-rates'),
           },
           {
             label: 'Portfolio Progress',
             value: `${ugcPortfolioChecklist.length} / 10`,
-            button: 'Build Portfolio →',
+            button: 'Build Portfolio',
             onClick: () => setShowPortfolioModal(true),
           },
           {
@@ -601,7 +601,7 @@ function DashboardPage({ onNavigate }: { onNavigate: (section: string) => void }
                         textAlign: 'left',
                       }}
                     >
-                      Portfolio pieces are completed content samples that show brands what you can create. Think of them as your work examples — videos, photos or any content you have made that demonstrates your skills. Brands review your portfolio before deciding to hire you. The more variety you have the better your chances of landing deals.
+                      Portfolio pieces are completed content samples that show brands what you can create. Think of them as your work examples - videos, photos or any content you have made that demonstrates your skills. Brands review your portfolio before deciding to hire you. The more variety you have the better your chances of landing deals.
                       <div
                         style={{
                           position: 'absolute',
@@ -1225,7 +1225,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
       step: 1,
       title: 'What topics do you naturally talk about or enjoy?',
       helperText: 'Choose up to 2 topics',
-      successMessage: "You've picked your top 2 niches — focused creators get hired faster.",
+      successMessage: "You've picked your top 2 niches - focused creators get hired faster.",
       maxSelections: 2,
       options: [
         'Beauty & Skincare',
@@ -1247,7 +1247,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
       step: 2,
       title: 'What type of content feels most natural to you?',
       helperText: 'Choose up to 2 content types',
-      successMessage: 'Perfect — 2 content types keeps your portfolio sharp and consistent.',
+      successMessage: 'Perfect - 2 content types keeps your portfolio sharp and consistent.',
       maxSelections: 2,
       options: [
         'Talking to camera',
@@ -1263,7 +1263,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
       step: 3,
       title: 'What kind of brands would you love to work with?',
       helperText: 'Choose up to 3 brand categories',
-      successMessage: 'Great — 3 brand categories gives you focus without limiting your opportunities.',
+      successMessage: 'Great - 3 brand categories gives you focus without limiting your opportunities.',
       maxSelections: 3,
       options: [
         'Beauty brands',
@@ -1299,7 +1299,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
       options: [
         '1-2 videos per week',
         '3-5 videos per week',
-        'Full time — open to multiple brands',
+        'Full time - open to multiple brands',
         'Project by project basis',
       ],
       isMultiple: false,
@@ -1367,7 +1367,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
     const brandText = q3.length > 0 ? q3[0].toLowerCase() : 'brand';
     const availabilityText = q5.toLowerCase();
 
-    const generatedResult = `You are a ${styleText} UGC creator in the ${topicsText} space, ideal for ${brandText} — available for ${availabilityText}.`;
+    const generatedResult = `You are a ${styleText} UGC creator in the ${topicsText} space, ideal for ${brandText} - available for ${availabilityText}.`;
 
     setField('ugcNicheQ1', q1);
     setField('ugcNicheQ2', q2);
@@ -1414,7 +1414,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
           marginBottom: '32px'
         }}>
           <p style={{ fontSize: '13px', color: '#e8c96a', lineHeight: '1.6', margin: 0 }}>
-            <strong style={{ fontWeight: 700 }}>What's a niche?</strong> It's the specific topic or category you'll create content about — like beauty, fitness, or tech. Finding your niche helps brands know exactly what you're good at and makes it easier to get hired.
+            <strong style={{ fontWeight: 700 }}>What's a niche?</strong> It's the specific topic or category you'll create content about - like beauty, fitness, or tech. Finding your niche helps brands know exactly what you're good at and makes it easier to get hired.
           </p>
         </div>
       )}
@@ -1463,7 +1463,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
 
             {currentQuestion.step === 4 && (
               <p style={{ fontSize: '11px', color: '#c9a84c', marginBottom: '20px', lineHeight: '1.6' }}>
-                Your content style is your signature — own one style and master it.
+                Your content style is your signature - own one style and master it.
               </p>
             )}
 
@@ -1656,7 +1656,7 @@ function NichePage({ onNavigate }: { onNavigate: (section: string) => void }) {
                   e.currentTarget.style.boxShadow = '0 4px 16px rgba(201,168,76,0.4)';
                 }}
               >
-                Save My Niche →
+                Save My Niche
               </button>
             </div>
           </>
@@ -2127,7 +2127,7 @@ function RatesPage() {
               }}
             >
               <Download size={16} />
-              Download Rate Card →
+              Download Rate Card
             </button>
           </div>
 
@@ -2360,13 +2360,13 @@ function RatesPage() {
                     <tr key={index} style={{ borderBottom: '1px solid rgba(201,168,76,0.2)' }}>
                       <td style={{ padding: '16px 8px', fontSize: '14px', color: '#2a2420', fontWeight: 600 }}>{rate.platform}</td>
                       <td style={{ padding: '16px 8px', fontSize: '14px', color: '#4a4340', textAlign: 'right' }}>
-                        {rate.videoRate || '—'}
+                        {rate.videoRate || '-'}
                       </td>
                       <td style={{ padding: '16px 8px', fontSize: '14px', color: '#4a4340', textAlign: 'right' }}>
-                        {rate.photoRate || '—'}
+                        {rate.photoRate || '-'}
                       </td>
                       <td style={{ padding: '16px 8px', fontSize: '14px', color: '#4a4340', textAlign: 'right' }}>
-                        {rate.followers || '—'}
+                        {rate.followers || '-'}
                       </td>
                     </tr>
                   ))}

@@ -5,11 +5,11 @@ const GEAR_CARDS = [
   {
     id: 'email',
     title: 'Your UGC Business Email',
-    description: 'A dedicated professional email for all brand communications. Never pitch from your personal email — it signals amateur immediately.',
-    tip: 'Create a free Gmail — yourname.ugc@gmail.com or yourname.creates@gmail.com',
+    description: 'A dedicated professional email for all brand communications. Never pitch from your personal email - it signals amateur immediately.',
+    tip: 'Create a free Gmail - yourname.ugc@gmail.com or yourname.creates@gmail.com',
     points: [
-      'Keep it simple — your name plus ugc or creates',
-      'Use Gmail — most universally trusted by brands',
+      'Keep it simple - your name plus ugc or creates',
+      'Use Gmail - most universally trusted by brands',
       'Add your portfolio link to your email signature',
       'Check it every single day once you start pitching',
     ],
@@ -17,34 +17,34 @@ const GEAR_CARDS = [
   {
     id: 'phone',
     title: 'Your Phone',
-    description: 'The only camera you need. Use the back camera — always higher quality than the front.',
+    description: 'The only camera you need. Use the back camera - always higher quality than the front.',
     tip: 'Set to 1080p HD at 60fps before every single shoot.',
     points: [
-      'Always use the back camera — never the front',
+      'Always use the back camera - never the front',
       'Set resolution to 1080p HD at 60fps in your camera settings',
-      'Clean your lens before every shoot — a fingerprint destroys sharpness',
-      'Film vertical 9:16 always — never horizontal for UGC content',
+      'Clean your lens before every shoot - a fingerprint destroys sharpness',
+      'Film vertical 9:16 always - never horizontal for UGC content',
     ],
   },
   {
     id: 'lighting',
     title: 'Lighting',
-    description: 'Natural window light is free and beats most ring lights. Face the window — never have it behind you.',
-    tip: 'No window? Search \'LED video panel light\' on Amazon. Anti-glare only — avoid harsh shadows.',
+    description: 'Natural window light is free and beats most ring lights. Face the window - never have it behind you.',
+    tip: 'No window? Search \'LED video panel light\' on Amazon. Anti-glare only - avoid harsh shadows.',
     points: [
-      'Face the window directly — light should hit your face not your back',
-      'Soft overcast daylight is ideal — avoid harsh midday sun',
+      'Face the window directly - light should hit your face not your back',
+      'Soft overcast daylight is ideal - avoid harsh midday sun',
       'Morning and late afternoon light is the most flattering',
-      'If filming at night search \'LED video panel light\' — more natural than a ring light',
+      'If filming at night search \'LED video panel light\' - more natural than a ring light',
     ],
   },
   {
     id: 'tripod',
     title: 'Phone Stand or Tripod',
     description: 'Your phone must be stable and at eye level. A stack of books works perfectly when starting out.',
-    tip: 'Search \'adjustable phone tripod\' on Amazon when you are ready to upgrade — under $25.',
+    tip: 'Search \'adjustable phone tripod\' on Amazon when you are ready to upgrade - under $25.',
     points: [
-      'Eye level always — never film looking up or down at yourself',
+      'Eye level always - never film looking up or down at yourself',
       'A stack of hardcover books is free and works perfectly',
       'An adjustable tripod that reaches 150cm lets you film standing up',
       'Stability matters more than any other gear upgrade',
@@ -53,12 +53,12 @@ const GEAR_CARDS = [
   {
     id: 'microphone',
     title: 'Microphone (Optional but Recommended)',
-    description: 'Your earphones already have a mic — plug them in for an instant audio upgrade. In noisy environments a noise cancelling clip mic is a game changer.',
+    description: 'Your earphones already have a mic - plug them in for an instant audio upgrade. In noisy environments a noise cancelling clip mic is a game changer.',
     tip: 'If background noise is unavoidable search \'noise cancelling clip mic for phone\' on Amazon.',
     points: [
-      'Earphones with a mic — free, already in your drawer, good enough to start',
-      'Noise cancelling clip mic — essential if you live in a noisy home or city environment',
-      'Record a 10 second test before every shoot and play it back — catch problems before filming',
+      'Earphones with a mic - free, already in your drawer, good enough to start',
+      'Noise cancelling clip mic - essential if you live in a noisy home or city environment',
+      'Record a 10 second test before every shoot and play it back - catch problems before filming',
       'Turn off every fan, TV and air conditioning you can control before pressing record',
     ],
     goldNote: 'Brands need audio clean enough for paid ads. Bad audio gets you rejected faster than anything else.',
@@ -66,10 +66,10 @@ const GEAR_CARDS = [
   {
     id: 'teleprompter',
     title: 'Teleprompter App',
-    description: 'Read your Velour script naturally without memorising a single word. Eyes stay on the lens — not on a piece of paper.',
+    description: 'Read your Velour script naturally without memorising a single word. Eyes stay on the lens - not on a piece of paper.',
     tip: 'Search \'teleprompter app\' in your App Store. Free tier is enough. Copy your Velour script and paste straight in.',
     points: [
-      'Search \'teleprompter app\' in App Store or Google Play — most have a free tier',
+      'Search \'teleprompter app\' in App Store or Google Play - most have a free tier',
       'Copy your script directly from Velour and paste it in before every shoot',
       'Adjust the scroll speed to match your natural speaking pace',
       'Position your phone or tablet at eye level beside your filming phone so your eyes stay on the lens',
@@ -83,21 +83,21 @@ const GEAR_CARDS = [
     tip: 'Download free from your App Store or capcut.com. Your full CapCut editing guide is in the section below.',
     points: [
       'Download free from App Store Google Play or capcut.com',
-      'Use Auto Captions — adds subtitles automatically, increases watch time significantly',
-      'Export at 1080p with no watermark — CapCut allows this for free',
+      'Use Auto Captions - adds subtitles automatically, increases watch time significantly',
+      'Export at 1080p with no watermark - CapCut allows this for free',
       'Full step by step editing guide is in the CapCut section below this card',
     ],
   },
 ];
 
 const PRIORITY_LIST = [
-  'Set up your UGC business email — do this first',
-  'Your phone — back camera 1080p 60fps',
-  'Find your best window — face it directly',
-  'Download a teleprompter app — paste your Velour script in',
-  'Plug in your earphones — instant audio upgrade',
-  'Stabilise your phone — books or tripod',
-  'Edit in CapCut — free and beginner friendly',
+  'Set up your UGC business email - do this first',
+  'Your phone - back camera 1080p 60fps',
+  'Find your best window - face it directly',
+  'Download a teleprompter app - paste your Velour script in',
+  'Plug in your earphones - instant audio upgrade',
+  'Stabilise your phone - books or tripod',
+  'Edit in CapCut - free and beginner friendly',
 ];
 
 export default function UGCGearGuide() {

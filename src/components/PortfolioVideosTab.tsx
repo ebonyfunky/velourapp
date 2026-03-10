@@ -166,15 +166,15 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
 
   const getReadinessMessage = () => {
     if (totalPortfolioPieces === 0 || totalPortfolioPieces <= 2) {
-      return "Let's get started — brands need to see your work before they hire you";
+      return "Let's get started - brands need to see your work before they hire you";
     } else if (totalPortfolioPieces >= 3 && totalPortfolioPieces <= 5) {
-      return "Good start — keep adding more variety to strengthen your portfolio";
+      return "Good start - keep adding more variety to strengthen your portfolio";
     } else if (totalPortfolioPieces >= 6 && totalPortfolioPieces <= 9) {
-      return "Strong portfolio — you are ready to start reaching out to brands";
+      return "Strong portfolio - you are ready to start reaching out to brands";
     } else if (totalPortfolioPieces >= 10 && totalPortfolioPieces <= 15) {
-      return "Excellent portfolio — you have what it takes to land brand deals";
+      return "Excellent portfolio - you have what it takes to land brand deals";
     } else {
-      return "Outstanding — your portfolio is complete and you are ready to pitch any brand with full confidence";
+      return "Outstanding - your portfolio is complete and you are ready to pitch any brand with full confidence";
     }
   };
 
@@ -213,7 +213,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
               </h3>
             </div>
             <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.6', marginBottom: '12px', fontStyle: 'italic' }}>
-              The anchor of your entire portfolio — brands watch this first
+              The anchor of your entire portfolio - brands watch this first
             </p>
             <div
               style={{
@@ -346,7 +346,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
                   border: '1px solid rgba(201,168,76,0.2)',
                 }}
               >
-                Creator Introduction — Portfolio Anchor
+                Creator Introduction - Portfolio Anchor
               </div>
             </div>
           ) : (
@@ -385,7 +385,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
               display: 'block',
             }}
           >
-            Need the script? → Go to Script Builder
+            Need the script?  Go to Script Builder
           </button>
         </div>
 
@@ -412,7 +412,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
               </h3>
             </div>
             <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.6', marginBottom: '12px', fontStyle: 'italic' }}>
-              Goes inside your outreach messages — opens the door with brands
+              Goes inside your outreach messages - opens the door with brands
             </p>
             <div
               style={{
@@ -545,7 +545,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
                   border: '1px solid rgba(201,168,76,0.2)',
                 }}
               >
-                Pitch Video — Outreach Tool
+                Pitch Video - Outreach Tool
               </div>
             </div>
           ) : (
@@ -584,7 +584,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
               display: 'block',
             }}
           >
-            Need the script? → Go to Script Builder
+            Need the script?  Go to Script Builder
           </button>
         </div>
         </div>
@@ -614,7 +614,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
               color: validVideosCount >= 5 ? '#22c55e' : '#c9a84c',
             }}
           >
-            Videos added: {validVideosCount} / 10 — aim for at least 5 different video types
+            Videos added: {validVideosCount} / 10 - aim for at least 5 different video types
           </div>
         </div>
 
@@ -875,7 +875,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
           {getReadinessMessage()}
         </p>
         <p style={{ fontSize: '12px', color: '#9b8fb5', fontStyle: 'italic', margin: 0 }}>
-          Tip: Include at least one Faceless video in your portfolio — brands that run paid ads specifically look for faceless content creators.
+          Tip: Include at least one Faceless video in your portfolio - brands that run paid ads specifically look for faceless content creators.
         </p>
       </div>
 

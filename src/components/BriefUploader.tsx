@@ -390,7 +390,7 @@ Example output:
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <label style={{ fontSize: '12px', fontWeight: 700, color: '#22c55e', textTransform: 'uppercase' }}>
-                  Dos — What Brand Wants
+                  Dos - What Brand Wants
                 </label>
                 <button
                   onClick={() => addArrayItem('dos')}
@@ -438,7 +438,7 @@ Example output:
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                 <label style={{ fontSize: '12px', fontWeight: 700, color: '#ef4444', textTransform: 'uppercase' }}>
-                  Don'ts — What Brand Does NOT Want
+                  Don'ts - What Brand Does NOT Want
                 </label>
                 <button
                   onClick={() => addArrayItem('donts')}
@@ -542,7 +542,7 @@ Example output:
         >
           <Check size={24} style={{ color: '#22c55e', flexShrink: 0 }} />
           <p style={{ fontSize: '14px', fontWeight: 600, color: '#f0ebff', margin: 0 }}>
-            Brief loaded — Velour will use these requirements when generating your script below
+            Brief loaded - Velour will use these requirements when generating your script below
           </p>
         </div>
       </div>
@@ -555,7 +555,7 @@ Example output:
         Upload Your Brand Brief First
       </h2>
       <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#c9a84c', marginBottom: '32px' }}>
-        Got a brief from the brand? Upload it here and Velour will read the requirements and bake them directly into your script so you deliver exactly what the brand asked for — first time every time.
+        Got a brief from the brand? Upload it here and Velour will read the requirements and bake them directly into your script so you deliver exactly what the brand asked for - first time every time.
       </p>
 
       <div style={{ display: 'flex', gap: '12px', marginBottom: '24px' }}>
@@ -645,7 +645,7 @@ Example output:
               opacity: !manualText.trim() ? 0.5 : 1,
             }}
           >
-            {isProcessing ? 'Analyzing Brief...' : 'Extract Requirements →'}
+            {isProcessing ? 'Analyzing Brief...' : 'Extract Requirements'}
           </button>
         </div>
       ) : (
@@ -682,7 +682,7 @@ Example output:
               Drag your {uploadMode === 'screenshot' ? 'screenshot' : 'brief'} here or tap to upload
             </p>
             <p style={{ fontSize: '13px', color: '#9b8fb5' }}>
-              {uploadMode === 'screenshot' ? 'JPG or PNG • Up to 5 images' : 'PDF or Word doc'}
+              {uploadMode === 'screenshot' ? 'JPG or PNG - Up to 5 images' : 'PDF or Word doc'}
             </p>
           </div>
 
@@ -735,7 +735,7 @@ Example output:
               opacity: uploadedFiles.length === 0 ? 0.5 : 1,
             }}
           >
-            {isProcessing ? 'Analyzing Brief...' : 'Extract Requirements →'}
+            {isProcessing ? 'Analyzing Brief...' : 'Extract Requirements'}
           </button>
         </div>
       )}

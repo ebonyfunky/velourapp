@@ -122,7 +122,7 @@ Return the response in this exact JSON format:
   return (
     <div style={{ color: 'white', fontFamily: 'Inter, sans-serif' }} className="pb-20">
       <h1 style={{ color: '#c9a84c', fontSize: '28px', fontWeight: 800, marginBottom: '8px' }}>
-        Step 1 — Creator Identity
+        Step 1 - Creator Identity
       </h1>
       <p style={{ color: '#9a8fa8', fontSize: '14px', marginBottom: '32px' }}>
         Build your creator brand foundation in 4 steps
@@ -131,7 +131,7 @@ Return the response in this exact JSON format:
       <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 1 — YOUR PERSONA
+            SECTION 1 - YOUR PERSONA
           </h3>
           <p style={{ color: '#9a8fa8', fontSize: '12px', marginBottom: '16px' }}>
             How do you show up as a creator?
@@ -165,7 +165,7 @@ Return the response in this exact JSON format:
 
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 2 — YOUR CONTENT STYLE
+            SECTION 2 - YOUR CONTENT STYLE
           </h3>
           <p style={{ color: '#9a8fa8', fontSize: '12px', marginBottom: '16px' }}>
             What vibe do you bring to your content?
@@ -199,7 +199,7 @@ Return the response in this exact JSON format:
 
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 3 — YOUR NICHE
+            SECTION 3 - YOUR NICHE
           </h3>
           <label style={{ color: '#9a8fa8', fontSize: '12px', display: 'block', marginBottom: '8px' }}>
             What do you create content about?
@@ -224,7 +224,7 @@ Return the response in this exact JSON format:
 
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 4 — YOUR STORY IN ONE LINE
+            SECTION 4 - YOUR STORY IN ONE LINE
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <div>
@@ -311,7 +311,7 @@ Return the response in this exact JSON format:
 
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 5 — GENERATE YOUR IDENTITY CARD
+            SECTION 5 - GENERATE YOUR IDENTITY CARD
           </h3>
           <button
             onClick={generateIdentityCard}

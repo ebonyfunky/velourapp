@@ -169,7 +169,7 @@ export default function WelcomeScreen({ onDismiss }: WelcomeScreenProps) {
                 maxWidth: '520px',
               }}
             >
-              Built for every creator everywhere — Lagos to London,
+              Built for every creator everywhere - Lagos to London,
               <br />
               Atlanta to Auckland, male, female, every background.
               <br />
@@ -248,7 +248,7 @@ export default function WelcomeScreen({ onDismiss }: WelcomeScreenProps) {
                   ease: 'linear',
                 }}
               />
-              <span className="relative z-10">Start Building My Empire →</span>
+              <span className="relative z-10">Start Building My Empire</span>
             </motion.button>
 
             {/* Below CTA text */}
@@ -260,7 +260,7 @@ export default function WelcomeScreen({ onDismiss }: WelcomeScreenProps) {
                 fontWeight: 500,
               }}
             >
-              No credit card required • Cancel anytime • Used by creators in 50+ countries
+              No credit card required - Cancel anytime - Used by creators in 50+ countries
             </p>
           </motion.div>
         </motion.div>

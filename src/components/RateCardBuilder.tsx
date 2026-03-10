@@ -319,7 +319,7 @@ export default function RateCardBuilder() {
                 How To Reach You
               </label>
               <p style={{ fontSize: '11px', color: '#c9a84c', marginBottom: '12px', lineHeight: '1.5', fontStyle: 'italic' }}>
-                Only add what you actually use. You do not need social media to be a successful UGC creator — an email address and portfolio link is all a brand needs to hire you.
+                Only add what you actually use. You do not need social media to be a successful UGC creator - an email address and portfolio link is all a brand needs to hire you.
               </p>
 
               {Array.isArray(rateCardContactMethods) && rateCardContactMethods.map((contact) => {
@@ -538,7 +538,7 @@ export default function RateCardBuilder() {
                     {/* Option 1: Google Drive */}
                     <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: '10px', padding: '16px' }}>
                       <h4 style={{ fontSize: '14px', fontWeight: 700, color: '#e8c96a', marginBottom: '12px' }}>
-                        Option 1 — Google Drive (Free & Easy)
+                        Option 1 - Google Drive (Free & Easy)
                       </h4>
                       <ol style={{ fontSize: '12px', color: '#d0c9e0', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '12px' }}>
                         <li>Go to drive.google.com and sign in with your Google account</li>
@@ -570,14 +570,14 @@ export default function RateCardBuilder() {
                           e.currentTarget.style.background = 'rgba(201,168,76,0.15)';
                         }}
                       >
-                        Open Google Drive →
+                        Open Google Drive
                       </a>
                     </div>
 
                     {/* Option 2: Canva */}
                     <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: '10px', padding: '16px' }}>
                       <h4 style={{ fontSize: '14px', fontWeight: 700, color: '#e8c96a', marginBottom: '12px' }}>
-                        Option 2 — Canva Portfolio (Most Visual & Professional)
+                        Option 2 - Canva Portfolio (Most Visual & Professional)
                       </h4>
                       <ol style={{ fontSize: '12px', color: '#d0c9e0', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '12px' }}>
                         <li>Go to canva.com and create a free account</li>
@@ -609,14 +609,14 @@ export default function RateCardBuilder() {
                           e.currentTarget.style.background = 'rgba(201,168,76,0.15)';
                         }}
                       >
-                        Open Canva →
+                        Open Canva
                       </a>
                     </div>
 
                     {/* Option 3: Dropbox */}
                     <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(201,168,76,0.15)', borderRadius: '10px', padding: '16px' }}>
                       <h4 style={{ fontSize: '14px', fontWeight: 700, color: '#e8c96a', marginBottom: '12px' }}>
-                        Option 3 — Dropbox (Great for Large Video Files)
+                        Option 3 - Dropbox (Great for Large Video Files)
                       </h4>
                       <ol style={{ fontSize: '12px', color: '#d0c9e0', lineHeight: '1.8', paddingLeft: '20px', marginBottom: '12px' }}>
                         <li>Go to dropbox.com and create a free account</li>
@@ -647,7 +647,7 @@ export default function RateCardBuilder() {
                           e.currentTarget.style.background = 'rgba(201,168,76,0.15)';
                         }}
                       >
-                        Open Dropbox →
+                        Open Dropbox
                       </a>
                     </div>
 
@@ -914,7 +914,7 @@ export default function RateCardBuilder() {
                   <textarea
                     value={pkg.description}
                     onChange={(e) => updatePackage(pkg.id, 'description', e.target.value)}
-                    placeholder="• 3 short-form videos&#10;• 5 high-res photos&#10;• 2 rounds of revisions&#10;• 30-day usage rights"
+                    placeholder="- 3 short-form videos&#10;- 5 high-res photos&#10;- 2 rounds of revisions&#10;- 30-day usage rights"
                     style={{
                       width: '100%',
                       padding: '10px',
@@ -1427,7 +1427,7 @@ export default function RateCardBuilder() {
                 </p>
               )}
               <p style={{ fontSize: '10px', color: '#9b8fb5', fontStyle: 'italic' }}>
-                Created with Velour — velour-app.com
+                Created with Velour - velour-app.com
               </p>
             </div>
           </div>
@@ -1614,27 +1614,27 @@ export default function RateCardBuilder() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   {[
                     {
-                      title: 'Step 1 — Download your rate card from Velour',
+                      title: 'Step 1 - Download your rate card from Velour',
                       description: 'Click the "Download as PNG" button above. PNG works best for uploading into Canva.',
                     },
                     {
-                      title: 'Step 2 — Open a Canva template',
+                      title: 'Step 2 - Open a Canva template',
                       description: 'Click any template above to open it in Canva. Create a free account if you don\'t have one.',
                     },
                     {
-                      title: 'Step 3 — Delete the template\'s placeholder content',
+                      title: 'Step 3 - Delete the template\'s placeholder content',
                       description: 'Once inside Canva click on the text and images in the template and delete what you don\'t need.',
                     },
                     {
-                      title: 'Step 4 — Upload your Velour rate card',
+                      title: 'Step 4 - Upload your Velour rate card',
                       description: 'Click "Uploads" on the left sidebar in Canva. Click "Upload files" and select the PNG you downloaded from Velour. Drag it onto your canvas.',
                     },
                     {
-                      title: 'Step 5 — Add your personal touches',
+                      title: 'Step 5 - Add your personal touches',
                       description: 'Add your photo, change the fonts and colors to match your brand, add your logo if you have one.',
                     },
                     {
-                      title: 'Step 6 — Download your finished rate card',
+                      title: 'Step 6 - Download your finished rate card',
                       description: 'Click "Share" then "Download" in Canva. Choose PDF Print for the best quality. Your professional rate card is ready to send to brands.',
                     },
                   ].map((step, idx) => (

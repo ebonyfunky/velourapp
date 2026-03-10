@@ -41,7 +41,7 @@ Best,
 
 I'm a UGC creator in the [Niche] space and I've been obsessed with your [Product]. The way you [specific thing you noticed] is exactly what my audience loves.
 
-I create scroll-stopping [Video Type] content that converts. I'd love to create something for you — either as a paid collab or for your upcoming campaigns.
+I create scroll-stopping [Video Type] content that converts. I'd love to create something for you - either as a paid collab or for your upcoming campaigns.
 
 Here's my work: [Portfolio Link]
 
@@ -56,7 +56,7 @@ Just wanted to follow up on my email from [Date] about creating UGC content for 
 
 I know inboxes get busy, so I wanted to make sure this didn't get lost. I'm genuinely excited about the possibility of working together and creating content that drives results for [Product].
 
-If now isn't the right time, no worries at all — I'd love to stay in touch for future opportunities.
+If now isn't the right time, no worries at all - I'd love to stay in touch for future opportunities.
 
 Here's my portfolio again: [Portfolio Link]
 
@@ -126,11 +126,11 @@ Best,
 const objectionHandlers = [
   {
     objection: '"Your following is too small"',
-    response: "I completely understand! The great thing about UGC is that it's not about my following — it's about creating authentic content you can use in your own ads and on your own channels. Brands use UGC creators specifically because the content performs better than influencer posts. You're buying the content, not my audience. That's why my rates reflect content creation, not influencer rates."
+    response: "I completely understand! The great thing about UGC is that it's not about my following - it's about creating authentic content you can use in your own ads and on your own channels. Brands use UGC creators specifically because the content performs better than influencer posts. You're buying the content, not my audience. That's why my rates reflect content creation, not influencer rates."
   },
   {
     objection: '"We don\'t have budget right now"',
-    response: "No problem at all! I totally understand budget cycles. Would it make sense to keep in touch for when budget opens up? I can also offer a smaller starter package — like one video instead of three — to make it easier to test the partnership. Some of my best long-term clients started with a single video and loved the results."
+    response: "No problem at all! I totally understand budget cycles. Would it make sense to keep in touch for when budget opens up? I can also offer a smaller starter package - like one video instead of three - to make it easier to test the partnership. Some of my best long-term clients started with a single video and loved the results."
   },
   {
     objection: '"Can you do it for free product?"',
@@ -142,14 +142,14 @@ const objectionHandlers = [
   },
   {
     objection: '"Send us your rate card"',
-    response: "Absolutely! I'd be happy to send that over. Just to make sure I send you the most relevant info — what type of content are you looking for? (Example: testimonial, tutorial, unboxing, etc.) And how many videos were you thinking? This way I can customize the pricing to exactly what you need."
+    response: "Absolutely! I'd be happy to send that over. Just to make sure I send you the most relevant info - what type of content are you looking for? (Example: testimonial, tutorial, unboxing, etc.) And how many videos were you thinking? This way I can customize the pricing to exactly what you need."
   }
 ];
 
 const brandDiscoveryPlatforms = [
   {
     name: 'TikTok Creator Marketplace',
-    description: 'Free. Brands post open campaigns. Go to TikTok Studio → Creator Marketplace → Apply to campaigns in your niche.'
+    description: 'Free. Brands post open campaigns. Go to TikTok Studio  Creator Marketplace  Apply to campaigns in your niche.'
   },
   {
     name: 'TikTok Shop Affiliate',
@@ -306,7 +306,7 @@ export default function BrandOutreach() {
               lineHeight: 1.4,
             }}
           >
-            85% of UGC creators never send a single pitch. The ones who do — win.
+            85% of UGC creators never send a single pitch. The ones who do - win.
           </div>
 
           <div style={{ marginTop: '24px' }}>
@@ -445,8 +445,7 @@ export default function BrandOutreach() {
                   }}
                 >
                   <Copy size={16} />
-                  Copy Template →
-                </button>
+                  Copy Template                 </button>
               </div>
               <pre
                 style={{
@@ -769,7 +768,7 @@ export default function BrandOutreach() {
                       </div>
                     </td>
                     <td style={{ padding: '16px 12px', fontSize: '13px', color: '#9b8fb5' }}>
-                      {pitch.notes || '—'}
+                      {pitch.notes || '-'}
                     </td>
                     <td style={{ padding: '16px 12px', textAlign: 'center' }}>
                       <button
@@ -975,8 +974,7 @@ export default function BrandOutreach() {
                 e.currentTarget.style.boxShadow = '0 4px 16px rgba(201,168,76,0.4)';
               }}
             >
-              Start The Challenge →
-            </button>
+              Start The Challenge             </button>
           ) : (
             <div
               style={{

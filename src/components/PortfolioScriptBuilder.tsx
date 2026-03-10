@@ -73,14 +73,14 @@ interface PortfolioScript {
 
 const getEditingTip = (videoType: string, isFaceForward: boolean): string => {
   const tips: Record<string, string> = {
-    'Unboxing & First Reaction': 'In CapCut, cut between each item reveal — do not film one long take. Add a zoom effect when revealing the hero product using the keyframe feature. Use text overlay at the start: the product name and your first reaction word.',
-    'Honest Review': 'In CapCut, cut out any pauses longer than half a second. Add captions using Auto Captions — reviews live and die by how clear the message is. Use a clean minimal filter — you want the focus on your face not the edit.',
+    'Unboxing & First Reaction': 'In CapCut, cut between each item reveal - do not film one long take. Add a zoom effect when revealing the hero product using the keyframe feature. Use text overlay at the start: the product name and your first reaction word.',
+    'Honest Review': 'In CapCut, cut out any pauses longer than half a second. Add captions using Auto Captions - reviews live and die by how clear the message is. Use a clean minimal filter - you want the focus on your face not the edit.',
     'Tutorial & How-To': 'In CapCut, use text overlays to number each step: Step 1, Step 2 etc. Speed up any waiting time during application using the Speed feature. Add a before and after side by side at the end using the split screen feature.',
     'Before & After': 'In CapCut, use the split screen feature to show before and after side by side. Add a transition between the before and after sections. Text overlay: "Before" on the left and "After" on the right.',
     'Get Ready With Me': 'In CapCut, use the speed feature to speed up the getting ready sections between talking to camera moments. Add trending audio as background music. Add text overlays for each product you feature.',
-    'Mini Commercial': 'In CapCut, use the keyframe feature to create smooth zoom effects on the product. Match every cut to the beat of your background music. Colour grade more intentionally — mini commercials benefit from a stronger visual style.',
-    'Voiceover Ad': 'In CapCut, record your voiceover using the Voiceover feature under Audio. Match your product shots to the rhythm of your voiceover — cut on the beat. Use text overlays to reinforce every key point you say.',
-    'Text on Screen': 'In CapCut, use the Text Animate feature to make each line appear with a clean fade or typewriter effect. Time each text line to stay on screen for at least 2 seconds. Use a consistent font throughout — do not mix font styles. Add subtle background music at 10% volume.',
+    'Mini Commercial': 'In CapCut, use the keyframe feature to create smooth zoom effects on the product. Match every cut to the beat of your background music. Colour grade more intentionally - mini commercials benefit from a stronger visual style.',
+    'Voiceover Ad': 'In CapCut, record your voiceover using the Voiceover feature under Audio. Match your product shots to the rhythm of your voiceover - cut on the beat. Use text overlays to reinforce every key point you say.',
+    'Text on Screen': 'In CapCut, use the Text Animate feature to make each line appear with a clean fade or typewriter effect. Time each text line to stay on screen for at least 2 seconds. Use a consistent font throughout - do not mix font styles. Add subtle background music at 10% volume.',
   };
 
   if (!isFaceForward && videoType === 'Text on Screen') {
@@ -263,7 +263,7 @@ export default function PortfolioScriptBuilder() {
         <Info size={24} style={{ color: '#c9a84c', flexShrink: 0, marginTop: '2px' }} />
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: '16px', fontWeight: 700, color: '#e8c96a', marginBottom: '8px' }}>
-            Write Your Script First — Then Film
+            Write Your Script First - Then Film
           </div>
           <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.6', margin: 0 }}>
             Before you pick up your phone you need to know exactly what to say. Use this script builder to generate your word-for-word portfolio script, hooks, CTAs and filming checklist. Then switch to the My Videos tab to upload your finished content.
@@ -283,7 +283,7 @@ export default function PortfolioScriptBuilder() {
         {!showIntroductionForm && !showPitchForm && (
           <>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#f0ebff', marginBottom: '16px' }}>
-              Section 1 — Pick a Product Category
+              Section 1 - Pick a Product Category
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', marginBottom: '32px' }}>
               {PRODUCT_CATEGORIES.map((category) => (
@@ -313,10 +313,10 @@ export default function PortfolioScriptBuilder() {
             </div>
 
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-              Section 2 — Tell us about your practice product
+              Section 2 - Tell us about your practice product
             </h3>
             <p style={{ fontSize: '12px', color: '#9b8fb5', marginBottom: '12px', fontStyle: 'italic' }}>
-              You do not need to buy anything new. Use products you already have at home. Brands want to see how you present ANY product — not a specific one.
+              You do not need to buy anything new. Use products you already have at home. Brands want to see how you present ANY product - not a specific one.
             </p>
             <input
               type="text"
@@ -338,7 +338,7 @@ export default function PortfolioScriptBuilder() {
         )}
 
         <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#f0ebff', marginBottom: '16px' }}>
-          Section 3 — What type of portfolio video are you filming?
+          Section 3 - What type of portfolio video are you filming?
         </h3>
 
         <div
@@ -411,8 +411,7 @@ export default function PortfolioScriptBuilder() {
                 }}
               >
                 <Sparkles size={16} />
-                Generate My Introduction Script →
-              </button>
+                Generate My Introduction Script               </button>
             </div>
 
             <div
@@ -472,8 +471,7 @@ export default function PortfolioScriptBuilder() {
                 }}
               >
                 <Sparkles size={16} />
-                Generate My Pitch Script →
-              </button>
+                Generate My Pitch Script               </button>
             </div>
           </div>
         </div>
@@ -489,7 +487,7 @@ export default function PortfolioScriptBuilder() {
             }}
           >
             <h4 style={{ fontSize: '15px', fontWeight: 700, color: '#e8c96a', marginBottom: '16px' }}>
-              Creator Introduction — Tell us about yourself
+              Creator Introduction - Tell us about yourself
             </h4>
 
             <div style={{ marginBottom: '16px' }}>
@@ -602,7 +600,7 @@ export default function PortfolioScriptBuilder() {
               }}
             >
               <Sparkles size={16} />
-              {isGenerating ? 'Generating...' : 'Write My Introduction Script →'}
+              {isGenerating ? 'Generating...' : 'Write My Introduction Script '}
             </button>
           </div>
         )}
@@ -618,7 +616,7 @@ export default function PortfolioScriptBuilder() {
             }}
           >
             <h4 style={{ fontSize: '15px', fontWeight: 700, color: '#e8c96a', marginBottom: '16px' }}>
-              Pitch Video — Tell us about this opportunity
+              Pitch Video - Tell us about this opportunity
             </h4>
 
             <div style={{ marginBottom: '16px' }}>
@@ -711,7 +709,7 @@ export default function PortfolioScriptBuilder() {
               }}
             >
               <Sparkles size={16} />
-              {isGenerating ? 'Generating...' : 'Write My Pitch Script →'}
+              {isGenerating ? 'Generating...' : 'Write My Pitch Script '}
             </button>
           </div>
         )}
@@ -725,12 +723,12 @@ export default function PortfolioScriptBuilder() {
             fontStyle: 'italic',
           }}
         >
-          — or choose a video type below to generate a portfolio script —
+          - or choose a video type below to generate a portfolio script -
         </div>
 
         <div style={{ marginBottom: '24px' }}>
           <div style={{ fontSize: '14px', fontWeight: 700, color: '#c9a84c', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            Face Forward — you appear on camera
+            Face Forward - you appear on camera
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', marginBottom: '24px' }}>
             {FACE_FORWARD_TYPES.map((type) => {
@@ -768,7 +766,7 @@ export default function PortfolioScriptBuilder() {
           </div>
 
           <div style={{ fontSize: '14px', fontWeight: 700, color: '#c9a84c', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            Faceless — your face never appears on camera
+            Faceless - your face never appears on camera
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', marginBottom: '12px' }}>
             {FACELESS_TYPES.map((type) => {
@@ -800,14 +798,14 @@ export default function PortfolioScriptBuilder() {
             })}
           </div>
           <p style={{ fontSize: '12px', color: '#9b8fb5', fontStyle: 'italic', lineHeight: '1.5' }}>
-            Faceless content is perfect if you are camera shy or just starting out. Your voice or text tells the story — your face never appears.
+            Faceless content is perfect if you are camera shy or just starting out. Your voice or text tells the story - your face never appears.
           </p>
         </div>
 
         {!showIntroductionForm && !showPitchForm && (
           <>
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#f0ebff', marginBottom: '16px' }}>
-              Section 4 — Your Content Style
+              Section 4 - Your Content Style
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', marginBottom: '32px' }}>
               {CONTENT_STYLES.map((style) => (
@@ -837,7 +835,7 @@ export default function PortfolioScriptBuilder() {
             </div>
 
             <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#f0ebff', marginBottom: '16px' }}>
-              Section 5 — Video Length
+              Section 5 - Video Length
             </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '8px', marginBottom: '32px' }}>
               {VIDEO_LENGTHS.map((length) => (
@@ -1099,7 +1097,7 @@ export default function PortfolioScriptBuilder() {
                 ) : (
                   <>
                     <Copy size={16} />
-                    CTA Selected — Copy It
+                    CTA Selected - Copy It
                   </>
                 )}
               </button>
@@ -1213,8 +1211,7 @@ export default function PortfolioScriptBuilder() {
               }}
             >
               <CheckCircle2 size={16} />
-              I Filmed This! →
-            </button>
+              I Filmed This!             </button>
           </div>
         </div>
       )}
@@ -1243,7 +1240,7 @@ export default function PortfolioScriptBuilder() {
                 color: savedScriptsCount >= 5 ? '#22c55e' : '#c9a84c',
               }}
             >
-              Scripts saved: {savedScriptsCount} — aim for at least 5
+              Scripts saved: {savedScriptsCount} - aim for at least 5
             </div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>

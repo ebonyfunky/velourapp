@@ -56,9 +56,9 @@ export default function Step12() {
     setTimeout(() => setCopiedTemplate(null), 2000);
   };
 
-  const retainerTemplate = `Hi [Brand] — loved creating for you this month. I would love to propose a monthly retainer — [X videos] per month at $[rate]. Consistent content for you, locked availability for me. Open to discussing?`;
+  const retainerTemplate = `Hi [Brand] - loved creating for you this month. I would love to propose a monthly retainer - [X videos] per month at $[rate]. Consistent content for you, locked availability for me. Open to discussing?`;
 
-  const rateRaiseTemplate = `Hi [Brand] — my rates update from [date]. New rate: $[amount] per video. Happy to lock in your current rate for briefs confirmed before then.`;
+  const rateRaiseTemplate = `Hi [Brand] - my rates update from [date]. New rate: $[amount] per video. Happy to lock in your current rate for briefs confirmed before then.`;
 
   useEffect(() => {
     const today = new Date().toDateString();
@@ -705,7 +705,7 @@ export default function Step12() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {[
                   'You are seeing their highlight reel. Not the 47 pitches before that $2,000 deal.',
-                  'The only comparison that matters — you versus you 90 days ago.',
+                  'The only comparison that matters - you versus you 90 days ago.',
                   'Their success does not shrink yours. The market is enormous.'
                 ].map((statement, i) => (
                   <div
@@ -793,11 +793,11 @@ export default function Step12() {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {[
-                  'Do not panic — brands have cycles that have nothing to do with you',
+                  'Do not panic - brands have cycles that have nothing to do with you',
                   'Double your outreach immediately',
-                  'Update your portfolio — come back stronger',
-                  'Join a new platform — more channels mean more deals',
-                  'Message every past brand — "I have availability next month. Any upcoming campaigns?"'
+                  'Update your portfolio - come back stronger',
+                  'Join a new platform - more channels mean more deals',
+                  'Message every past brand - "I have availability next month. Any upcoming campaigns?"'
                 ].map((step, i) => (
                   <div
                     key={i}
@@ -845,7 +845,7 @@ export default function Step12() {
 
               <div style={{ marginBottom: '32px' }}>
                 <div style={{ fontSize: '12px', fontWeight: 700, color: '#c9a84c', marginBottom: '16px', textTransform: 'uppercase' }}>
-                  Milestones — {progress.completed}/{progress.total} Unlocked
+                  Milestones - {progress.completed}/{progress.total} Unlocked
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                   {[
@@ -892,7 +892,7 @@ export default function Step12() {
                     value={winInput}
                     onChange={(e) => setWinInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && addWin()}
-                    placeholder="Log a win — big or small..."
+                    placeholder="Log a win - big or small..."
                     style={{
                       flex: 1,
                       padding: '14px 20px',

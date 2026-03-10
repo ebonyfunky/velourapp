@@ -126,7 +126,7 @@ Return the response in this exact JSON format:
   return (
     <div style={{ color: 'white', fontFamily: 'Inter, sans-serif' }}>
       <h1 style={{ color: '#c9a84c', fontSize: '28px', fontWeight: 800, marginBottom: '8px' }}>
-        Step 2 — Audience Avatar
+        Step 2 - Audience Avatar
       </h1>
       <p style={{ color: '#9a8fa8', fontSize: '14px', marginBottom: '32px' }}>
         Define the one real person you create content for
@@ -135,7 +135,7 @@ Return the response in this exact JSON format:
       <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 1 — THE ONE REAL PERSON
+            SECTION 1 - THE ONE REAL PERSON
           </h3>
           <div style={{
             padding: '20px',
@@ -148,7 +148,7 @@ Return the response in this exact JSON format:
               Who Are You Really Talking To?
             </div>
             <div style={{ color: '#9a8fa8', fontSize: '13px', lineHeight: '1.6' }}>
-              Think of one real person — someone a few steps behind where you are now. Not a crowd. One person.
+              Think of one real person - someone a few steps behind where you are now. Not a crowd. One person.
             </div>
           </div>
           <div>
@@ -176,10 +176,10 @@ Return the response in this exact JSON format:
 
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 2 — DEFINE HER INNER WORLD
+            SECTION 2 - DEFINE HER INNER WORLD
           </h3>
           <div style={{ color: '#9a8fa8', fontSize: '13px', marginBottom: '16px' }}>
-            Complete each line honestly — this becomes the emotional core of your brand.
+            Complete each line honestly - this becomes the emotional core of your brand.
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div>
@@ -313,10 +313,10 @@ Return the response in this exact JSON format:
 
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 3 — GIVE THEM A VOICE
+            SECTION 3 - GIVE THEM A VOICE
           </h3>
           <div style={{ color: '#9a8fa8', fontSize: '13px', marginBottom: '16px' }}>
-            How does this person talk in their head? Your content must sound like this voice — not marketing language.
+            How does this person talk in their head? Your content must sound like this voice - not marketing language.
           </div>
           <textarea
             value={innerVoice}
@@ -346,13 +346,13 @@ Return the response in this exact JSON format:
             fontSize: '12px',
             fontWeight: 600,
           }}>
-            Your content must sound like this voice — not marketing language.
+            Your content must sound like this voice - not marketing language.
           </div>
         </div>
 
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 4 — YOUR AUDIENCE STATEMENT
+            SECTION 4 - YOUR AUDIENCE STATEMENT
           </h3>
           <div style={{ color: '#9a8fa8', fontSize: '13px', marginBottom: '16px' }}>
             This one sentence guides every piece of content you create.
@@ -419,7 +419,7 @@ Return the response in this exact JSON format:
 
         <div>
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
-            SECTION 5 — GENERATE AVATAR PROFILE
+            SECTION 5 - GENERATE AVATAR PROFILE
           </h3>
           <button
             onClick={generateAvatar}
@@ -576,7 +576,7 @@ Return the response in this exact JSON format:
                     fontWeight: 600,
                     textAlign: 'center',
                   }}>
-                    Yes — post it confidently
+                    Yes - post it confidently
                   </div>
                   <div style={{
                     flex: 1,
@@ -589,7 +589,7 @@ Return the response in this exact JSON format:
                     fontWeight: 600,
                     textAlign: 'center',
                   }}>
-                    No — rewrite or delete
+                    No - rewrite or delete
                   </div>
                 </div>
               </div>

@@ -276,7 +276,7 @@ export default function Sidebar({ currentStep, onStepClick, completedSteps }: Si
                 marginBottom: '12px',
               }}
             >
-              Switch to UGC Hub →
+              Switch to UGC Hub
             </button>
 
             <div

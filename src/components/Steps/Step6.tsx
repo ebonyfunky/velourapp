@@ -14,7 +14,7 @@ type ScriptFormat = 'hook-and-sell' | 'story-led' | 'problem-solution' | 'trend-
 const SCRIPT_FORMATS = [
   { id: 'hook-and-sell' as const, label: 'Hook & Sell' },
   { id: 'story-led' as const, label: 'Story-Led' },
-  { id: 'problem-solution' as const, label: 'Problem → Solution' },
+  { id: 'problem-solution' as const, label: 'Problem to Solution' },
   { id: 'trend-challenge' as const, label: 'Trend & Challenge' },
   { id: 'results-first' as const, label: 'Results First' },
   { id: 'faith-purpose' as const, label: 'Faith & Purpose' },
@@ -39,9 +39,9 @@ export default function Step5({ onNext, onBack }: Step5Props) {
 
   const presetCTAs = [
     'DM me [word] to learn more',
-    'Applications open — link in bio',
+    'Applications open - link in bio',
     'Comment [word] and I\'ll send you the details',
-    'Book a free call — link in bio',
+    'Book a free call - link in bio',
     'Follow for more',
     'Comment [word] and I\'ll send you the link',
     'Duet this if you agree',
@@ -49,7 +49,7 @@ export default function Step5({ onNext, onBack }: Step5Props) {
     'Save this for later',
     'Share with someone who needs this',
     'Drop a comment if this helped',
-    'Try it for free — link in bio',
+    'Try it for free - link in bio',
     'Watch till the end',
     'Tag someone building their empire',
     'Comment your country',
@@ -57,22 +57,22 @@ export default function Step5({ onNext, onBack }: Step5Props) {
 
   const affiliateCTAs = [
     'Use my code [X] for [X]% off',
-    'Link in my bio — grab yours',
+    'Link in my bio - grab yours',
     'Comment [word] and I\'ll DM you my link',
-    'Shop through my link — same price, supports me',
+    'Shop through my link - same price, supports me',
     'DM me [word] for the affiliate discount',
     'Swipe up to grab yours',
   ];
 
   const digitalProductCTAs = [
-    'Get instant access — link in bio',
-    'Download yours — link in bio',
-    'Grab your copy — link in bio',
+    'Get instant access - link in bio',
+    'Download yours - link in bio',
+    'Grab your copy - link in bio',
     'Comment [word] for the link',
     'DM me [word] for instant access',
-    'Only $[X] — link in bio',
-    'Free for the next 24 hours — link in bio',
-    'Last few copies — link in bio',
+    'Only $[X] - link in bio',
+    'Free for the next 24 hours - link in bio',
+    'Last few copies - link in bio',
   ];
 
   const categoryAngles = categoryScriptAngles[contentCategory];
@@ -110,22 +110,22 @@ export default function Step5({ onNext, onBack }: Step5Props) {
     const instructions: Record<ScriptFormat, string> = {
       'hook-and-sell': `FORMAT: Hook & Sell
 Open with a bold pattern interrupt that stops the scroll in under 3 seconds. Build quickly to the offer. Close with a direct CTA.
-Structure: SCROLL-STOPPER HOOK → PROBLEM AGITATION → OFFER REVEAL → CTA`,
+Structure: SCROLL-STOPPER HOOK to PROBLEM AGITATION to OFFER REVEAL to CTA`,
       'story-led': `FORMAT: Story-Led
 Open with a personal story hook the audience relates to. Build tension. Reveal the lesson or transformation. Close with a CTA.
-Structure: STORY HOOK → TENSION/STRUGGLE → TURNING POINT → LESSON → CTA`,
-      'problem-solution': `FORMAT: Problem → Solution
-Name the pain clearly and specifically. Agitate it — make them feel it. Present the product/offer as the direct solution. CTA.
-Structure: PAIN POINT → AGITATE → SOLUTION REVEAL → PROOF/BENEFIT → CTA`,
+Structure: STORY HOOK to TENSION/STRUGGLE to TURNING POINT to LESSON to CTA`,
+      'problem-solution': `FORMAT: Problem to Solution
+Name the pain clearly and specifically. Agitate it - make them feel it. Present the product/offer as the direct solution. CTA.
+Structure: PAIN POINT to AGITATE to SOLUTION REVEAL to PROOF/BENEFIT to CTA`,
       'trend-challenge': `FORMAT: Trend & Challenge
 High energy. Trend-aware. Designed to be shared, dueted, or stitched. Bold confident energy. Speak directly to the viewer.
-Structure: BOLD TREND HOOK → RELATABLE PROBLEM → SOLUTION TEASE → COMMUNITY CTA`,
+Structure: BOLD TREND HOOK to RELATABLE PROBLEM to SOLUTION TEASE to COMMUNITY CTA`,
       'results-first': `FORMAT: Results First
-Lead with the transformation or result BEFORE explaining anything. Then reverse engineer — show how they can get there.
-Structure: RESULT/TRANSFORMATION REVEAL → "Here's how I did it" → STEPS/PROCESS → CTA`,
+Lead with the transformation or result BEFORE explaining anything. Then reverse engineer - show how they can get there.
+Structure: RESULT/TRANSFORMATION REVEAL to "Here's how I did it" to STEPS/PROCESS to CTA`,
       'faith-purpose': `FORMAT: Faith & Purpose
 Open with a scripture, faith statement or purpose-driven question. Connect it to the transformation your product creates. Close with a faith-aligned, purpose-driven CTA.
-Structure: SCRIPTURE/PURPOSE HOOK → FAITH CONTEXT → PRODUCT AS CALLING → PURPOSE CTA`,
+Structure: SCRIPTURE/PURPOSE HOOK to FAITH CONTEXT to PRODUCT AS CALLING to PURPOSE CTA`,
       'threads': 'Threads format',
       'twitter-thread': 'Twitter thread format',
     };

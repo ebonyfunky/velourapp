@@ -10,19 +10,19 @@ interface Step6Props {
 }
 
 const TIMEZONES = [
-  { value: 'America/New_York', label: 'Eastern Time (EST) — UTC-5' },
-  { value: 'America/Chicago', label: 'Central Time (CST) — UTC-6' },
-  { value: 'America/Denver', label: 'Mountain Time (MST) — UTC-7' },
-  { value: 'America/Los_Angeles', label: 'Pacific Time (PST) — UTC-8' },
-  { value: 'Europe/London', label: 'London (GMT/BST) — UTC+0/+1' },
-  { value: 'Africa/Lagos', label: 'Lagos (WAT) — UTC+1' },
-  { value: 'Africa/Nairobi', label: 'Nairobi (EAT) — UTC+3' },
-  { value: 'Africa/Johannesburg', label: 'Johannesburg (SAST) — UTC+2' },
-  { value: 'Africa/Accra', label: 'Accra (GMT) — UTC+0' },
-  { value: 'Asia/Dubai', label: 'Dubai (GST) — UTC+4' },
-  { value: 'Asia/Kolkata', label: 'India (IST) — UTC+5:30' },
-  { value: 'Asia/Singapore', label: 'Singapore (SGT) — UTC+8' },
-  { value: 'Australia/Sydney', label: 'Sydney (AEST) — UTC+10' },
+  { value: 'America/New_York', label: 'Eastern Time (EST) - UTC-5' },
+  { value: 'America/Chicago', label: 'Central Time (CST) - UTC-6' },
+  { value: 'America/Denver', label: 'Mountain Time (MST) - UTC-7' },
+  { value: 'America/Los_Angeles', label: 'Pacific Time (PST) - UTC-8' },
+  { value: 'Europe/London', label: 'London (GMT/BST) - UTC+0/+1' },
+  { value: 'Africa/Lagos', label: 'Lagos (WAT) - UTC+1' },
+  { value: 'Africa/Nairobi', label: 'Nairobi (EAT) - UTC+3' },
+  { value: 'Africa/Johannesburg', label: 'Johannesburg (SAST) - UTC+2' },
+  { value: 'Africa/Accra', label: 'Accra (GMT) - UTC+0' },
+  { value: 'Asia/Dubai', label: 'Dubai (GST) - UTC+4' },
+  { value: 'Asia/Kolkata', label: 'India (IST) - UTC+5:30' },
+  { value: 'Asia/Singapore', label: 'Singapore (SGT) - UTC+8' },
+  { value: 'Australia/Sydney', label: 'Sydney (AEST) - UTC+10' },
   { value: 'auto', label: 'Auto-detect from browser' },
 ];
 

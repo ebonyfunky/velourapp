@@ -17,8 +17,8 @@ export default function Step7({ onNext, onBack }: Step7Props) {
 
     console.log('Store state:', store);
 
-    const divider = '═'.repeat(50);
-    const thinDivider = '─'.repeat(50);
+    const divider = '='.repeat(50);
+    const thinDivider = '-'.repeat(50);
 
     const safeArray = (val: any) => Array.isArray(val) ? val : [];
 
@@ -52,7 +52,7 @@ export default function Step7({ onNext, onBack }: Step7Props) {
     const formatLabels: Record<string, string> = {
       'hook-and-sell': 'Hook & Sell',
       'story-led': 'Story-Led',
-      'problem-solution': 'Problem → Solution',
+      'problem-solution': 'Problem to Solution',
       'trend-challenge': 'Trend & Challenge',
       'results-first': 'Results First',
       'faith-purpose': 'Faith & Purpose',
@@ -61,7 +61,7 @@ export default function Step7({ onNext, onBack }: Step7Props) {
 
     const content = `
 ${divider}
-VELOUR — CAMPAIGN PACK
+VELOUR - CAMPAIGN PACK
 Where Creators Become Empires
 ${divider}
 
@@ -77,45 +77,45 @@ GENERATED: ${new Date().toLocaleDateString(
     )}
 
 ${divider}
-SECTION 1 — CAMPAIGN IDENTITY
+SECTION 1 - CAMPAIGN IDENTITY
 ${divider}
 
-Brand Name: ${store.brandName || '—'}
-Creator Name: ${store.creatorName || '—'}
-Content Category: ${categoryLabels[store.contentCategory] || store.contentCategory || '—'}
-Target Platforms: ${safeArray(store.platformTargets).join(', ') || '—'}
-Campaign Goals: ${safeArray(store.campaignGoals).join(', ') || '—'}
+Brand Name: ${store.brandName || '-'}
+Creator Name: ${store.creatorName || '-'}
+Content Category: ${categoryLabels[store.contentCategory] || store.contentCategory || '-'}
+Target Platforms: ${safeArray(store.platformTargets).join(', ') || '-'}
+Campaign Goals: ${safeArray(store.campaignGoals).join(', ') || '-'}
 Content Language: ${store.contentLanguage || 'English'}
 Content Mode: ${store.contentMode === 'real-face'
       ? 'Real Face (Direct to Camera)'
       : store.contentMode === 'ai-twin'
       ? 'AI Twin (Faceless)'
-      : '—'}
+      : '-'}
 
 ${divider}
-SECTION 2 — PERFECT AUDIENCE AVATAR
+SECTION 2 - PERFECT AUDIENCE AVATAR
 ${divider}
 
 YOUR AVATAR:
-${store.avatarRealPerson || '—'}
+${store.avatarRealPerson || '-'}
 
 THEIR INNER WORLD:
-→ Currently: ${store.avatarCurrently || '—'}
-→ They feel: ${store.avatarFeels || '—'}
-→ Frustrated by: ${store.avatarFrustratedBy || '—'}
-→ Already tried: ${store.avatarAlreadyTried || '—'}
-→ Biggest fear: ${store.avatarBiggestFear || '—'}
-→ Secret hope: ${store.avatarSecretHope || '—'}
+- Currently: ${store.avatarCurrently || '-'}
+- They feel: ${store.avatarFeels || '-'}
+- Frustrated by: ${store.avatarFrustratedBy || '-'}
+- Already tried: ${store.avatarAlreadyTried || '-'}
+- Biggest fear: ${store.avatarBiggestFear || '-'}
+- Secret hope: ${store.avatarSecretHope || '-'}
 
 THEIR VOICE:
-"${store.avatarVoice || '—'}"
+"${store.avatarVoice || '-'}"
 
 YOUR CONTENT FILTER:
 "I help people who feel ${store.avatarFeelBlank || '___'}
 because they want ${store.avatarWantBlank || '___'}
 but they're tired of ${store.avatarTiredOfBlank || '___'}"
 
-SCROLL TEST — Before every post ask:
+SCROLL TEST - Before every post ask:
 "Would THIS version of me stop scrolling for this?"
 
 ${thinDivider}
@@ -124,36 +124,36 @@ This is your messaging anchor.
 Every piece of content must pass the scroll test.
 
 ${divider}
-SECTION 3 — PRODUCT & OFFER
+SECTION 3 - PRODUCT & OFFER
 ${divider}
 
-Product Name: ${store.productName || '—'}
-Product Type: ${store.productType || '—'}
-Price: ${store.currency || '$'}${store.pricePoint || '—'}
+Product Name: ${store.productName || '-'}
+Product Type: ${store.productType || '-'}
+Price: ${store.currency || '$'}${store.pricePoint || '-'}
 
 Key Benefits:
-${safeArray(store.benefits).filter(Boolean).map(b => `  • ${b}`).join('\n') || '  —'}
+${safeArray(store.benefits).filter(Boolean).map(b => `  - ${b}`).join('\n') || '  -'}
 
-Unique Selling Point: ${store.usp || '—'}
-Target Audience: ${store.targetAudience || '—'}
-Pain Point: ${store.painPoint || '—'}
-Desired Outcome: ${store.desiredOutcome || '—'}
-
-${divider}
-SECTION 4 — SCENE DIRECTION
-${divider}
-
-Scene Type: ${store.sceneType || '—'}
-Lighting Mood: ${safeArray(store.lightingMood).join(', ') || '—'}
-Outfit Vibe: ${safeArray(store.outfitVibe).join(', ') || '—'}
+Unique Selling Point: ${store.usp || '-'}
+Target Audience: ${store.targetAudience || '-'}
+Pain Point: ${store.painPoint || '-'}
+Desired Outcome: ${store.desiredOutcome || '-'}
 
 ${divider}
-SECTION 5 — GENERATED SCRIPTS
+SECTION 4 - SCENE DIRECTION
 ${divider}
 
-Script Format: ${formatLabels[store.scriptFormat] || store.scriptFormat || '—'}
-Content Style: ${store.contentStyle || '—'}
-Selected CTA: ${store.selectedCTA || '—'}
+Scene Type: ${store.sceneType || '-'}
+Lighting Mood: ${safeArray(store.lightingMood).join(', ') || '-'}
+Outfit Vibe: ${safeArray(store.outfitVibe).join(', ') || '-'}
+
+${divider}
+SECTION 5 - GENERATED SCRIPTS
+${divider}
+
+Script Format: ${formatLabels[store.scriptFormat] || store.scriptFormat || '-'}
+Content Style: ${store.contentStyle || '-'}
+Selected CTA: ${store.selectedCTA || '-'}
 
 ${thinDivider}
 ${store.generatedScripts && store.generatedScripts.length > 0
@@ -163,7 +163,7 @@ ${store.generatedScripts && store.generatedScripts.length > 0
       : 'No scripts generated yet.\nGo to Step 5 and click Generate first.'}
 
 ${divider}
-SECTION 6 — LIVE SHOW SCRIPT
+SECTION 6 - LIVE SHOW SCRIPT
 ${divider}
 
 ${store.liveScript
@@ -171,12 +171,12 @@ ${store.liveScript
       : 'No Live script generated yet.\nGo to the Live Show Planner and click Generate.'}
 
 ${divider}
-SECTION 7 — CONTENT CALENDAR
+SECTION 7 - CONTENT CALENDAR
 ${divider}
 
-Start Date: ${store.startDate || '—'}
-Campaign Duration: ${store.campaignDuration || '—'}
-Posting Frequency: ${store.postsPerWeek || '—'} posts/week
+Start Date: ${store.startDate || '-'}
+Campaign Duration: ${store.campaignDuration || '-'}
+Posting Frequency: ${store.postsPerWeek || '-'} posts/week
 Timezone: ${store.timezone || 'EST'}
 
 ${thinDivider}
@@ -188,10 +188,10 @@ POSTING TIPS:
 - The algorithm rewards consistency
 
 ${divider}
-SECTION 8 — BRAND PITCH EMAIL TEMPLATE
+SECTION 8 - BRAND PITCH EMAIL TEMPLATE
 ${divider}
 
-SUBJECT: ${store.creatorName || 'Creator'} x [Brand Name] — UGC Collaboration Opportunity
+SUBJECT: ${store.creatorName || 'Creator'} x [Brand Name] - UGC Collaboration Opportunity
 
 Hi [Brand Name] team,
 
@@ -199,7 +199,7 @@ My name is ${store.creatorName || '[Your Name]'} and I specialise in creating ${
 
 I create authentic, scroll-stopping content for ${safeArray(store.platformTargets).join(' and ') || 'social media'} that drives real engagement and conversions.
 
-I'd love to explore a UGC collaboration with your brand — creating videos that speak directly to your ideal customer in a genuine, relatable way.
+I'd love to explore a UGC collaboration with your brand - creating videos that speak directly to your ideal customer in a genuine, relatable way.
 
 Would you be open to a quick chat or for me to send over my media kit?
 
@@ -211,28 +211,28 @@ ${safeArray(store.platformTargets).map(p => `@${(store.creatorName || 'creator')
 ${store.creatorName || '[Your Name]'}
 
 ${divider}
-SECTION 9 — UGC STARTER KIT
+SECTION 9 - UGC STARTER KIT
 ${divider}
 
 YOUR UGC NICHE:
 ${(() => {
   try {
     const parsed = JSON.parse(store.ugcNicheResult || '{}');
-    return parsed.niche || '—';
+    return parsed.niche || '-';
   } catch {
-    return '—';
+    return '-';
   }
 })()}
 
 YOUR RATES:
-─────────────────────────────────────
-15-30 sec video:    ${store.ugcExperience === 'beginner' ? '$150' : store.ugcExperience === 'intermediate' ? '$250' : store.ugcExperience === 'experienced' ? '$400' : '$—'}
-30-60 sec video:    ${store.ugcExperience === 'beginner' ? '$250' : store.ugcExperience === 'intermediate' ? '$400' : store.ugcExperience === 'experienced' ? '$650' : '$—'}
-60-90 sec video:    ${store.ugcExperience === 'beginner' ? '$350' : store.ugcExperience === 'intermediate' ? '$550' : store.ugcExperience === 'experienced' ? '$900' : '$—'}
-Photo pack (5):     ${store.ugcExperience === 'beginner' ? '$100' : store.ugcExperience === 'intermediate' ? '$200' : store.ugcExperience === 'experienced' ? '$350' : '$—'}
-─────────────────────────────────────
+${thinDivider}
+15-30 sec video:    ${store.ugcExperience === 'beginner' ? '$150' : store.ugcExperience === 'intermediate' ? '$250' : store.ugcExperience === 'experienced' ? '$400' : '$-'}
+30-60 sec video:    ${store.ugcExperience === 'beginner' ? '$250' : store.ugcExperience === 'intermediate' ? '$400' : store.ugcExperience === 'experienced' ? '$650' : '$-'}
+60-90 sec video:    ${store.ugcExperience === 'beginner' ? '$350' : store.ugcExperience === 'intermediate' ? '$550' : store.ugcExperience === 'experienced' ? '$900' : '$-'}
+Photo pack (5):     ${store.ugcExperience === 'beginner' ? '$100' : store.ugcExperience === 'intermediate' ? '$200' : store.ugcExperience === 'experienced' ? '$350' : '$-'}
+${thinDivider}
 Add-ons:
-${safeArray(store.ugcAddOns).map(a => '• ' + a).join('\n') || '• None selected'}
+${safeArray(store.ugcAddOns).map(a => '- ' + a).join('\n') || '- None selected'}
 
 PORTFOLIO CHECKLIST:
 Unboxing Review video (30-60 sec)
@@ -270,7 +270,7 @@ That is it.
 ${divider}
 
 ${divider}
-SECTION 10 — FILMING CHECKLIST
+SECTION 10 - FILMING CHECKLIST
 ${divider}
 
 BEFORE YOU FILM:
@@ -291,7 +291,7 @@ Reply to every comment within 1 hour
 DM anyone who comments with a question
 
 ${divider}
-SECTION 10 — WEEKLY GROWTH ACTIONS
+SECTION 10 - WEEKLY GROWTH ACTIONS
 ${divider}
 
 Post 3x minimum using your scripts
@@ -309,7 +309,7 @@ Every comment is a relationship.
 Every view is a potential customer.
 
 ${divider}
-VELOUR — WHERE CREATORS BECOME EMPIRES
+VELOUR - WHERE CREATORS BECOME EMPIRES
 velour-app.com
 ${divider}
 `.trim();
@@ -425,7 +425,7 @@ ${divider}
             Live Show Planner
           </h3>
           <p className="text-[13px] text-text-dim mb-6">
-            Never freeze on a Live again — know exactly what to say from open to close
+            Never freeze on a Live again - know exactly what to say from open to close
           </p>
 
           <button
@@ -492,7 +492,7 @@ ${divider}
                   style={{ color: '#f0ebff', fontSize: '13px', whiteSpace: 'pre-wrap', lineHeight: '1.8' }}
                   dangerouslySetInnerHTML={{
                     __html: liveScript
-                      .replace(/PART \d+ — [^\n]+/g, (match) =>
+                      .replace(/PART \d+ - [^\n]+/g, (match) =>
                         `<div style="color: #e8c96a; font-weight: 700; font-size: 13px; border-bottom: 1px solid rgba(201,168,76,0.2); margin-bottom: 8px; padding-bottom: 4px; margin-top: 16px;">${match}</div>`
                       )
                       .replace(/\[READ COMMENTS\]/g, '<span style="color: #4ade80; font-style: italic; font-size: 11px;">[READ COMMENTS]</span>')
@@ -622,7 +622,7 @@ ${divider}
             lineHeight: 1.8,
           }}
         >
-          Velour is built for creators everywhere — Nigeria, UK, USA, Canada, Ghana, Kenya, South Africa, Jamaica,
+          Velour is built for creators everywhere - Nigeria, UK, USA, Canada, Ghana, Kenya, South Africa, Jamaica,
           Philippines, India and beyond. Your story deserves to be heard. Your empire starts here.
         </p>
       </div>

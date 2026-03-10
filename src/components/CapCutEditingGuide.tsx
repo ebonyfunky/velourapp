@@ -18,69 +18,69 @@ const CHECKLIST_ITEMS = [
 const CHECKLIST_LABELS = {
   'trim-dead-air': 'Trimmed all dead air at the start and end of the video',
   'cut-pauses': 'Cut out any umms, pauses or mistakes between lines',
-  'add-captions': 'Added captions or subtitles — 85% of viewers watch with sound off',
+  'add-captions': 'Added captions or subtitles - 85% of viewers watch with sound off',
   'add-music': 'Added background music at low volume (10-15%) so it does not overpower your voice',
-  'colour-graded': 'Colour graded — used a filter or adjusted brightness and contrast slightly',
+  'colour-graded': 'Colour graded - used a filter or adjusted brightness and contrast slightly',
   'export-1080p': 'Video is exported in 1080p or higher',
   'vertical-format': 'Video is in vertical format 9:16',
   'product-visible': 'Product is visible and in focus in the first 3 seconds',
   'text-overlays': 'Text overlays added to reinforce key points if needed',
-  'no-watermark': 'Final export has no watermark — use CapCut\'s no-watermark export option',
+  'no-watermark': 'Final export has no watermark - use CapCut\'s no-watermark export option',
 };
 
 const EDITING_STEPS = [
   {
     id: 'import',
-    title: 'Step 1 — Import your footage',
+    title: 'Step 1 - Import your footage',
     content: 'Open CapCut and tap New Project. Select all the clips you filmed for this video. CapCut will arrange them in order on the timeline at the bottom.',
   },
   {
     id: 'trim',
-    title: 'Step 2 — Trim and cut',
+    title: 'Step 2 - Trim and cut',
     content: 'Tap each clip on the timeline to select it. Use the white handles on either side to trim the start and end. To cut out a section in the middle tap Split, move to the end of the section, tap Split again, then tap the section between the two cuts and delete it.',
   },
   {
     id: 'captions',
-    title: 'Step 3 — Add auto captions',
+    title: 'Step 3 - Add auto captions',
     content: 'Tap Text at the bottom then tap Auto Captions. CapCut will automatically transcribe everything you said and add captions to your video. Review them for any errors. This is one of the most powerful things you can do for engagement.',
-    tip: 'Auto captions can add up to 40% more watch time to your videos — always use them.',
+    tip: 'Auto captions can add up to 40% more watch time to your videos - always use them.',
   },
   {
     id: 'music',
-    title: 'Step 4 — Add background music',
+    title: 'Step 4 - Add background music',
     content: 'Tap Audio then tap Sounds. Search for royalty free music that matches your content style. Set the volume to between 10-15% so it sits beneath your voice without competing with it.',
   },
   {
     id: 'color',
-    title: 'Step 5 — Colour grade your video',
-    content: 'Tap Filter and choose a subtle clean filter — avoid anything too heavy or dramatic. Then tap Adjust and slightly increase the brightness by 5-10 points and the contrast by 5 points. This makes your video look more professional without looking over-edited.',
+    title: 'Step 5 - Colour grade your video',
+    content: 'Tap Filter and choose a subtle clean filter - avoid anything too heavy or dramatic. Then tap Adjust and slightly increase the brightness by 5-10 points and the contrast by 5 points. This makes your video look more professional without looking over-edited.',
   },
   {
     id: 'text',
-    title: 'Step 6 — Add text overlays',
-    content: 'Tap Text then tap Add Text. Use text to reinforce your hook at the start or your key benefit in the middle of the video. Keep it short — 3-5 words maximum per text overlay. Choose a clean readable font.',
+    title: 'Step 6 - Add text overlays',
+    content: 'Tap Text then tap Add Text. Use text to reinforce your hook at the start or your key benefit in the middle of the video. Keep it short - 3-5 words maximum per text overlay. Choose a clean readable font.',
   },
   {
     id: 'transitions',
-    title: 'Step 7 — Add transitions (use sparingly)',
-    content: 'Tap the small white square between two clips on the timeline to add a transition. Use Basic transitions only — Cut or Dissolve. Never use flashy dramatic transitions in UGC content. Clean and natural always wins.',
+    title: 'Step 7 - Add transitions (use sparingly)',
+    content: 'Tap the small white square between two clips on the timeline to add a transition. Use Basic transitions only - Cut or Dissolve. Never use flashy dramatic transitions in UGC content. Clean and natural always wins.',
   },
   {
     id: 'export',
-    title: 'Step 8 — Export without watermark',
-    content: 'Tap the export arrow in the top right. Make sure resolution is set to 1080p and frame rate is 30fps. CapCut exports without a watermark automatically — you do not need to pay for anything.',
+    title: 'Step 8 - Export without watermark',
+    content: 'Tap the export arrow in the top right. Make sure resolution is set to 1080p and frame rate is 30fps. CapCut exports without a watermark automatically - you do not need to pay for anything.',
   },
 ];
 
 const VIDEO_TYPE_TIPS: Record<string, string> = {
-  'Unboxing Video': 'Cut between each item reveal — do not film one long take. Add a zoom effect when revealing the hero product. Use text overlay at the start: the product name and your first reaction word.',
-  'Testimonial Video': 'Cut out any pauses longer than half a second. Add captions — testimonials live and die by how clear the message is. Use a clean minimal filter — you want the focus on your face not the edit.',
+  'Unboxing Video': 'Cut between each item reveal - do not film one long take. Add a zoom effect when revealing the hero product. Use text overlay at the start: the product name and your first reaction word.',
+  'Testimonial Video': 'Cut out any pauses longer than half a second. Add captions - testimonials live and die by how clear the message is. Use a clean minimal filter - you want the focus on your face not the edit.',
   'Tutorial & How-To': 'Use text overlays to number each step: Step 1, Step 2 etc. Speed up any waiting time during application. Add a before and after side by side at the end using CapCut\'s split screen feature.',
   'Before & After Transformation': 'Use CapCut\'s split screen feature to show before and after side by side. Add a transition between the before and after sections. Text overlay: "Before" on the left and "After" on the right.',
-  'Voiceover Ad': 'Record your voiceover inside CapCut using the Voiceover feature under Audio. Match your product shots to the rhythm of your voiceover — cut on the beat. Use text overlays to reinforce every key point you say.',
-  'Text on Screen Ad': 'Use CapCut\'s Text Animate feature to make each line appear with a clean fade or typewriter effect. Time each text line to stay on screen for at least 2 seconds. Use a consistent font throughout — do not mix font styles. Add subtle background music at 10% volume.',
+  'Voiceover Ad': 'Record your voiceover inside CapCut using the Voiceover feature under Audio. Match your product shots to the rhythm of your voiceover - cut on the beat. Use text overlays to reinforce every key point you say.',
+  'Text on Screen Ad': 'Use CapCut\'s Text Animate feature to make each line appear with a clean fade or typewriter effect. Time each text line to stay on screen for at least 2 seconds. Use a consistent font throughout - do not mix font styles. Add subtle background music at 10% volume.',
   'Get Ready With Me': 'Use CapCut\'s speed feature to speed up the getting ready sections between talking to camera moments. Add trending audio as background music. Text overlays for each product you feature.',
-  'Mini Commercial': 'Use CapCut\'s keyframe feature to create smooth zoom effects on the product. Match every cut to the beat of your background music. Colour grade more intentionally — mini commercials benefit from a stronger visual style.',
+  'Mini Commercial': 'Use CapCut\'s keyframe feature to create smooth zoom effects on the product. Match every cut to the beat of your background music. Colour grade more intentionally - mini commercials benefit from a stronger visual style.',
 };
 
 export default function CapCutEditingGuide() {
@@ -122,7 +122,7 @@ export default function CapCutEditingGuide() {
         }}
       >
         <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '32px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-          Edit Your Videos With CapCut — Free & Beginner Friendly
+          Edit Your Videos With CapCut - Free & Beginner Friendly
         </h2>
         <p style={{ fontSize: '14px', color: '#9b8fb5', marginBottom: '24px', lineHeight: '1.6' }}>
           Filming is only half the job. How you edit your video is what makes brands stop scrolling. CapCut is free, powerful and used by the world's top UGC creators.
@@ -169,16 +169,16 @@ export default function CapCutEditingGuide() {
               marginLeft: '16px',
             }}
           >
-            Download CapCut Free →
+            Download CapCut Free
           </a>
         </div>
 
         <div style={{ marginBottom: '32px' }}>
           <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#f0ebff', marginBottom: '8px' }}>
-            Section A — CapCut Editing Checklist For Every UGC Video
+            Section A - CapCut Editing Checklist For Every UGC Video
           </h3>
           <p style={{ fontSize: '13px', color: '#9b8fb5', marginBottom: '16px' }}>
-            Before you export — check every one of these
+            Before you export - check every one of these
           </p>
 
           <div
@@ -264,7 +264,7 @@ export default function CapCutEditingGuide() {
 
         <div style={{ marginBottom: '32px' }}>
           <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#f0ebff', marginBottom: '8px' }}>
-            Section B — CapCut Step By Step For UGC Beginners
+            Section B - CapCut Step By Step For UGC Beginners
           </h3>
           <p style={{ fontSize: '13px', color: '#9b8fb5', marginBottom: '16px' }}>
             New to CapCut? Start here
@@ -336,7 +336,7 @@ export default function CapCutEditingGuide() {
 
         <div style={{ marginBottom: '32px' }}>
           <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#f0ebff', marginBottom: '8px' }}>
-            Section C — CapCut Editing Tips Specific To Each Video Type
+            Section C - CapCut Editing Tips Specific To Each Video Type
           </h3>
           <p style={{ fontSize: '13px', color: '#9b8fb5', marginBottom: '16px' }}>
             Editing tips for your video type
@@ -390,7 +390,7 @@ export default function CapCutEditingGuide() {
 
         <div>
           <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#f0ebff', marginBottom: '8px' }}>
-            Section D — CapCut Resources
+            Section D - CapCut Resources
           </h3>
           <p style={{ fontSize: '13px', color: '#9b8fb5', marginBottom: '16px' }}>
             Learn more about CapCut
@@ -430,7 +430,7 @@ export default function CapCutEditingGuide() {
                   textDecoration: 'none',
                 }}
               >
-                Download CapCut →
+                Download CapCut
               </a>
             </div>
 
@@ -446,7 +446,7 @@ export default function CapCutEditingGuide() {
                 CapCut Tutorial Library
               </div>
               <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.5', margin: 0 }}>
-                Free video tutorials inside the CapCut app — tap the Learn tab after downloading
+                Free video tutorials inside the CapCut app - tap the Learn tab after downloading
               </p>
             </div>
 
@@ -462,7 +462,7 @@ export default function CapCutEditingGuide() {
                 CapCut Templates
               </div>
               <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.5', margin: 0 }}>
-                Browse thousands of trending UGC video templates — tap Templates inside the app to find styles that match your content
+                Browse thousands of trending UGC video templates - tap Templates inside the app to find styles that match your content
               </p>
             </div>
           </div>

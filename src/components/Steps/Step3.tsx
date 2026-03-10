@@ -55,7 +55,7 @@ export default function Step3({ onNext, onBack }: Step3Props) {
           overflow: 'visible',
         }}
       >
-        Choose your vibe and persona — this shapes how your content looks and sounds across all scripts.
+        Choose your vibe and persona - this shapes how your content looks and sounds across all scripts.
       </p>
 
       <div className="space-y-8">
@@ -83,7 +83,7 @@ export default function Step3({ onNext, onBack }: Step3Props) {
               overflow: 'visible',
             }}
           >
-            This sets the visual direction for your filming — lighting, background, and overall aesthetic.
+            This sets the visual direction for your filming - lighting, background, and overall aesthetic.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '12px' }}>
             {VIBE_OPTIONS.map((vibe) => (
@@ -187,7 +187,7 @@ export default function Step3({ onNext, onBack }: Step3Props) {
               overflow: 'visible',
             }}
           >
-            This defines your tone and delivery style — how you communicate and connect with your audience.
+            This defines your tone and delivery style - how you communicate and connect with your audience.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '12px' }}>
             {PERSONA_OPTIONS.map((persona) => (

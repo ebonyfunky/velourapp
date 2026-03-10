@@ -9,7 +9,7 @@ interface Step1Props {
 
 const categoryGroups = [
   {
-    label: '── DIGITAL PRODUCTS ──',
+    label: '-- DIGITAL PRODUCTS --',
     options: [
       'UGC Creator',
       'Digital Course',
@@ -20,7 +20,7 @@ const categoryGroups = [
     ],
   },
   {
-    label: '── TECH & SOFTWARE ──',
+    label: '-- TECH & SOFTWARE --',
     options: [
       'Technology & Software',
       'SaaS & Apps',
@@ -28,7 +28,7 @@ const categoryGroups = [
     ],
   },
   {
-    label: '── MARKETING ──',
+    label: '-- MARKETING --',
     options: [
       'Affiliate Marketing',
       'TikTok Shop',
@@ -36,7 +36,7 @@ const categoryGroups = [
     ],
   },
   {
-    label: '── LIFESTYLE ──',
+    label: '-- LIFESTYLE --',
     options: [
       'Fitness & Wellness',
       'Lifestyle & Travel',
@@ -45,7 +45,7 @@ const categoryGroups = [
     ],
   },
   {
-    label: '── FAITH & MINISTRY ──',
+    label: '-- FAITH & MINISTRY --',
     options: [
       'Faith & Ministry',
       'Church / Religious Organisation',
@@ -55,7 +55,7 @@ const categoryGroups = [
     ],
   },
   {
-    label: '── OTHER ──',
+    label: '-- OTHER --',
     options: [
       'Physical Product',
       'Personal Brand',
@@ -270,7 +270,7 @@ export default function Step1({ onNext }: Step1Props) {
             <label className="input-label mb-0">Content Language</label>
           </div>
           <p className="text-[12px] text-text-dim mb-4 italic">
-            Scripts generated in your language — not translated, natively written
+            Scripts generated in your language - not translated, natively written
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px', width: '100%', marginBottom: '16px' }}>
@@ -328,7 +328,7 @@ export default function Step1({ onNext }: Step1Props) {
               color: '#b8aed0',
             }}
           >
-            Velour supports 50+ languages — your scripts, hooks and CTAs will be generated in your chosen language by Claude AI. For best results with African languages, select from the featured options above.
+            Velour supports 50+ languages - your scripts, hooks and CTAs will be generated in your chosen language by Claude AI. For best results with African languages, select from the featured options above.
           </div>
         </div>
 
@@ -420,7 +420,7 @@ export default function Step1({ onNext }: Step1Props) {
               >
                 <AlertCircle className="w-4 h-4 text-gold-light flex-shrink-0" />
                 <p className="text-sm text-gold-light font-medium">
-                  Max 3 goals — deselect one to change.
+                  Max 3 goals - deselect one to change.
                 </p>
               </motion.div>
             )}

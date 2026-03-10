@@ -79,7 +79,7 @@ const SOCIAL_PLATFORMS = [
     description: 'One of the most underused places to find UGC work. Brands and agencies post paid opportunities daily.',
     strategies: [
       'Join r/UGCcreators and r/UGCforBrands',
-      'Search "UGC creator needed" and "paid UGC" — filter by New',
+      'Search "UGC creator needed" and "paid UGC" - filter by New',
       'Post your own introduction in r/UGCcreators with your niche and portfolio link'
     ]
   },
@@ -99,16 +99,16 @@ const SOCIAL_PLATFORMS = [
     description: 'DM brands directly. Small to mid size brands respond more than you think.',
     strategies: [
       'Search hashtags like #[yourniche]brand and #smallbusiness[niche]',
-      'Look for brands with 5k-50k followers — they are actively growing and need content',
+      'Look for brands with 5k-50k followers - they are actively growing and need content',
       'Check their bio for a contact or partnerships email and pitch there first'
     ]
   },
   {
     id: 'tiktok',
     name: 'TikTok',
-    description: 'Search your niche plus the word brand or small business. Follow brands that already post UGC style content — they are already buying.',
+    description: 'Search your niche plus the word brand or small business. Follow brands that already post UGC style content - they are already buying.',
     strategies: [
-      'Go to TikTok Creator Marketplace — free to join, brands post open campaigns',
+      'Go to TikTok Creator Marketplace - free to join, brands post open campaigns',
       'Search [your niche] + brand or [product type] + small business',
       'Check bios for collaboration emails'
     ]
@@ -116,11 +116,11 @@ const SOCIAL_PLATFORMS = [
   {
     id: 'linkedin',
     name: 'LinkedIn & Twitter/X',
-    description: 'Brands post UGC briefs here too — especially agencies and marketing managers.',
+    description: 'Brands post UGC briefs here too - especially agencies and marketing managers.',
     strategies: [
       'Follow these accounts on Twitter/X for daily UGC job postings: UGC SHOP, UGC Opportunities, Ugcsparkworks, UGC Jobs, UGC Network, Media Engineered, UGC Connect',
       'Search "UGC creator" on LinkedIn and filter by Jobs',
-      'Use ZipRecruiter and Indeed — search "UGC content creator" for paid remote opportunities'
+      'Use ZipRecruiter and Indeed - search "UGC content creator" for paid remote opportunities'
     ]
   }
 ];
@@ -157,13 +157,13 @@ const PITCH_TEMPLATES = [
   {
     id: 'cold-email',
     label: 'Cold Email Pitch',
-    template: `Subject: UGC Creator — [Your Niche] Content For [Brand Name]
+    template: `Subject: UGC Creator - [Your Niche] Content For [Brand Name]
 
 Hi [Brand Name] team,
 
 I am a [niche] UGC creator who makes [content style] content for brands like yours. I have been using [product or product type] for a while now and genuinely love what you are doing.
 
-I would love to create a short video for [Brand Name] — the kind of authentic content that works in feeds, stories and paid ads.
+I would love to create a short video for [Brand Name] - the kind of authentic content that works in feeds, stories and paid ads.
 
 My portfolio is here: [portfolio link]
 My rates start from [rate].
@@ -181,13 +181,13 @@ Would you be open to a quick chat?
   {
     id: 'follow-up',
     label: 'Follow Up Email (sent 5-7 days after no response)',
-    template: `Subject: Following Up — UGC Content For [Brand Name]
+    template: `Subject: Following Up - UGC Content For [Brand Name]
 
 Hi [Brand Name] team,
 
 I wanted to follow up on my message from last week about creating UGC content for [Brand Name].
 
-I know inboxes get busy — just wanted to make sure this did not get lost. My portfolio is here: [portfolio link] if you would like to take a look.
+I know inboxes get busy - just wanted to make sure this did not get lost. My portfolio is here: [portfolio link] if you would like to take a look.
 
 Happy to work around your timeline and current campaigns.
 
@@ -196,7 +196,7 @@ Happy to work around your timeline and current campaigns.
   {
     id: 'tiktok-shop',
     label: 'TikTok Shop Pitch',
-    template: `Hi [Brand Name] team — I am a TikTok Shop affiliate creator in the [niche] space. I have been featuring products similar to yours and would love to add [Brand Name] to my shop showcase. Here is my portfolio of recent content: [link]. Let me know if you would like to discuss rates or a gifting arrangement.`
+    template: `Hi [Brand Name] team - I am a TikTok Shop affiliate creator in the [niche] space. I have been featuring products similar to yours and would love to add [Brand Name] to my shop showcase. Here is my portfolio of recent content: [link]. Let me know if you would like to discuss rates or a gifting arrangement.`
   },
   {
     id: 'rate-card',
@@ -235,23 +235,23 @@ const PITCH_PRINCIPLES = [
 const OBJECTION_HANDLERS = [
   {
     objection: 'Your rates are too high',
-    response: 'I completely understand budget considerations. My rates reflect the value of content that is ready to use in paid ads without additional production costs. That said I am happy to discuss a starter package — would a single video at [lower rate] work as a first collaboration?'
+    response: 'I completely understand budget considerations. My rates reflect the value of content that is ready to use in paid ads without additional production costs. That said I am happy to discuss a starter package - would a single video at [lower rate] work as a first collaboration?'
   },
   {
     objection: 'We only work with influencers who have followers',
-    response: 'UGC and influencer content serve different purposes. UGC is bought for its authenticity and ad performance — not for the creator\'s audience size. Brands like [relevant example] use UGC creators specifically because the content converts better in paid ads than influencer content.'
+    response: 'UGC and influencer content serve different purposes. UGC is bought for its authenticity and ad performance - not for the creator\'s audience size. Brands like [relevant example] use UGC creators specifically because the content converts better in paid ads than influencer content.'
   },
   {
     objection: 'We will get back to you',
-    response: 'Of course — I completely understand. I will follow up in a week. In the meantime here is my portfolio link again in case it is helpful for your team\'s review: [link].'
+    response: 'Of course - I completely understand. I will follow up in a week. In the meantime here is my portfolio link again in case it is helpful for your team\'s review: [link].'
   },
   {
     objection: 'Can you send us some free content first?',
-    response: 'I appreciate your interest in working together. I do not create content on a speculative basis but I would love to create something official for [Brand Name]. My starter rate for a single video is [rate] — would that work as a first step?'
+    response: 'I appreciate your interest in working together. I do not create content on a speculative basis but I would love to create something official for [Brand Name]. My starter rate for a single video is [rate] - would that work as a first step?'
   },
   {
     objection: 'We have no budget right now',
-    response: 'I understand — budgets can be tight. If gifting works better for now I am open to discussing a product exchange arrangement for a single piece of content. That way you get to see my work before committing to a paid arrangement.'
+    response: 'I understand - budgets can be tight. If gifting works better for now I am open to discussing a product exchange arrangement for a single piece of content. That way you get to see my work before committing to a paid arrangement.'
   },
 ];
 
@@ -425,7 +425,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
           Four Ways To Find Brand Deals
         </h2>
         <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#9b8fb5', marginBottom: '40px' }}>
-          Start with the platforms — they are the fastest way to land your first deal. Then work through the rest.
+          Start with the platforms - they are the fastest way to land your first deal. Then work through the rest.
         </p>
 
         {/* Group 1: UGC Platforms */}
@@ -627,8 +627,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
                   }}
                 >
                   <ExternalLink size={14} />
-                  Join {server.name.split(' ')[0]} →
-                </button>
+                  Join {server.name.split(' ')[0]}                 </button>
               </div>
             ))}
           </div>
@@ -644,7 +643,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
               fontStyle: 'italic',
             }}
           >
-            To join a Discord server — download the Discord app first, create a free account, then click the join links above.
+            To join a Discord server - download the Discord app first, create a free account, then click the join links above.
           </div>
         </div>
 
@@ -697,7 +696,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
               fontWeight: 600,
             }}
           >
-            The pitch templates for cold outreach are in the section below. Always include your portfolio link — every single time.
+            The pitch templates for cold outreach are in the section below. Always include your portfolio link - every single time.
           </div>
         </div>
       </div>
@@ -864,7 +863,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
             fontFamily: 'Cormorant Garamond, serif',
           }}
         >
-          Now You Know Where They Are — Here Is Exactly What To Say
+          Now You Know Where They Are - Here Is Exactly What To Say
         </h2>
         <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#c9a84c', marginBottom: '32px' }}>
           The pitch that gets a response is not the cleverest one. It is the clearest one. Short, specific and easy to say yes to.
@@ -905,7 +904,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
           }}
         >
           <h3 style={{ fontSize: '22px', fontWeight: 700, color: '#f0ebff', marginBottom: '20px' }}>
-            5 Pitch Templates — Copy and Customize
+            5 Pitch Templates - Copy and Customize
           </h3>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -992,7 +991,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
               What to say when a brand pushes back
             </h2>
             <p style={{ fontSize: '13px', color: '#9b8fb5', margin: 0, fontStyle: 'italic', textAlign: 'left' }}>
-              Most creators give up the moment a brand says no or goes quiet. The ones who close deals know that a pushback is rarely a no — it is a negotiation.
+              Most creators give up the moment a brand says no or goes quiet. The ones who close deals know that a pushback is rarely a no - it is a negotiation.
             </p>
           </div>
           {showObjections ? <ChevronUp size={24} color="#c9a84c" /> : <ChevronDown size={24} color="#c9a84c" />}
@@ -1339,7 +1338,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
                       </div>
                     </td>
                     <td style={{ padding: '16px 12px', fontSize: '13px', color: '#9b8fb5' }}>
-                      {pitch.notes || '—'}
+                      {pitch.notes || '-'}
                     </td>
                     <td style={{ padding: '16px 12px', textAlign: 'center' }}>
                       <button
@@ -1392,8 +1391,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
           }}
         >
           <Target size={20} />
-          I Am Ready To Start Pitching — Go To Action Plan →
-        </button>
+          I Am Ready To Start Pitching - Go To Action Plan         </button>
       </div>
       </div>
       )}

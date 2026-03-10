@@ -17,7 +17,7 @@ export function getFormatBanner(platforms: string[]): FormatBanner | null {
 
   if (hasStories) {
     return {
-      text: 'Stories Format — 9:16 vertical aspect ratio optimised',
+      text: 'Stories Format - 9:16 vertical aspect ratio optimised',
       background: 'rgba(201,168,76,0.08)',
       borderColor: '#c9a84c',
     };
@@ -25,7 +25,7 @@ export function getFormatBanner(platforms: string[]): FormatBanner | null {
 
   if (hasShortForm) {
     return {
-      text: 'Short-Form Video — 9:16 vertical, max 60–90 seconds',
+      text: 'Short-Form Video - 9:16 vertical, max 60-90 seconds',
       background: 'rgba(46,139,87,0.08)',
       borderColor: '#2e8b57',
     };
@@ -33,7 +33,7 @@ export function getFormatBanner(platforms: string[]): FormatBanner | null {
 
   if (hasLongForm) {
     return {
-      text: 'Long-Form Video — 16:9 landscape recommended',
+      text: 'Long-Form Video - 16:9 landscape recommended',
       background: 'rgba(124,58,237,0.08)',
       borderColor: '#7c3aed',
     };
@@ -41,7 +41,7 @@ export function getFormatBanner(platforms: string[]): FormatBanner | null {
 
   if (hasFeed) {
     return {
-      text: 'Feed Content — Square or portrait format, text-first',
+      text: 'Feed Content - Square or portrait format, text-first',
       background: 'rgba(201,168,76,0.08)',
       borderColor: '#c9a84c',
     };
@@ -167,38 +167,38 @@ export const linkedInAngles = [
 ];
 
 export const threadsAngles = [
-  'Hot Takes — Bold opinions that divide the room',
-  'Contrarian — "Everyone says X. Here\'s why they\'re wrong."',
-  'Unpopular Opinion — Opens with "Unpopular opinion:"',
-  'Quick Tips — Fast value in list format',
-  'Behind the Scenes — Raw, unfiltered thoughts',
-  'Story-led — Personal narrative, relatable moment',
+  'Hot Takes - Bold opinions that divide the room',
+  'Contrarian - "Everyone says X. Here\'s why they\'re wrong."',
+  'Unpopular Opinion - Opens with "Unpopular opinion:"',
+  'Quick Tips - Fast value in list format',
+  'Behind the Scenes - Raw, unfiltered thoughts',
+  'Story-led - Personal narrative, relatable moment',
 ];
 
 export const categoryScriptAngles: Record<string, string[]> = {
   'eBook / Digital Download': [
     'This ebook changed how I think about [topic]',
     'I wrote everything I know about [topic] into one guide',
-    'Stop Googling [topic] — I put it all in one place',
-    'The exact framework I used to [result] — now in an ebook',
+    'Stop Googling [topic] - I put it all in one place',
+    'The exact framework I used to [result] - now in an ebook',
   ],
   'Print on Demand': [
     'I designed something and I need your opinion',
     'This is what [niche] people actually wear / use',
     'I made this for people who [identity statement]',
-    'POD unboxing — here\'s how it turned out',
+    'POD unboxing - here\'s how it turned out',
   ],
   'Affiliate Marketing': [
     'I\'ve been using this for [X] weeks and here\'s my honest review',
     'This is the product I wish I found sooner',
     'Nobody talks about this affiliate offer but it\'s paying me every week',
-    'I compared 5 options so you don\'t have to — here\'s the winner',
+    'I compared 5 options so you don\'t have to - here\'s the winner',
   ],
   'TikTok Shop': [
-    'TikTok made me buy it — and I have no regrets',
+    'TikTok made me buy it - and I have no regrets',
     'Honest review after [X] days of using this',
     'I found this on TikTok Shop and it actually works',
-    'Unboxing + first impression — worth it or skip it?',
+    'Unboxing + first impression - worth it or skip it?',
   ],
   'Coaching Program': [
     'What my clients achieve in [X] weeks inside my program',
@@ -209,7 +209,7 @@ export const categoryScriptAngles: Record<string, string[]> = {
   'Faith & Ministry': [
     'This scripture/principle changed how I see [topic]',
     'God placed this message on my heart and I had to share it',
-    'If you\'re going through [struggle] — watch this',
+    'If you\'re going through [struggle] - watch this',
     'The breakthrough you\'ve been praying for starts here',
     'This is what nobody in the church is talking about',
     'I almost gave up until [turning point]',
@@ -221,7 +221,7 @@ export const categoryScriptAngles: Record<string, string[]> = {
   'Church / Religious Organisation': [
     'This scripture/principle changed how I see [topic]',
     'God placed this message on my heart and I had to share it',
-    'If you\'re going through [struggle] — watch this',
+    'If you\'re going through [struggle] - watch this',
     'The breakthrough you\'ve been praying for starts here',
     'This is what nobody in the church is talking about',
     'I almost gave up until [turning point]',
@@ -260,19 +260,19 @@ export const categoryCTAs: Record<string, string[]> = {
   'eBook / Digital Download': [
     'Link in bio to grab your copy',
     'Comment GUIDE and I\'ll send you the link',
-    'Only $[price] — tap the link',
-    'Download it instantly — link in bio',
+    'Only $[price] - tap the link',
+    'Download it instantly - link in bio',
   ],
   'Print on Demand': [
     'Shop the link in bio',
-    'Limited run — grab yours before it\'s gone',
+    'Limited run - grab yours before it\'s gone',
     'Tag someone who needs this',
     'Comment [word] for the link',
   ],
   'Affiliate Marketing': [
-    'Link in bio — my affiliate link gets you [discount/bonus]',
+    'Link in bio - my affiliate link gets you [discount/bonus]',
     'Comment [word] and I\'ll send you my honest review',
-    'This is not sponsored — this is just what actually works',
+    'This is not sponsored - this is just what actually works',
   ],
   'TikTok Shop': [
     'Tap the yellow basket to shop',
@@ -281,9 +281,9 @@ export const categoryCTAs: Record<string, string[]> = {
   ],
   'Coaching Program': [
     'DM me [word] to learn more',
-    'Applications open — link in bio',
+    'Applications open - link in bio',
     'Comment [word] and I\'ll send you the details',
-    'Book a free call — link in bio',
+    'Book a free call - link in bio',
   ],
   'Faith & Ministry': [
     'Share this with someone who needs to hear it today',
@@ -309,7 +309,7 @@ export const categoryCTAs: Record<string, string[]> = {
 
 export const categoryTips: Record<string, string> = {
   'eBook / Digital Download': 'For low-ticket digital products, lead with the transformation not the price. Mention price only in the CTA.',
-  'Print on Demand': 'POD content performs best when it leads with identity — make the viewer feel the product was made specifically for them.',
-  'Faith & Ministry': 'Faith-based content performs best when it leads with the human struggle before the spiritual solution. Meet people where they are — then lift them higher.',
-  'Church / Religious Organisation': 'Faith-based content performs best when it leads with the human struggle before the spiritual solution. Meet people where they are — then lift them higher.',
+  'Print on Demand': 'POD content performs best when it leads with identity - make the viewer feel the product was made specifically for them.',
+  'Faith & Ministry': 'Faith-based content performs best when it leads with the human struggle before the spiritual solution. Meet people where they are - then lift them higher.',
+  'Church / Religious Organisation': 'Faith-based content performs best when it leads with the human struggle before the spiritual solution. Meet people where they are - then lift them higher.',
 };

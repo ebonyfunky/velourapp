@@ -266,7 +266,7 @@ function PortfolioPhotosSection() {
             color: filledPhotosCount >= 5 ? '#22c55e' : '#c9a84c',
           }}
         >
-          Photos: {filledPhotosCount} / 10 — aim for at least 5
+          Photos: {filledPhotosCount} / 10 - aim for at least 5
         </div>
       </div>
 
@@ -430,7 +430,7 @@ function PortfolioVideosSection() {
             color: filledVideosCount >= 5 ? '#22c55e' : '#c9a84c',
           }}
         >
-          Videos: {filledVideosCount} / 10 — aim for at least 5
+          Videos: {filledVideosCount} / 10 - aim for at least 5
         </div>
       </div>
 
@@ -587,27 +587,27 @@ function PortfolioReadinessBanner() {
   let borderColor = '';
 
   if (totalPieces === 0) {
-    message = 'Keep going — brands need to see at least 5 pieces of content to consider hiring you';
+    message = 'Keep going - brands need to see at least 5 pieces of content to consider hiring you';
     color = '#ff6b6b';
     bgColor = 'rgba(255,107,107,0.1)';
     borderColor = 'rgba(255,107,107,0.3)';
   } else if (totalPieces <= 2) {
-    message = 'Keep going — brands need to see at least 5 pieces of content to consider hiring you';
+    message = 'Keep going - brands need to see at least 5 pieces of content to consider hiring you';
     color = '#ff6b6b';
     bgColor = 'rgba(255,107,107,0.1)';
     borderColor = 'rgba(255,107,107,0.3)';
   } else if (totalPieces <= 4) {
-    message = 'Almost there — add a few more pieces to make your portfolio competitive';
+    message = 'Almost there - add a few more pieces to make your portfolio competitive';
     color = '#ffa94d';
     bgColor = 'rgba(255,169,77,0.1)';
     borderColor = 'rgba(255,169,77,0.3)';
   } else if (totalPieces <= 7) {
-    message = 'Good portfolio — you are ready to start reaching out to brands';
+    message = 'Good portfolio - you are ready to start reaching out to brands';
     color = '#c9a84c';
     bgColor = 'rgba(201,168,76,0.1)';
     borderColor = 'rgba(201,168,76,0.3)';
   } else {
-    message = 'Outstanding portfolio — you are ready to pitch any brand with confidence';
+    message = 'Outstanding portfolio - you are ready to pitch any brand with confidence';
     color = '#22c55e';
     bgColor = 'rgba(34,197,94,0.1)';
     borderColor = 'rgba(34,197,94,0.3)';
@@ -945,7 +945,7 @@ export default function PortfolioBuilder() {
             fontFamily: 'Cormorant Garamond, serif',
           }}
         >
-          Your 10 Portfolio Videos — Full Production Guide
+          Your 10 Portfolio Videos - Full Production Guide
         </h2>
         <p style={{ fontSize: '14px', color: '#9b8fb5', marginBottom: '24px' }}>
           Master these 10 formats and you'll have everything brands are looking for
@@ -1524,7 +1524,7 @@ export default function PortfolioBuilder() {
           }}
         >
           <Copy size={20} />
-          Copy My Portfolio Statement →
+          Copy My Portfolio Statement
         </button>
       </div>
     </div>
