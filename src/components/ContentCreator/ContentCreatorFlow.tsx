@@ -13,7 +13,7 @@ const PERSONA_OPTIONS = [
   { id: 'disruptor', title: 'THE DISRUPTOR', description: 'You challenge what everyone else accepts as normal' },
   { id: 'visionary', title: 'THE VISIONARY', description: 'You paint the future and people follow your lead' },
   { id: 'builder', title: 'THE BUILDER', description: 'You document the journey of creating something from nothing' },
-];
+]
 
 const STYLE_OPTIONS = [
   { id: 'natural', title: 'NATURAL AND AUTHENTIC', description: 'Real, raw, unfiltered' },
