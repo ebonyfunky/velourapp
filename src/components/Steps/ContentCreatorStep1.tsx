@@ -13,8 +13,7 @@ const PROFESSIONS = [
   { id: 'ecommerce', label: 'E-commerce' },
   { id: 'ai-arbitrage', label: 'AI Arbitrage' },
   { id: 'healthcare-services', label: 'Healthcare Services' },
-  { id: 'religious-services', label: 'Faith-Based Leader' },
-  { id: 'it-software', label: 'IT/SOFTWARE' },
+  { id: 'religious-services', label: 'Religious Services' },
   { id: 'other', label: 'Other' },
 ] as const;
 
@@ -30,7 +29,6 @@ const PROFESSION_AFFIRMATIONS: Record<string, string> = {
   'ai-arbitrage': 'Smart strategy. Let\'s build it.',
   'healthcare-services': 'Your knowledge can change lives. Let\'s share it.',
   'religious-services': 'Your message deserves a bigger stage.',
-  'it-software': 'Tech and content. Powerful combo.',
   'other': 'Your path is yours. Let\'s build it.',
 };
 
