@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCampaignStore } from '../store/campaignStore';
 import { X, Check, ChevronLeft, ChevronRight, ArrowLeft, Download, Mail, Globe, Info, Search as SearchIcon } from 'lucide-react';
@@ -2557,14 +2557,22 @@ function IncomePage() {
 
       {/* Tab Content */}
       {activeTab === 'mindset' && (
-        <div>
-          <p style={{ color: '#d4cee8' }}>Mindset content coming soon...</p>
+        <div style={{ maxWidth: '720px' }}>
+          <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '24px', fontWeight: 600, color: '#e8c96a', marginBottom: '16px' }}>
+            Creator mindset that keeps you going
+          </h2>
+          <p style={{ fontSize: '14px', color: '#d4cee8', lineHeight: '1.8', marginBottom: '16px' }}>
+            Talent gets you in the door. Resilience and consistency build your business. Every creator who makes it past the first few brand deals shares a few habits: they treat pitching like a numbers game, they track every deal, they follow up, and they do not wait for motivation - they show up anyway.
+          </p>
+          <p style={{ fontSize: '14px', color: '#d4cee8', lineHeight: '1.8', marginBottom: '16px' }}>
+            Your mindset shifts when you see income as a system - set a monthly goal, log every deal, and review what worked. The Sustainable Income tab below is where you track deals and watch your numbers grow. Use it every week.
+          </p>
         </div>
       )}
 
       {activeTab === 'income' && (
         <div>
-          <p style={{ color: '#d4cee8' }}>Income content coming soon...</p>
+          <IncomeCommandCentre />
         </div>
       )}
     </div>
