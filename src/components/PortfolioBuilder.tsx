@@ -168,7 +168,7 @@ export default function PortfolioBuilder() {
       link: 'https://www.canva.com',
     },
     {
-      title: '📦 Dropbox — Best for large video files',
+      title: 'Dropbox — Best for large video files',
       subtitle: 'Free up to 2GB, reliable for large video files',
       steps: [
         'Go to dropbox.com and create a free account',
@@ -210,7 +210,7 @@ export default function PortfolioBuilder() {
         }}
       >
         <div style={{ fontSize: '16px', fontWeight: 700, color: '#e8c96a', marginBottom: '8px' }}>
-          🗂️ You have your content — now make it sendable in one click
+          You have your content — now make it sendable in one click
         </div>
         <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.6', margin: 0 }}>
           Your photos and videos are done. Now you need to organise everything into one clean professional link that you can send to any brand in seconds. This is the final step before you start pitching.
@@ -488,7 +488,7 @@ export default function PortfolioBuilder() {
         }}
       >
         <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-          ✍️ Your Portfolio Statement
+          Your Portfolio Statement
         </h2>
         <p style={{ fontSize: '13px', color: '#9b8fb5', marginBottom: '24px', fontStyle: 'italic' }}>
           A professional one-sentence summary of who you are as a creator. Paste this everywhere — your rate card, your pitches, your bio, your UGC Pack.

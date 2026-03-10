@@ -134,7 +134,7 @@ export default function PortfolioScriptBuilder() {
     setTimeout(() => setCopiedItem(null), 2000);
   };
 
-  const isIntroduction = portfolioScriptVideoType === '🎬 Creator Introduction';
+  const isIntroduction = portfolioScriptVideoType === 'Creator Introduction';
   const isPitch = portfolioScriptVideoType === 'Pitch Video';
 
   const handleGenerate = async () => {
@@ -263,7 +263,7 @@ export default function PortfolioScriptBuilder() {
         <Info size={24} style={{ color: '#c9a84c', flexShrink: 0, marginTop: '2px' }} />
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: '16px', fontWeight: 700, color: '#e8c96a', marginBottom: '8px' }}>
-            ✍️ Write Your Script First — Then Film
+            Write Your Script First — Then Film
           </div>
           <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.6', margin: 0 }}>
             Before you pick up your phone you need to know exactly what to say. Use this script builder to generate your word-for-word portfolio script, hooks, CTAs and filming checklist. Then switch to the My Videos tab to upload your finished content.
@@ -351,7 +351,7 @@ export default function PortfolioScriptBuilder() {
           }}
         >
           <div style={{ fontSize: '14px', fontWeight: 700, color: '#e8c96a', marginBottom: '16px' }}>
-            📍 You are in the right place
+            You are in the right place
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
             <div
@@ -364,7 +364,7 @@ export default function PortfolioScriptBuilder() {
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
                 <div style={{ fontSize: '15px', fontWeight: 700, color: '#e8c96a' }}>
-                  🎬 Creator Introduction Video
+                  Creator Introduction Video
                 </div>
                 <div
                   style={{
@@ -579,7 +579,7 @@ export default function PortfolioScriptBuilder() {
 
             <button
               onClick={() => {
-                setField('portfolioScriptVideoType', '🎬 Creator Introduction');
+                setField('portfolioScriptVideoType', 'Creator Introduction');
                 handleGenerate();
               }}
               disabled={!introCreatorName || !introContentNiche || !introContentStyle || !introWhatMakesDifferent || isGenerating}
@@ -730,7 +730,7 @@ export default function PortfolioScriptBuilder() {
 
         <div style={{ marginBottom: '24px' }}>
           <div style={{ fontSize: '14px', fontWeight: 700, color: '#c9a84c', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            🎥 Face Forward — you appear on camera
+            Face Forward — you appear on camera
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', marginBottom: '24px' }}>
             {FACE_FORWARD_TYPES.map((type) => {
@@ -768,7 +768,7 @@ export default function PortfolioScriptBuilder() {
           </div>
 
           <div style={{ fontSize: '14px', fontWeight: 700, color: '#c9a84c', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            🎭 Faceless — your face never appears on camera
+            Faceless — your face never appears on camera
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px', marginBottom: '12px' }}>
             {FACELESS_TYPES.map((type) => {
@@ -883,7 +883,7 @@ export default function PortfolioScriptBuilder() {
                     width: 'fit-content',
                   }}
                 >
-                  {FACELESS_TYPES.includes(portfolioScriptVideoType) ? '🎭 Faceless Script' : '🎥 Face Forward Script'}
+                  {FACELESS_TYPES.includes(portfolioScriptVideoType) ? 'Faceless Script' : 'Face Forward Script'}
                 </div>
               )}
               <button
@@ -909,7 +909,7 @@ export default function PortfolioScriptBuilder() {
             }}
           >
             <Sparkles size={18} />
-            {isGenerating ? 'Generating...' : '✨ Write My Portfolio Script →'}
+            {isGenerating ? 'Generating...' : 'Write My Portfolio Script'}
           </button>
         </div>
           </>
@@ -1034,7 +1034,7 @@ export default function PortfolioScriptBuilder() {
               Your CTA Options
             </h4>
             <p style={{ fontSize: '13px', fontWeight: 700, color: '#c9a84c', marginBottom: '16px' }}>
-              👇 Pick ONE that feels right for this video
+              Pick ONE that feels right for this video
             </p>
             <div style={{ display: 'grid', gap: '12px', marginBottom: '16px' }}>
               {Object.entries(generatedScript.ctas).map(([type, cta]) => {
@@ -1099,7 +1099,7 @@ export default function PortfolioScriptBuilder() {
                 ) : (
                   <>
                     <Copy size={16} />
-                    ✓ CTA Selected — Copy It →
+                    CTA Selected — Copy It
                   </>
                 )}
               </button>
@@ -1129,7 +1129,7 @@ export default function PortfolioScriptBuilder() {
             }}
           >
             <h4 style={{ fontSize: '14px', fontWeight: 700, color: '#a78bfa', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              ✂️ Editing Tip for this video type:
+              Editing Tip for this video type:
             </h4>
             <p style={{ fontSize: '14px', color: '#d0c9e0', lineHeight: '1.6', margin: 0, fontStyle: 'italic' }}>
               {getEditingTip(generatedScript.videoType, generatedScript.isFaceForward)}
@@ -1275,7 +1275,7 @@ export default function PortfolioScriptBuilder() {
                       color: script.isFaceForward ? '#c9a84c' : '#7c5cbf',
                     }}
                   >
-                    {script.isFaceForward ? '🎥 Face Forward' : '🎭 Faceless'}
+                    {script.isFaceForward ? 'Face Forward' : 'Faceless'}
                   </div>
                   {script.completed && (
                     <div

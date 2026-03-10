@@ -126,6 +126,21 @@ export interface CampaignStore {
     } | null;
   } | null;
 
+  // Content Creator Onboarding (Steps 1–3)
+  contentCreatorProfession: string;
+  contentCreatorProfessionOther: string;
+  contentCreatorFaceType: '' | 'faceless' | 'face-forward';
+  contentCreatorAudienceEmotions: string[];
+  contentCreatorAudienceWants: string[];
+  contentCreatorAudienceTriedOptions: string[];
+  contentCreatorAudienceFear: string;
+  contentCreatorAudienceAges: string[];
+  contentCreatorAudienceLife: string[];
+  contentCreatorAudiencePainPoints: string[];
+  contentCreatorAudienceStatement: string;
+  contentCreatorProjectTypes: string[];
+  contentCreatorProjectOther: string;
+
   // Affiliate Product Fields
   affiliateBrandName: string;
   affiliatePlatform: string;
@@ -654,6 +669,19 @@ const initialState = {
   creatorIdentityStory: '',
   creatorIdentityCard: null,
   audienceAvatar: null,
+  contentCreatorProfession: '',
+  contentCreatorProfessionOther: '',
+  contentCreatorFaceType: '',
+  contentCreatorAudienceEmotions: [],
+  contentCreatorAudienceWants: [],
+  contentCreatorAudienceTriedOptions: [],
+  contentCreatorAudienceFear: '',
+  contentCreatorAudienceAges: [],
+  contentCreatorAudienceLife: [],
+  contentCreatorAudiencePainPoints: [],
+  contentCreatorAudienceStatement: '',
+  contentCreatorProjectTypes: [],
+  contentCreatorProjectOther: '',
 };
 
 export const useCampaignStore = (() => {
@@ -840,6 +868,23 @@ export const useCampaignStore = (() => {
           version: 1,
           onRehydrateStorage: () => (state) => {
             if (state) {
+              const s = state as Record<string, unknown>;
+              if (!Array.isArray(s.contentCreatorAudienceEmotions)) {
+                s.contentCreatorAudienceEmotions = typeof s.contentCreatorAudienceEmotion === 'string' && s.contentCreatorAudienceEmotion
+                  ? [s.contentCreatorAudienceEmotion]
+                  : typeof s.contentCreatorAudienceEmotions === 'string' && s.contentCreatorAudienceEmotions
+                    ? [s.contentCreatorAudienceEmotions]
+                    : [];
+              }
+              if (!Array.isArray(s.contentCreatorAudienceWants) && (s.contentCreatorAudienceWant != null || s.contentCreatorAudienceWants == null)) {
+                s.contentCreatorAudienceWants = typeof s.contentCreatorAudienceWant === 'string' && s.contentCreatorAudienceWant ? [s.contentCreatorAudienceWant] : [];
+              }
+              if (!Array.isArray(s.contentCreatorAudienceTriedOptions) && (s.contentCreatorAudienceTried != null || s.contentCreatorAudienceTriedOptions == null)) {
+                s.contentCreatorAudienceTriedOptions = typeof s.contentCreatorAudienceTried === 'string' && s.contentCreatorAudienceTried ? [s.contentCreatorAudienceTried] : [];
+              }
+              if (!Array.isArray(s.contentCreatorAudienceAges) && (s.contentCreatorAudienceAge != null || s.contentCreatorAudienceAges == null)) {
+                s.contentCreatorAudienceAges = typeof s.contentCreatorAudienceAge === 'string' && s.contentCreatorAudienceAge ? [s.contentCreatorAudienceAge] : [];
+              }
               if (typeof state.platformTargets === 'string') {
                 state.platformTargets = state.platformTargets ? [state.platformTargets] : [];
               }

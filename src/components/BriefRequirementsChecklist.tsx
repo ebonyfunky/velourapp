@@ -75,7 +75,7 @@ export default function BriefRequirementsChecklist({ brief }: BriefRequirementsC
   return (
     <div style={{ marginTop: '48px' }}>
       <h3 style={{ fontSize: '24px', fontWeight: 700, color: '#f0ebff', marginBottom: '16px', fontFamily: 'Cormorant Garamond, serif' }}>
-        ✅ Brief Requirements Check
+        Brief Requirements Check
       </h3>
 
       <div

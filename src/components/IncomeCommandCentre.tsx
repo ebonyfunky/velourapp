@@ -660,7 +660,7 @@ export default function IncomeCommandCentre() {
           }}
         >
           <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-            💸 Money You Are Owed Right Now
+            Money You Are Owed Right Now
           </h2>
           <p style={{ fontSize: '13px', color: '#9b8fb5', marginBottom: '24px' }}>
             You should never feel awkward chasing payment. You delivered the work. You earned the money. Chase it professionally and consistently.
@@ -745,7 +745,7 @@ export default function IncomeCommandCentre() {
         }}
       >
         <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontWeight: 600, color: '#f0ebff', marginBottom: '24px' }}>
-          🎯 Your Income Goals
+          Your Income Goals
         </h2>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '24px' }}>
@@ -892,7 +892,7 @@ export default function IncomeCommandCentre() {
                         color: '#22c55e',
                       }}
                     >
-                      Paid ✓
+                      Paid
                     </div>
                   </div>
                   <div style={{ fontSize: '20px', fontWeight: 700, color: '#22c55e', marginBottom: '4px' }}>

@@ -133,7 +133,7 @@ export default function Step12() {
             transition: 'all 0.2s',
           }}
         >
-          🧠 MINDSET
+          MINDSET
         </button>
         <button
           onClick={() => setActiveTab('income')}
@@ -149,7 +149,7 @@ export default function Step12() {
             transition: 'all 0.2s',
           }}
         >
-          💰 SUSTAINABLE INCOME
+          SUSTAINABLE INCOME
         </button>
       </div>
 
@@ -358,11 +358,11 @@ export default function Step12() {
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
                 {[
-                  { icon: '💰', name: 'UGC Brand Deals', desc: 'your foundation', range: '$300-$3,000+/month' },
-                  { icon: '🛍️', name: 'TikTok Shop Affiliate', desc: 'create once earn repeatedly', range: '$100-$2,000+/month' },
-                  { icon: '📜', name: 'Usage Rights', desc: 'charge extra when brands run your content as ads', range: '+20-100% per video' },
-                  { icon: '🔁', name: 'Content Licensing', desc: 'sell the same content to non-competing brands', range: '$50-$500 per license' },
-                  { icon: '📦', name: 'UGC Packages', desc: 'bundle videos and photos, higher value per transaction', range: '2-3x single rate' }
+                  { name: 'UGC Brand Deals', desc: 'your foundation', range: '$300-$3,000+/month' },
+                  { name: 'TikTok Shop Affiliate', desc: 'create once earn repeatedly', range: '$100-$2,000+/month' },
+                  { name: 'Usage Rights', desc: 'charge extra when brands run your content as ads', range: '+20-100% per video' },
+                  { name: 'Content Licensing', desc: 'sell the same content to non-competing brands', range: '$50-$500 per license' },
+                  { name: 'UGC Packages', desc: 'bundle videos and photos, higher value per transaction', range: '2-3x single rate' }
                 ].map((stream, i) => (
                   <div
                     key={i}
@@ -373,7 +373,6 @@ export default function Step12() {
                       padding: '24px',
                     }}
                   >
-                    <div style={{ fontSize: '32px', marginBottom: '12px' }}>{stream.icon}</div>
                     <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#f0ebff', marginBottom: '8px' }}>
                       {stream.name}
                     </h3>
@@ -499,10 +498,10 @@ export default function Step12() {
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
                 {[
-                  { icon: '📄', title: 'Always use a contract.', desc: 'Deliverables, payment date, revision limit, usage rights. Non-negotiable.' },
-                  { icon: '💳', title: '50% upfront from new brands.', desc: 'Any brand that refuses is a red flag.' },
-                  { icon: '⏰', title: '14 day payment terms.', desc: 'State it in writing. Late payment fee included.' },
-                  { icon: '🎬', title: 'Usage rights cost extra.', desc: 'Creating content and licensing it for ads are two different services.' }
+                  { title: 'Always use a contract.', desc: 'Deliverables, payment date, revision limit, usage rights. Non-negotiable.' },
+                  { title: '50% upfront from new brands.', desc: 'Any brand that refuses is a red flag.' },
+                  { title: '14 day payment terms.', desc: 'State it in writing. Late payment fee included.' },
+                  { title: 'Usage rights cost extra.', desc: 'Creating content and licensing it for ads are two different services.' }
                 ].map((rule, i) => (
                   <div
                     key={i}
@@ -513,7 +512,6 @@ export default function Step12() {
                       padding: '24px',
                     }}
                   >
-                    <div style={{ fontSize: '32px', marginBottom: '16px' }}>{rule.icon}</div>
                     <h3 style={{ fontSize: '16px', fontWeight: 700, color: '#c9a84c', marginBottom: '12px' }}>
                       {rule.title}
                     </h3>
@@ -739,11 +737,11 @@ export default function Step12() {
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
                 {[
-                  { key: 'creatorAction' as const, icon: '☀️', text: 'Write down one creator action for today' },
-                  { key: 'sentPitch' as const, icon: '📧', text: 'Send at least one pitch' },
-                  { key: 'brandEngagement' as const, icon: '📱', text: 'Engage genuinely with one brand' },
-                  { key: 'contentCreated' as const, icon: '📹', text: 'Create or plan one piece of content' },
-                  { key: 'checkedNumbers' as const, icon: '📊', text: 'Check your numbers for 10 minutes' }
+                  { key: 'creatorAction' as const, text: 'Write down one creator action for today' },
+                  { key: 'sentPitch' as const, text: 'Send at least one pitch' },
+                  { key: 'brandEngagement' as const, text: 'Engage genuinely with one brand' },
+                  { key: 'contentCreated' as const, text: 'Create or plan one piece of content' },
+                  { key: 'checkedNumbers' as const, text: 'Check your numbers for 10 minutes' }
                 ].map((habit) => (
                   <button
                     key={habit.key}
@@ -775,7 +773,6 @@ export default function Step12() {
                       {dailyCheckboxes[habit.key] && <Check size={16} style={{ color: '#0a0610' }} />}
                     </div>
                     <div>
-                      <div style={{ fontSize: '18px', marginBottom: '8px' }}>{habit.icon}</div>
                       <div style={{ fontSize: '14px', color: dailyCheckboxes[habit.key] ? '#c9a84c' : '#d4cee8', fontWeight: 600 }}>
                         {habit.text}
                       </div>
@@ -852,16 +849,16 @@ export default function Step12() {
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                   {[
-                    { key: 'firstPitch' as const, icon: '🥇', label: 'First pitch' },
-                    { key: 'firstReply' as const, icon: '📬', label: 'First reply' },
-                    { key: 'firstDeal' as const, icon: '🤝', label: 'First deal' },
-                    { key: 'firstDelivery' as const, icon: '🎬', label: 'First delivery' },
-                    { key: 'firstPayment' as const, icon: '💰', label: 'First payment' },
-                    { key: 'firstRateRaise' as const, icon: '📈', label: 'First rate raise' },
-                    { key: 'firstRetainer' as const, icon: '🔄', label: 'First retainer' },
-                    { key: 'first500Month' as const, icon: '💵', label: 'First $500 month' },
-                    { key: 'first1kMonth' as const, icon: '🚀', label: 'First $1k month' },
-                    { key: 'first3kMonth' as const, icon: '👑', label: 'First $3k month' }
+                    { key: 'firstPitch' as const, label: 'First pitch' },
+                    { key: 'firstReply' as const, label: 'First reply' },
+                    { key: 'firstDeal' as const, label: 'First deal' },
+                    { key: 'firstDelivery' as const, label: 'First delivery' },
+                    { key: 'firstPayment' as const, label: 'First payment' },
+                    { key: 'firstRateRaise' as const, label: 'First rate raise' },
+                    { key: 'firstRetainer' as const, label: 'First retainer' },
+                    { key: 'first500Month' as const, label: 'First $500 month' },
+                    { key: 'first1kMonth' as const, label: 'First $1k month' },
+                    { key: 'first3kMonth' as const, label: 'First $3k month' }
                   ].map((milestone) => (
                     <button
                       key={milestone.key}
@@ -882,7 +879,6 @@ export default function Step12() {
                         transition: 'all 0.2s',
                       }}
                     >
-                      <span>{milestone.icon}</span>
                       <span>{milestone.label}</span>
                     </button>
                   ))}

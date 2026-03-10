@@ -1,16 +1,13 @@
-// SAFE VERSION - Mode Selector and UGC Hub working - March 2026
-import { useState, useEffect } from 'react';
+// Content Creator flow: Step 1 (Who Are You), Step 2 (Audience Avatar), Step 3 (Content Project), then Creator Identity, etc.
+import { useState, useEffect, useCallback } from 'react';
 import { useCampaignStore } from './store/campaignStore';
 import Sidebar from './components/Sidebar';
 import ProgressBar from './components/Layout/ProgressBar';
-import Step1 from './components/Steps/Step1';
-import Step2 from './components/Steps/Step2';
-import CreatorIdentity from './components/Steps/CreatorIdentity';
+import ContentCreatorStep1 from './components/Steps/ContentCreatorStep1';
+import ContentCreatorStep2 from './components/Steps/ContentCreatorStep2';
+import ContentCreatorStep3 from './components/Steps/ContentCreatorStep3';
 import CreatorPlatform from './components/Steps/CreatorPlatform';
 import Step3 from './components/Steps/Step3';
-import Step4 from './components/Steps/Step4';
-import Step6 from './components/Steps/Step6';
-import Step8 from './components/Steps/Step8';
 import Step9 from './components/Steps/Step9';
 import WelcomeScreen from './components/WelcomeScreen';
 import ModeSelector from './components/ModeSelector';
@@ -18,10 +15,11 @@ import UGCHub from './components/UGCHub';
 import Toast from './components/Toast';
 
 function App() {
-  const { creatorMode } = useCampaignStore();
+  const { creatorMode, setField } = useCampaignStore();
   const [currentStep, setCurrentStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [showWelcome, setShowWelcome] = useState(false);
+  const [subProgress, setSubProgress] = useState(0);
 
   useEffect(() => {
     const hasSeenWelcome = localStorage.getItem('velour_welcomed');
@@ -36,18 +34,24 @@ function App() {
     }
   };
 
-  const handleNext = () => {
-    if (!completedSteps.includes(currentStep)) {
-      setCompletedSteps([...completedSteps, currentStep]);
+  const handleBack = useCallback(() => {
+    if (currentStep === 1) {
+      setField('creatorMode', '');
+      setCurrentStep(1);
+      setSubProgress(0);
+    } else {
+      setCurrentStep((prev) => prev - 1);
+      setSubProgress(0);
     }
-    setCurrentStep(currentStep + 1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, [currentStep, setField]);
 
-  const handleBack = () => {
-    setCurrentStep(currentStep - 1);
+  const handleNext = useCallback(() => {
+    setCompletedSteps((prev) => (prev.includes(currentStep) ? prev : [...prev, currentStep]));
+    setCurrentStep((prev) => prev + 1);
+    setSubProgress(0);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, [currentStep]);
 
   if (!creatorMode) {
     return <ModeSelector />;
@@ -85,7 +89,7 @@ function App() {
           minHeight: '100vh',
         }}
       >
-        <ProgressBar currentStep={currentStep} totalSteps={7} />
+        <ProgressBar currentStep={currentStep} totalSteps={6} subProgress={subProgress} />
 
         <div
           style={{
@@ -116,24 +120,21 @@ function App() {
             }}
           >
             <div style={{ display: currentStep === 1 ? 'block' : 'none' }}>
-              <CreatorIdentity onNext={handleNext} onBack={handleBack} />
+              <ContentCreatorStep1 onNext={handleNext} onBack={handleBack} onSubProgress={setSubProgress} />
             </div>
             <div style={{ display: currentStep === 2 ? 'block' : 'none' }}>
-              <CreatorPlatform onNext={handleNext} onBack={handleBack} />
+              <ContentCreatorStep2 onNext={handleNext} onBack={handleBack} onSubProgress={setSubProgress} />
             </div>
             <div style={{ display: currentStep === 3 ? 'block' : 'none' }}>
-              <Step3 onNext={handleNext} onBack={handleBack} />
+              <ContentCreatorStep3 onNext={handleNext} onBack={handleBack} />
             </div>
             <div style={{ display: currentStep === 4 ? 'block' : 'none' }}>
-              <Step4 onNext={handleNext} onBack={handleBack} />
+              <CreatorPlatform onNext={handleNext} onBack={handleBack} />
             </div>
             <div style={{ display: currentStep === 5 ? 'block' : 'none' }}>
-              <Step6 onNext={handleNext} onBack={handleBack} />
+              <Step3 onNext={handleNext} onBack={handleBack} />
             </div>
             <div style={{ display: currentStep === 6 ? 'block' : 'none' }}>
-              <Step8 onNext={handleNext} onBack={handleBack} />
-            </div>
-            <div style={{ display: currentStep === 7 ? 'block' : 'none' }}>
               <Step9
                 onNext={() => {
                   setCurrentStep(1);

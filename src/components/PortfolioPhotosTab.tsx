@@ -121,7 +121,7 @@ export default function PortfolioPhotosTab({ onNavigateToScriptBuilder, onNaviga
                   margin: '0 0 12px 0',
                 }}
               >
-                🎬 Before you upload a single photo — you need two videos first
+                Before you upload a single photo — you need two videos first
               </h3>
               <p
                 style={{

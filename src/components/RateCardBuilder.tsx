@@ -1564,7 +1564,6 @@ export default function RateCardBuilder() {
                   >
                     <div style={{ marginBottom: '12px', flex: 1 }}>
                       <h4 style={{ fontSize: '14px', fontWeight: 700, color: '#e8c96a', marginBottom: '6px' }}>
-                        {idx === 0 && '🎨 '}{idx === 1 && '📋 '}{idx === 2 && '💼 '}{idx === 3 && '✨ '}{idx === 4 && '🌿 '}{idx === 5 && '🖤 '}
                         {template.name}
                       </h4>
                       <p style={{ fontSize: '12px', color: '#d0c9e0', lineHeight: '1.5' }}>

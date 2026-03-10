@@ -399,7 +399,7 @@ export default function ActionPlan() {
             textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: '64px', marginBottom: '16px' }}>🎉</div>
+          <div style={{ fontSize: '64px', marginBottom: '16px' }} />
           <h2
             style={{
               fontSize: '32px',

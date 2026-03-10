@@ -37,7 +37,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
   const packSections = [
     {
       id: 'niche',
-      title: '👤 Your Creator Identity',
+      title: 'Your Creator Identity',
       data: niche,
       emptyText: 'Not defined yet',
       linkText: '→ Define Your Niche',
@@ -45,7 +45,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     },
     {
       id: 'rates',
-      title: '💰 Your Rates',
+      title: 'Your Rates',
       data: hasRates
         ? rateCardPlatformRates
             .filter(r => r.videoRate)
@@ -58,7 +58,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     },
     {
       id: 'portfolio',
-      title: '📸 Your Portfolio',
+      title: 'Your Portfolio',
       data: photosCount > 0 || videosCount > 0 ? `${photosCount} photos | ${videosCount} videos${portfolioLink ? ' | Portfolio link: ' + portfolioLink : ''}` : '',
       emptyText: 'No portfolio content yet',
       linkText: '→ Add Your Portfolio',
@@ -66,7 +66,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     },
     {
       id: 'script',
-      title: '✍️ Your Best Script',
+      title: 'Your Best Script',
       data: latestScript ? (latestScript.hooks?.[0] || 'Script saved') : '',
       emptyText: 'No scripts saved yet',
       linkText: '→ Generate a Script',
@@ -75,7 +75,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     },
     {
       id: 'pitch',
-      title: '📧 Your Pitch',
+      title: 'Your Pitch',
       data: autoPitch,
       emptyText: 'Save your portfolio link first',
       linkText: '→ Save Portfolio Link',
@@ -83,7 +83,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
     },
     {
       id: 'statement',
-      title: '📝 Your Portfolio Statement',
+      title: 'Your Portfolio Statement',
       data: portfolioStatement,
       emptyText: 'Not generated yet',
       linkText: '→ Go To Organise Your Portfolio',
@@ -224,7 +224,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
   return (
     <div style={{ paddingBottom: '120px' }}>
       <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '42px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-        🎁 Your UGC Pack
+        Your UGC Pack
       </h1>
       <p style={{ fontSize: '14px', color: '#9b8fb5', marginBottom: '32px', fontStyle: 'italic' }}>
         Everything a brand needs to hire you — compiled and ready to send
@@ -357,7 +357,7 @@ export default function UGCPack({ onNavigate }: UGCPackProps) {
             opacity: completedCount < 3 ? 0.5 : 1,
           }}
         >
-          ⬇️ Download My UGC Pack
+          Download My UGC Pack
         </button>
 
         <p style={{ fontSize: '12px', color: '#9b8fb5', fontStyle: 'italic', textAlign: 'center' }}>

@@ -35,37 +35,31 @@ const scriptFormats = [
     id: 'hook-sell',
     name: 'Hook & Sell',
     description: 'Grab attention immediately, then pitch the product',
-    icon: '🎣'
   },
   {
     id: 'story-led',
     name: 'Story-Led',
     description: 'Personal narrative that naturally leads to the product',
-    icon: '📖'
   },
   {
     id: 'problem-solution',
     name: 'Problem → Solution',
     description: 'Show the pain point, reveal your product as the answer',
-    icon: '💡'
   },
   {
     id: 'trend-challenge',
     name: 'Trend & Challenge',
     description: 'Leverage trending sounds or challenges with your product',
-    icon: '🔥'
   },
   {
     id: 'results-first',
     name: 'Results First',
     description: 'Lead with the transformation or before/after',
-    icon: '⚡'
   },
   {
     id: 'faith-purpose',
     name: 'Faith & Purpose',
     description: 'Values-driven content connecting faith to product benefit',
-    icon: '🙏'
   }
 ];
 
@@ -649,7 +643,7 @@ ESTIMATED READ TIME:
                 }
               }}
             >
-              <div style={{ fontSize: '32px', marginBottom: '12px' }}>{format.icon}</div>
+              {format.icon && <div style={{ fontSize: '32px', marginBottom: '12px' }}>{format.icon}</div>}
               <div style={{ fontSize: '16px', fontWeight: 700, color: scriptStudioFormat === format.id ? '#e8c96a' : '#f0ebff', marginBottom: '8px' }}>
                 {format.name}
               </div>
@@ -795,7 +789,7 @@ ESTIMATED READ TIME:
                   Word Count: {countWords(scriptStudioGeneratedScript.body)} / {getTargetWordCount(scriptStudioVideoLength)}
                 </span>
                 <span style={{ fontSize: '12px', color: '#9b8fb5' }}>
-                  {countWords(scriptStudioGeneratedScript.body) <= getTargetWordCount(scriptStudioVideoLength) ? '✓ On target' : '⚠ Over limit'}
+                  {countWords(scriptStudioGeneratedScript.body) <= getTargetWordCount(scriptStudioVideoLength) ? 'On target' : 'Over limit'}
                 </span>
               </div>
               <div
@@ -828,7 +822,7 @@ ESTIMATED READ TIME:
                 Call To Action
               </div>
               <p style={{ fontSize: '13px', fontWeight: 700, color: '#c9a84c', marginBottom: '16px' }}>
-                👇 Pick ONE that feels right for this video
+                Pick ONE that feels right for this video
               </p>
               <div style={{ display: 'grid', gap: '12px', marginBottom: '16px' }}>
                 {Object.entries(scriptStudioGeneratedScript.ctas).map(([type, cta]) => {
@@ -899,7 +893,7 @@ ESTIMATED READ TIME:
                   ) : (
                     <>
                       <Copy size={16} />
-                      ✓ CTA Selected — Copy It →
+                      CTA Selected — Copy It
                     </>
                   )}
                 </button>

@@ -192,9 +192,9 @@ export default function WelcomeScreen({ onDismiss }: WelcomeScreenProps) {
             {/* Feature pills */}
             <div className="flex items-center justify-center gap-3 mb-10 flex-wrap">
               {[
-                '🎭 AI Twin Creation',
-                '📝 Viral Scripts',
-                '📅 Content Calendar',
+'AI Twin Creation',
+    'Viral Scripts',
+    'Content Calendar',
               ].map((feature, index) => (
                 <motion.div
                   key={index}

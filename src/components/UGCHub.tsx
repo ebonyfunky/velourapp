@@ -18,18 +18,18 @@ import WhereToFindBrands from './WhereToFindBrands';
 import UGCGearGuide from './UGCGearGuide';
 
 const UGC_SECTIONS = [
-  { id: 'ugc-dashboard', icon: '🏠', label: 'Dashboard', sublabel: 'Your overview' },
-  { id: 'ugc-niche', icon: '🎯', label: 'Find Your Niche', sublabel: 'Discover what fits you' },
-  { id: 'ugc-rates', icon: '💰', label: 'Rate Card', sublabel: 'Set your prices' },
-  { id: 'ugc-portfolio-photos', icon: '📸', label: 'Portfolio Photos', sublabel: 'Build photo portfolio' },
-  { id: 'ugc-portfolio-videos', icon: '🎬', label: 'Portfolio Videos', sublabel: 'Build video portfolio' },
-  { id: 'ugc-portfolio', icon: '📂', label: 'Organise Your Portfolio', sublabel: 'Organize your work' },
-  { id: 'ugc-pack', icon: '📦', label: 'UGC Pack', sublabel: 'Download everything' },
-  { id: 'ugc-outreach-brands', icon: '🔍', label: 'Where To Find Brands', sublabel: 'Find & pitch brands' },
-  { id: 'ugc-plan', icon: '📅', label: 'Action Plan', sublabel: 'Day 1 to Day 30' },
-  { id: 'ugc-deal', icon: '🎉', label: 'You Landed a Deal', sublabel: 'What happens next' },
-  { id: 'ugc-brand-scripts', icon: '✍️', label: 'Brand Deal Script Studio', sublabel: 'Paid brand scripts' },
-  { id: 'ugc-income', icon: '💸', label: 'Sustainable Income', sublabel: 'Long-term strategy' },
+  { id: 'ugc-dashboard', label: 'Dashboard', sublabel: 'Your overview' },
+  { id: 'ugc-niche', label: 'Find Your Niche', sublabel: 'Discover what fits you' },
+  { id: 'ugc-rates', label: 'Rate Card', sublabel: 'Set your prices' },
+  { id: 'ugc-portfolio-photos', label: 'Portfolio Photos', sublabel: 'Build photo portfolio' },
+  { id: 'ugc-portfolio-videos', label: 'Portfolio Videos', sublabel: 'Build video portfolio' },
+  { id: 'ugc-portfolio', label: 'Organise Your Portfolio', sublabel: 'Organize your work' },
+  { id: 'ugc-pack', label: 'UGC Pack', sublabel: 'Download everything' },
+  { id: 'ugc-outreach-brands', label: 'Where To Find Brands', sublabel: 'Find & pitch brands' },
+  { id: 'ugc-plan', label: 'Action Plan', sublabel: 'Day 1 to Day 30' },
+  { id: 'ugc-deal', label: 'You Landed a Deal', sublabel: 'What happens next' },
+  { id: 'ugc-brand-scripts', label: 'Brand Deal Script Studio', sublabel: 'Paid brand scripts' },
+  { id: 'ugc-income', label: 'Sustainable Income', sublabel: 'Long-term strategy' },
 ];
 
 const NICHE_OPTIONS = [
@@ -234,7 +234,7 @@ export default function UGCHub() {
                   }
                 }}
               >
-                <span style={{ fontSize: '20px' }}>{section.icon}</span>
+                {section.icon && <span style={{ fontSize: '20px' }}>{section.icon}</span>}
                 <div style={{ flex: 1 }}>
                   <div
                     style={{
@@ -473,7 +473,7 @@ function DashboardPage({ onNavigate }: { onNavigate: (section: string) => void }
         }}
       >
         <h3 style={{ fontSize: '14px', fontWeight: 700, color: '#e8c96a', marginBottom: '12px' }}>
-          ✦ What is UGC and why do brands pay for it?
+          What is UGC and why do brands pay for it?
         </h3>
         <p style={{ fontSize: '13px', color: '#9b8fb5', lineHeight: '1.8', marginBottom: '16px' }}>
           UGC stands for User Generated Content. Brands pay everyday creators — people with no massive
@@ -2428,7 +2428,7 @@ function PortfolioPhotosPage({ onNavigate }: { onNavigate: (section: string) => 
     onNavigate('ugc-portfolio-videos');
     const store = useCampaignStore.getState();
     store.setField('portfolioVideosDefaultTab', 'script-builder');
-    store.setField('portfolioScriptVideoType', '🎬 Creator Introduction');
+    store.setField('portfolioScriptVideoType', 'Creator Introduction');
   };
 
   const handleNavigateToPitchScript = () => {
@@ -2449,7 +2449,7 @@ function PortfolioVideosPage({ onNavigate }: { onNavigate: (section: string) => 
   const handleNavigateToScriptBuilder = () => {
     const store = useCampaignStore.getState();
     store.setField('portfolioVideosDefaultTab', 'script-builder');
-    store.setField('portfolioScriptVideoType', '🎬 Creator Introduction');
+    store.setField('portfolioScriptVideoType', 'Creator Introduction');
   };
 
   return <PortfolioVideos />;
@@ -2492,7 +2492,7 @@ function IncomePage() {
             transition: 'all 0.2s',
           }}
         >
-          🧠 Mindset
+          Mindset
         </button>
         <button
           onClick={() => setActiveTab('income')}
@@ -2508,7 +2508,7 @@ function IncomePage() {
             transition: 'all 0.2s',
           }}
         >
-          💰 Sustainable Income
+          Sustainable Income
         </button>
       </div>
 

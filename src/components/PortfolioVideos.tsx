@@ -11,7 +11,7 @@ export default function PortfolioVideos() {
   const handleNavigateToScriptBuilder = () => {
     setActiveTab('script-builder');
     setField('portfolioVideosTabState', 'script-builder');
-    setField('portfolioScriptVideoType', '🎬 Creator Introduction');
+    setField('portfolioScriptVideoType', 'Creator Introduction');
   };
 
   const handleNavigateToPitchScript = () => {
@@ -144,7 +144,7 @@ export default function PortfolioVideos() {
             }}
           >
             <Video size={18} />
-            🎬 My Videos
+            My Videos
           </button>
         </div>
       </div>

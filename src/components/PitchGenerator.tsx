@@ -6,7 +6,7 @@ import Anthropic from '@anthropic-ai/sdk';
 const PITCH_CATEGORIES = [
   {
     id: 'social-media',
-    label: '📱 Social Media DMs',
+    label: 'Social Media DMs',
     subTypes: [
       { id: 'instagram-dm', label: 'Instagram DM' },
       { id: 'tiktok-dm', label: 'TikTok DM' },
@@ -17,7 +17,7 @@ const PITCH_CATEGORIES = [
   },
   {
     id: 'emails',
-    label: '📧 Emails',
+    label: 'Emails',
     subTypes: [
       { id: 'cold-email', label: 'Cold Email' },
       { id: 'partnership-inquiry', label: 'Partnership Inquiry Email' },
@@ -27,7 +27,7 @@ const PITCH_CATEGORIES = [
   },
   {
     id: 'follow-up',
-    label: '🔄 Follow Up',
+    label: 'Follow Up',
     subTypes: [
       { id: 'follow-up-no-response', label: 'Follow Up After No Response' },
       { id: 'follow-up-positive', label: 'Follow Up After Positive Reply' },
@@ -37,7 +37,7 @@ const PITCH_CATEGORIES = [
   },
   {
     id: 'rate-negotiation',
-    label: '🤝 Rate Negotiation',
+    label: 'Rate Negotiation',
     subTypes: [
       { id: 'counter-offer', label: 'Counter Offer' },
       { id: 'rate-increase', label: 'Rate Increase Request' },

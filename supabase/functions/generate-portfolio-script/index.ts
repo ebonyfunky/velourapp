@@ -80,13 +80,13 @@ The script output must include B-roll directions embedded naturally:
 - Closing shot: [B-roll: direct eye contact to camera — warm confident smile, slight lean forward]
 
 Filming checklist specific to introduction videos:
-- ✅ Film in your best location — the background represents your brand as a creator
-- ✅ Wear something that matches the niche you work in
-- ✅ Make direct eye contact with the camera lens throughout — not at yourself on screen
-- ✅ Film at least 5 takes — your best performance is never your first one
-- ✅ Keep your energy slightly higher than feels natural — cameras reduce energy by about 30%
-- ✅ Film all B-roll shots after your main takes before you change your outfit or location
-- ✅ Your introduction video should be between 30 and 60 seconds — never longer
+- Film in your best location — the background represents your brand as a creator
+- Wear something that matches the niche you work in
+- Make direct eye contact with the camera lens throughout — not at yourself on screen
+- Film at least 5 takes — your best performance is never your first one
+- Keep your energy slightly higher than feels natural — cameras reduce energy by about 30%
+- Film all B-roll shots after your main takes before you change your outfit or location
+- Your introduction video should be between 30 and 60 seconds — never longer
 
 CTAs adapted for brand outreach:
 
@@ -303,7 +303,7 @@ Return ONLY valid JSON with this exact structure:
     "medium": "Everything you need to make a decision is in my portfolio — the link is right here",
     "strong": "My portfolio is live and I am available for new partnerships right now — let's talk"
   },
-  "checklist": ["✅ Film in your best location — the background represents your brand as a creator", "✅ Wear something that matches the niche you work in", "✅ Make direct eye contact with the camera lens throughout — not at yourself on screen", "✅ Film at least 5 takes — your best performance is never your first one", "✅ Keep your energy slightly higher than feels natural — cameras reduce energy by about 30%", "✅ Film all B-roll shots after your main takes before you change your outfit or location", "✅ Your introduction video should be between 30 and 60 seconds — never longer"],
+  "checklist": ["Film in your best location — the background represents your brand as a creator", "Wear something that matches the niche you work in", "Make direct eye contact with the camera lens throughout — not at yourself on screen", "Film at least 5 takes — your best performance is never your first one", "Keep your energy slightly higher than feels natural — cameras reduce energy by about 30%", "Film all B-roll shots after your main takes before you change your outfit or location", "Your introduction video should be between 30 and 60 seconds — never longer"],
   "confidenceNote": "A personalised encouragement from Velour's AI coach specific to the creator's niche and content style. End with: The brand watching this video right now is looking for exactly what you have to offer. Show them."
 }`
       : `Generate a portfolio script for:

@@ -132,7 +132,6 @@ export default function Step3({ onNext, onBack }: Step3Props) {
                       fontWeight: 800,
                     }}
                   >
-                    ✓
                   </div>
                 )}
                 <h3
@@ -237,7 +236,6 @@ export default function Step3({ onNext, onBack }: Step3Props) {
                       fontWeight: 800,
                     }}
                   >
-                    ✓
                   </div>
                 )}
                 <h3
@@ -281,7 +279,7 @@ export default function Step3({ onNext, onBack }: Step3Props) {
               marginTop: '16px',
             }}
           >
-            <div style={{ fontSize: '20px', color: '#4ade80', marginBottom: '4px' }}>✦</div>
+            <div style={{ fontSize: '20px', color: '#4ade80', marginBottom: '4px' }} />
             <h3
               style={{
                 color: '#4ade80',

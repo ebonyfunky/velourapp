@@ -105,7 +105,7 @@ export default function ModeSelector() {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          <div style={{ fontSize: '44px', marginBottom: '16px' }}>🎯</div>
+          <div style={{ fontSize: '44px', marginBottom: '16px' }} />
           <h3
             style={{
               fontFamily: 'Cormorant Garamond, serif',
@@ -210,7 +210,7 @@ export default function ModeSelector() {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          <div style={{ fontSize: '44px', marginBottom: '16px' }}>🤝</div>
+          <div style={{ fontSize: '44px', marginBottom: '16px' }} />
           <h3
             style={{
               fontFamily: 'Cormorant Garamond, serif',

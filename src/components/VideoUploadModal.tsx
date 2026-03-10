@@ -104,7 +104,7 @@ export default function VideoUploadModal({ onClose, onUpload }: VideoUploadModal
               <Upload size={24} style={{ color: '#c9a84c', flexShrink: 0, marginTop: '2px' }} />
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '15px', fontWeight: 600, color: '#f0ebff', marginBottom: '4px' }}>
-                  📁 Upload from your device
+                  Upload from your device
                 </div>
                 <p style={{ fontSize: '12px', color: '#9b8fb5', marginBottom: '12px', fontStyle: 'italic' }}>
                   Select your video file from your phone or computer
@@ -151,7 +151,7 @@ export default function VideoUploadModal({ onClose, onUpload }: VideoUploadModal
               <Link2 size={24} style={{ color: '#c9a84c', flexShrink: 0, marginTop: '2px' }} />
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '15px', fontWeight: 600, color: '#f0ebff', marginBottom: '4px' }}>
-                  🔗 Paste a link instead
+                  Paste a link instead
                 </div>
                 <p style={{ fontSize: '12px', color: '#9b8fb5', margin: 0, fontStyle: 'italic' }}>
                   Already uploaded to Google Drive, Canva or Dropbox? Paste your link here

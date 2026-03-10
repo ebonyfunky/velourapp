@@ -37,7 +37,7 @@ Best,
   {
     id: 'instagram-dm',
     label: 'The Instagram DM Pitch',
-    template: `Hey [Brand Name]! 👋
+    template: `Hey [Brand Name]!
 
 I'm a UGC creator in the [Niche] space and I've been obsessed with your [Product]. The way you [specific thing you noticed] is exactly what my audience loves.
 
@@ -148,37 +148,30 @@ const objectionHandlers = [
 
 const brandDiscoveryPlatforms = [
   {
-    emoji: '📱',
     name: 'TikTok Creator Marketplace',
     description: 'Free. Brands post open campaigns. Go to TikTok Studio → Creator Marketplace → Apply to campaigns in your niche.'
   },
   {
-    emoji: '🛍️',
     name: 'TikTok Shop Affiliate',
     description: 'Find products in your niche, create videos, earn commission per sale. No pitch needed to start.'
   },
   {
-    emoji: '📧',
     name: 'Cold Email Outreach',
     description: 'Find DTC brands on Instagram or TikTok. Go to their website. Find the marketing or partnerships email. Pitch directly.'
   },
   {
-    emoji: '💼',
     name: 'Billo',
     description: 'UGC platform that connects brands with creators. Apply at billo.app'
   },
   {
-    emoji: '🎯',
     name: 'Insense',
     description: 'Premium UGC marketplace. Brands post briefs, creators apply. insense.pro'
   },
   {
-    emoji: '🤝',
     name: 'Passionfroot',
     description: 'Build a creator storefront and let brands come to you. passionfroot.me'
   },
   {
-    emoji: '📲',
     name: 'Instagram DM Outreach',
     description: 'Find small to mid-size brands in your niche. DM their business account with your pitch. Response rate is higher than email for smaller brands.'
   }
@@ -385,7 +378,7 @@ export default function BrandOutreach() {
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <div style={{ fontSize: '40px', marginBottom: '16px' }}>{platform.emoji}</div>
+              {platform.emoji && <div style={{ fontSize: '40px', marginBottom: '16px' }}>{platform.emoji}</div>}
               <div style={{ fontSize: '18px', fontWeight: 700, color: '#e8c96a', marginBottom: '12px' }}>
                 {platform.name}
               </div>

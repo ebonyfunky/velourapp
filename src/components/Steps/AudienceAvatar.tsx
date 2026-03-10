@@ -346,7 +346,7 @@ Return the response in this exact JSON format:
             fontSize: '12px',
             fontWeight: 600,
           }}>
-            💡 Your content must sound like this voice — not marketing language.
+            Your content must sound like this voice — not marketing language.
           </div>
         </div>
 
@@ -401,7 +401,7 @@ Return the response in this exact JSON format:
               fontSize: '11px',
               fontWeight: 600,
             }}>
-              ✍️ Add this to your bio
+              Add this to your bio
             </div>
             <div style={{
               padding: '8px 14px',
@@ -412,7 +412,7 @@ Return the response in this exact JSON format:
               fontSize: '11px',
               fontWeight: 600,
             }}>
-              📖 Read this before every post
+              Read this before every post
             </div>
           </div>
         </div>
@@ -576,7 +576,7 @@ Return the response in this exact JSON format:
                     fontWeight: 600,
                     textAlign: 'center',
                   }}>
-                    ✓ Yes — post it confidently
+                    Yes — post it confidently
                   </div>
                   <div style={{
                     flex: 1,
@@ -589,7 +589,7 @@ Return the response in this exact JSON format:
                     fontWeight: 600,
                     textAlign: 'center',
                   }}>
-                    ✗ No — rewrite or delete
+                    No — rewrite or delete
                   </div>
                 </div>
               </div>

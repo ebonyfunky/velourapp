@@ -241,7 +241,7 @@ Example output:
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
           <div>
             <h2 style={{ fontSize: '32px', fontWeight: 700, color: '#f0ebff', marginBottom: '8px', fontFamily: 'Cormorant Garamond, serif' }}>
-              📋 Brand Brief Loaded
+              Brand Brief Loaded
             </h2>
             <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#c9a84c' }}>
               Review and edit any field before generating your script
@@ -552,7 +552,7 @@ Example output:
   return (
     <div style={{ marginBottom: '48px' }}>
       <h2 style={{ fontSize: '32px', fontWeight: 700, color: '#f0ebff', marginBottom: '8px', fontFamily: 'Cormorant Garamond, serif' }}>
-        📋 Upload Your Brand Brief First
+        Upload Your Brand Brief First
       </h2>
       <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#c9a84c', marginBottom: '32px' }}>
         Got a brief from the brand? Upload it here and Velour will read the requirements and bake them directly into your script so you deliver exactly what the brand asked for — first time every time.
@@ -573,7 +573,7 @@ Example output:
             boxShadow: uploadMode === 'document' ? '0 4px 12px rgba(201,168,76,0.4)' : 'none',
           }}
         >
-          📄 Upload a Document
+          Upload a Document
         </button>
         <button
           onClick={() => setUploadMode('screenshot')}
@@ -589,7 +589,7 @@ Example output:
             boxShadow: uploadMode === 'screenshot' ? '0 4px 12px rgba(201,168,76,0.4)' : 'none',
           }}
         >
-          🖼️ Upload a Screenshot
+          Upload a Screenshot
         </button>
         <button
           onClick={() => setUploadMode('manual')}
@@ -605,7 +605,7 @@ Example output:
             boxShadow: uploadMode === 'manual' ? '0 4px 12px rgba(201,168,76,0.4)' : 'none',
           }}
         >
-          ✍️ Paste It Manually
+          Paste It Manually
         </button>
       </div>
 

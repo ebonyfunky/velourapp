@@ -12,12 +12,12 @@ interface Step5Props {
 type ScriptFormat = 'hook-and-sell' | 'story-led' | 'problem-solution' | 'trend-challenge' | 'results-first' | 'faith-purpose' | 'threads' | 'twitter-thread';
 
 const SCRIPT_FORMATS = [
-  { id: 'hook-and-sell' as const, label: '⚡ Hook & Sell' },
-  { id: 'story-led' as const, label: '📖 Story-Led' },
-  { id: 'problem-solution' as const, label: '🎯 Problem → Solution' },
-  { id: 'trend-challenge' as const, label: '🔥 Trend & Challenge' },
-  { id: 'results-first' as const, label: '💰 Results First' },
-  { id: 'faith-purpose' as const, label: '🙏 Faith & Purpose' },
+  { id: 'hook-and-sell' as const, label: 'Hook & Sell' },
+  { id: 'story-led' as const, label: 'Story-Led' },
+  { id: 'problem-solution' as const, label: 'Problem → Solution' },
+  { id: 'trend-challenge' as const, label: 'Trend & Challenge' },
+  { id: 'results-first' as const, label: 'Results First' },
+  { id: 'faith-purpose' as const, label: 'Faith & Purpose' },
 ];
 
 export default function Step5({ onNext, onBack }: Step5Props) {
@@ -48,11 +48,11 @@ export default function Step5({ onNext, onBack }: Step5Props) {
     'Link in bio',
     'Save this for later',
     'Share with someone who needs this',
-    'Drop a 🔥 if this helped',
+    'Drop a comment if this helped',
     'Try it for free — link in bio',
     'Watch till the end',
     'Tag someone building their empire',
-    'Comment your country 🌍',
+    'Comment your country',
   ];
 
   const affiliateCTAs = [
@@ -303,7 +303,7 @@ Result or transformation example.
             color: '#f0ebff',
           }}
         >
-          ⚡ Stories viewers decide in 1.5 seconds. Pattern Interrupt or Emotional Hook recommended for maximum hold
+          Stories viewers decide in 1.5 seconds. Pattern Interrupt or Emotional Hook recommended for maximum hold
           rate.
         </div>
       )}
@@ -324,7 +324,7 @@ Result or transformation example.
             ))}
           </ul>
           <div className="mt-3 italic text-gold">
-            ✦ LinkedIn hooks must earn the 'see more' click in the first line. Lead with the insight, not the
+            LinkedIn hooks must earn the 'see more' click in the first line. Lead with the insight, not the
             backstory.
           </div>
         </div>
@@ -346,7 +346,7 @@ Result or transformation example.
             ))}
           </ul>
           <div className="mt-3 italic text-gold">
-            ✦ Threads rewards raw, conversational and opinionated content. Less polished = more reach. Write like you
+            Threads rewards raw, conversational and opinionated content. Less polished = more reach. Write like you
             think, not like you edit.
           </div>
         </div>
@@ -393,7 +393,7 @@ Result or transformation example.
               padding: '20px 16px',
             }}
           >
-            <div className="text-2xl mb-2">⚡</div>
+            <div className="text-2xl mb-2" />
             <h3 className="text-[16px] font-bold text-text-primary mb-2">Western</h3>
             <p className="text-[12px] text-text-dim leading-relaxed">Direct, fast-paced, high energy</p>
           </button>
@@ -413,7 +413,7 @@ Result or transformation example.
               padding: '20px 16px',
             }}
           >
-            <div className="text-2xl mb-2">🌍</div>
+            <div className="text-2xl mb-2" />
             <h3 className="text-[16px] font-bold text-text-primary mb-2">African / Cultural</h3>
             <p className="text-[12px] text-text-dim leading-relaxed">Storytelling-led, community-focused, culturally rich and relatable</p>
           </button>
@@ -433,7 +433,7 @@ Result or transformation example.
               padding: '20px 16px',
             }}
           >
-            <div className="text-2xl mb-2">🙏</div>
+            <div className="text-2xl mb-2" />
             <h3 className="text-[16px] font-bold text-text-primary mb-2">Faith-Based</h3>
             <p className="text-[12px] text-text-dim leading-relaxed">Scripture-anchored, hope-led, transformational</p>
           </button>
@@ -453,7 +453,7 @@ Result or transformation example.
               padding: '20px 16px',
             }}
           >
-            <div className="text-2xl mb-2">🌐</div>
+            <div className="text-2xl mb-2" />
             <h3 className="text-[16px] font-bold text-text-primary mb-2">Universal</h3>
             <p className="text-[12px] text-text-dim leading-relaxed">Inclusive, clear and globally relatable</p>
           </button>
@@ -810,7 +810,7 @@ Result or transformation example.
             fontStyle: 'italic',
           }}
         >
-          ✦ {contentLanguage ? `Scripts will be generated in ${contentLanguage}` : 'Scripts generate in English by default'}.
+          {contentLanguage ? `Scripts will be generated in ${contentLanguage}` : 'Scripts generate in English by default'}.
         </p>
         <div
           className="velour-card p-6 min-h-[300px] relative"

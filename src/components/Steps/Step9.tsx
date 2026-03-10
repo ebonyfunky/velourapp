@@ -50,13 +50,13 @@ export default function Step7({ onNext, onBack }: Step7Props) {
     };
 
     const formatLabels: Record<string, string> = {
-      'hook-and-sell': '⚡ Hook & Sell',
-      'story-led': '📖 Story-Led',
-      'problem-solution': '🎯 Problem → Solution',
-      'trend-challenge': '🔥 Trend & Challenge',
-      'results-first': '💰 Results First',
-      'faith-purpose': '🙏 Faith & Purpose',
-      'brand-pitch': '🤝 Brand Pitch'
+      'hook-and-sell': 'Hook & Sell',
+      'story-led': 'Story-Led',
+      'problem-solution': 'Problem → Solution',
+      'trend-challenge': 'Trend & Challenge',
+      'results-first': 'Results First',
+      'faith-purpose': 'Faith & Purpose',
+      'brand-pitch': 'Brand Pitch'
     };
 
     const content = `
@@ -235,16 +235,16 @@ Add-ons:
 ${safeArray(store.ugcAddOns).map(a => '• ' + a).join('\n') || '• None selected'}
 
 PORTFOLIO CHECKLIST:
-☐ Unboxing Review video (30-60 sec)
-☐ Before & After video (30-45 sec)
-☐ Honest Review video (45-60 sec)
-☐ Lifestyle Integration video (20-40 sec)
-☐ Results Story video (45-75 sec)
-☐ Hero Shot photo
-☐ Lifestyle Flat Lay photo
-☐ In-Use Shot photo
-☐ Result Photo
-☐ Story Graphic
+Unboxing Review video (30-60 sec)
+Before & After video (30-45 sec)
+Honest Review video (45-60 sec)
+Lifestyle Integration video (20-40 sec)
+Results Story video (45-75 sec)
+Hero Shot photo
+Lifestyle Flat Lay photo
+In-Use Shot photo
+Result Photo
+Story Graphic
 
 WHERE TO FIND BRANDS:
 Free: TikTok Creator Marketplace,
@@ -274,33 +274,33 @@ SECTION 10 — FILMING CHECKLIST
 ${divider}
 
 BEFORE YOU FILM:
-☐ Pick your Velour script (above)
-☐ Face a window or set up ring light
-☐ Camera at eye level or slightly above
-☐ Eyes in the top third of the frame
-☐ Clean minimal background
-☐ Phone on Do Not Disturb
-☐ Read script 3 times before recording
-☐ Record minimum 3 takes
+Pick your Velour script (above)
+Face a window or set up ring light
+Camera at eye level or slightly above
+Eyes in the top third of the frame
+Clean minimal background
+Phone on Do Not Disturb
+Read script 3 times before recording
+Record minimum 3 takes
 
 AFTER YOU FILM:
-☐ Add on-screen captions
-☐ Add your CTA text overlay
-☐ Post at peak time for your timezone
-☐ Reply to every comment within 1 hour
-☐ DM anyone who comments with a question
+Add on-screen captions
+Add your CTA text overlay
+Post at peak time for your timezone
+Reply to every comment within 1 hour
+DM anyone who comments with a question
 
 ${divider}
 SECTION 10 — WEEKLY GROWTH ACTIONS
 ${divider}
 
-☐ Post 3x minimum using your scripts
-☐ Send 3 brand pitch emails
-☐ Go Live once using your Live script
-☐ Post one result or testimonial
-☐ Comment on 10 posts in your niche daily
-☐ Check analytics at end of week
-☐ Double down on what performed best
+Post 3x minimum using your scripts
+Send 3 brand pitch emails
+Go Live once using your Live script
+Post one result or testimonial
+Comment on 10 posts in your niche daily
+Check analytics at end of week
+Double down on what performed best
 
 ${thinDivider}
 Remember: Consistent beats perfect.
@@ -422,7 +422,7 @@ ${divider}
           }}
         >
           <h3 className="text-[20px] font-bold text-text-primary mb-1">
-            🔴 Live Show Planner
+            Live Show Planner
           </h3>
           <p className="text-[13px] text-text-dim mb-6">
             Never freeze on a Live again — know exactly what to say from open to close
@@ -445,7 +445,7 @@ ${divider}
               transition: 'opacity 0.2s',
             }}
           >
-            {isGeneratingLive ? 'Generating...' : '✦ Generate My Live Script'}
+            {isGeneratingLive ? 'Generating...' : 'Generate My Live Script'}
           </button>
 
           <div
@@ -481,7 +481,7 @@ ${divider}
               </>
             ) : !liveScript ? (
               <>
-                <div style={{ fontSize: '32px', marginBottom: '8px' }}>🔴</div>
+                <div style={{ fontSize: '32px', marginBottom: '8px' }} />
                 <p style={{ color: '#9b8fb5', fontSize: '13px', lineHeight: '1.6' }}>
                   Click Generate to create your<br />30-minute Live show script
                 </p>
@@ -602,19 +602,11 @@ ${divider}
                 marginTop: '12px',
               }}
             >
-              ✓ Campaign Pack Downloaded!
+              Campaign Pack Downloaded!
             </div>
           )}
         </div>
 
-        <div className="text-center">
-          <button
-            onClick={onNext}
-            className="text-[14px] font-semibold text-gold hover:text-gold-light transition-colors underline"
-          >
-            Start New Campaign →
-          </button>
-        </div>
       </div>
 
       <div className="flex justify-center pt-6">
@@ -635,9 +627,9 @@ ${divider}
         </p>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 justify-center pt-4">
         <button onClick={onBack} className="btn-secondary">
-          ← Back
+          Back
         </button>
       </div>
     </motion.div>

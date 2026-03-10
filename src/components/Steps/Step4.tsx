@@ -25,22 +25,22 @@ const currencies: { value: Currency; label: string; symbol: string }[] = [
 ];
 
 const productTypes = [
-  { value: 'high-ticket', emoji: '💎', label: 'High-Ticket', desc: '$500+, premium offer' },
-  { value: 'mid-ticket', emoji: '💼', label: 'Mid-Ticket', desc: '$50–$500, considered purchase' },
-  { value: 'low-ticket', emoji: '🏷', label: 'Low-Ticket', desc: 'Under $50, impulse buy' },
-  { value: 'tiktok-shop', emoji: '🛍', label: 'TikTok Shop', desc: 'Physical product for shop' },
-  { value: 'free-lead-magnet', emoji: '🎁', label: 'Free Lead Magnet', desc: 'Freebie to build your list' },
+  { value: 'high-ticket', label: 'High-Ticket', desc: '$500+, premium offer' },
+  { value: 'mid-ticket', label: 'Mid-Ticket', desc: '$50–$500, considered purchase' },
+  { value: 'low-ticket', label: 'Low-Ticket', desc: 'Under $50, impulse buy' },
+  { value: 'tiktok-shop', label: 'TikTok Shop', desc: 'Physical product for shop' },
+  { value: 'free-lead-magnet', label: 'Free Lead Magnet', desc: 'Freebie to build your list' },
 ];
 
 const affiliateDigitalTypes = [
-  { value: 'affiliate', emoji: '🔗', label: 'Affiliate Product', desc: 'You earn commission promoting someone else\'s product' },
-  { value: 'ebook', emoji: '📘', label: 'eBook', desc: 'A digital book your audience downloads instantly' },
-  { value: 'template', emoji: '📋', label: 'Template', desc: 'Canva, Notion, Excel or any done-for-you template' },
-  { value: 'guide-workbook', emoji: '📖', label: 'Guide or Workbook', desc: 'A step-by-step guide, workbook or how-to resource' },
-  { value: 'mini-course', emoji: '🎓', label: 'Mini Course', desc: 'A short video course, workshop or training' },
-  { value: 'spreadsheet-tracker', emoji: '📊', label: 'Spreadsheet or Tracker', desc: 'A budget tracker, content planner or business dashboard' },
-  { value: 'swipe-file', emoji: '🗂️', label: 'Swipe File or Resource Pack', desc: 'Done-for-you prompts, examples or resource collection' },
-  { value: 'printable', emoji: '🖨️', label: 'Printable', desc: 'A planner, journal, checklist or printable download' },
+  { value: 'affiliate', label: 'Affiliate Product', desc: 'You earn commission promoting someone else\'s product' },
+  { value: 'ebook', label: 'eBook', desc: 'A digital book your audience downloads instantly' },
+  { value: 'template', label: 'Template', desc: 'Canva, Notion, Excel or any done-for-you template' },
+  { value: 'guide-workbook', label: 'Guide or Workbook', desc: 'A step-by-step guide, workbook or how-to resource' },
+  { value: 'mini-course', label: 'Mini Course', desc: 'A short video course, workshop or training' },
+  { value: 'spreadsheet-tracker', label: 'Spreadsheet or Tracker', desc: 'A budget tracker, content planner or business dashboard' },
+  { value: 'swipe-file', label: 'Swipe File or Resource Pack', desc: 'Done-for-you prompts, examples or resource collection' },
+  { value: 'printable', label: 'Printable', desc: 'A planner, journal, checklist or printable download' },
 ];
 
 const digitalProductTypes = ['ebook', 'template', 'guide-workbook', 'mini-course', 'spreadsheet-tracker', 'swipe-file', 'printable'];
@@ -273,11 +273,9 @@ export default function Step3({ onNext, onBack }: Step3Props) {
                         fontWeight: 800,
                       }}
                     >
-                      ✓
                     </div>
                   )}
                   <div className="text-center space-y-2">
-                    <div style={{ fontSize: '32px', marginBottom: '4px' }}>{type.emoji}</div>
                     <div
                       style={{
                         color: isSelected ? '#c9a84c' : '#f0ebff',
@@ -346,11 +344,9 @@ export default function Step3({ onNext, onBack }: Step3Props) {
                         fontWeight: 800,
                       }}
                     >
-                      ✓
                     </div>
                   )}
                   <div className="text-center space-y-2">
-                    <div style={{ fontSize: '32px', marginBottom: '4px' }}>{type.emoji}</div>
                     <div
                       style={{
                         color: isSelected ? '#c9a84c' : '#f0ebff',
@@ -461,7 +457,7 @@ export default function Step3({ onNext, onBack }: Step3Props) {
                 fontStyle: 'italic',
               }}
             >
-              ✦ Never lead with the link. Lead with the transformation — the link is just how they access it. Velour scripts are written this way automatically.
+              Never lead with the link. Lead with the transformation — the link is just how they access it. Velour scripts are written this way automatically.
             </div>
           </motion.div>
         )}
@@ -554,10 +550,10 @@ Bonus: 10 Canva templates included"
                 className="input-field"
                 rows={4}
                 placeholder="e.g.
-✓ 47-page eBook ($47 value)
-✓ 10 Canva templates ($97 value)
-✓ Checklist PDF ($17 value)
-✓ Bonus: Private community access
+• 47-page eBook ($47 value)
+• 10 Canva templates ($97 value)
+• Checklist PDF ($17 value)
+• Bonus: Private community access
 Total value: $161 — your price: $27"
               />
             </div>
@@ -574,7 +570,7 @@ Total value: $161 — your price: $27"
                 marginTop: '16px',
               }}
             >
-              ✦ Always show the total value BEFORE you reveal the price. Velour scripts use price anchoring automatically — your audience will see $161 worth of value before they ever hear $27.
+              Always show the total value BEFORE you reveal the price. Velour scripts use price anchoring automatically — your audience will see $161 worth of value before they ever hear $27.
             </div>
           </motion.div>
         )}
@@ -720,7 +716,7 @@ Total value: $161 — your price: $27"
             marginTop: '24px',
           }}
         >
-          ✦ Everything you enter here powers your scripts, scenes and campaign strategy in the next steps.
+          Everything you enter here powers your scripts, scenes and campaign strategy in the next steps.
         </div>
       </div>
 

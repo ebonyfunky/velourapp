@@ -40,7 +40,6 @@ const photoTypes: PhotoType[] = [
   },
   {
     id: '5',
-    emoji: '📸',
     title: 'Before & After Photo Set',
     whyBrandsLove: 'Visual proof of results — the most powerful photo type for conversion',
     howToShoot: 'Take a photo before using the product in the same lighting and angle. Use the product for a few days then take the exact same photo in the same spot and light. Side by side these photos tell a story brands pay for.',
@@ -54,14 +53,12 @@ const photoTypes: PhotoType[] = [
   },
   {
     id: '7',
-    emoji: '📦',
     title: 'Unboxing Flat Lay',
     whyBrandsLove: 'Shows the full brand experience from packaging to product — great for gifting and premium brands',
     howToShoot: 'Lay out the box, packaging, any inserts and the product itself in a neat arrangement on a clean surface. Shoot from above. Make it look like a magazine editorial.',
   },
   {
     id: '8',
-    emoji: '✨',
     title: 'Texture & Application Shot',
     whyBrandsLove: 'Shows the product being used in real time — great for beauty, skincare and food',
     howToShoot: 'Apply a small amount of the product to your hand or skin and photograph the moment of application. Capture the texture, the colour, the way it blends. Get close and use natural light.',

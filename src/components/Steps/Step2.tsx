@@ -133,7 +133,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
               marginTop: '8px',
             }}
           >
-            ✦ The more specific you are, the more your content makes people say "this is literally me"
+            The more specific you are, the more your content makes people say "this is literally me"
           </div>
         </div>
 
@@ -510,7 +510,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                 width: '100%',
               }}
             >
-              ✦ Build My Statement
+              Build My Statement
             </button>
           </div>
 
@@ -523,7 +523,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                 className="text-center mb-3"
                 style={{ color: '#4ade80', fontSize: '11px', fontWeight: 600 }}
               >
-                ✦ Your statement has been built — refine it below until it feels exactly right
+                Your statement has been built — refine it below until it feels exactly right
               </motion.div>
             )}
           </AnimatePresence>
@@ -645,7 +645,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                 display: 'block',
               }}
             >
-              ✦ Or choose an example from your niche and edit it to make it yours
+              Or choose an example from your niche and edit it to make it yours
             </label>
 
             <div className="space-y-2">
@@ -839,7 +839,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                   className="text-center mt-2"
                   style={{ color: '#4ade80', fontSize: '11px', fontWeight: 600 }}
                 >
-                  ✓ Example applied — now edit the fields above to make it completely yours
+                  Example applied — now edit the fields above to make it completely yours
                 </motion.div>
               )}
             </AnimatePresence>
@@ -941,7 +941,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                 cursor: 'default',
               }}
             >
-              ✓ Yes — post it
+              Yes — post it
             </button>
             <button
               type="button"
@@ -956,7 +956,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
                 cursor: 'default',
               }}
             >
-              ✗ No — rewrite it
+              No — rewrite it
             </button>
           </div>
         </div>
@@ -973,7 +973,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
               marginTop: '16px',
             }}
           >
-            <div style={{ fontSize: '20px', color: '#4ade80', marginBottom: '4px' }}>✦</div>
+            <div style={{ fontSize: '20px', color: '#4ade80', marginBottom: '4px' }} />
             <h3
               style={{
                 color: '#4ade80',

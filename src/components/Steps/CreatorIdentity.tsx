@@ -120,7 +120,7 @@ Return the response in this exact JSON format:
   };
 
   return (
-    <div style={{ color: 'white', fontFamily: 'Inter, sans-serif' }}>
+    <div style={{ color: 'white', fontFamily: 'Inter, sans-serif' }} className="pb-20">
       <h1 style={{ color: '#c9a84c', fontSize: '28px', fontWeight: 800, marginBottom: '8px' }}>
         Step 1 — Creator Identity
       </h1>
@@ -397,39 +397,25 @@ Return the response in this exact JSON format:
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '12px', marginTop: '32px' }}>
+      <div
+        className="fixed bottom-0 left-0 right-0 flex justify-between items-center px-6 py-4 border-t border-[rgba(201,168,76,0.15)] bg-[#1c1a35] z-[100] md:left-[240px]"
+        style={{ pointerEvents: 'auto' }}
+      >
         <button
+          type="button"
           onClick={onBack}
-          style={{
-            flex: 1,
-            padding: '14px',
-            background: 'transparent',
-            border: '1px solid #c9a84c',
-            borderRadius: '8px',
-            color: '#c9a84c',
-            fontSize: '14px',
-            fontWeight: 700,
-            cursor: 'pointer',
-          }}
+          className="px-5 py-3 rounded-lg font-bold border border-[#c9a84c] text-[#c9a84c] hover:bg-[rgba(201,168,76,0.1)] transition-all"
         >
           Back
         </button>
+        <div className="w-24" />
         <button
+          type="button"
           onClick={onNext}
           disabled={!canProceed}
-          style={{
-            flex: 2,
-            padding: '14px',
-            background: canProceed ? '#c9a84c' : '#666',
-            border: 'none',
-            borderRadius: '8px',
-            color: '#000',
-            fontSize: '14px',
-            fontWeight: 700,
-            cursor: canProceed ? 'pointer' : 'not-allowed',
-          }}
+          className="px-6 py-3 rounded-lg font-bold border-0 transition-all next-btn-glow disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[#4a4560] disabled:shadow-none bg-[#c9a84c] text-[#0d0b1a] hover:bg-[#e8c96a] shadow-[0_0_20px_rgba(201,168,76,0.25)]"
         >
-          Next →
+          Next
         </button>
       </div>
     </div>

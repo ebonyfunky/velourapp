@@ -4,7 +4,6 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 const CARDS = [
   {
     id: 'background',
-    icon: '🏠',
     title: 'Your Background',
     subtitle: 'Your background speaks before you do',
     content: (
@@ -80,7 +79,6 @@ const CARDS = [
   },
   {
     id: 'framing',
-    icon: '📐',
     title: 'Camera Angle and Framing',
     subtitle: 'How you frame yourself determines if brands take you seriously',
     content: (
@@ -147,7 +145,6 @@ const CARDS = [
   },
   {
     id: 'sound',
-    icon: '🎤',
     title: 'Sound Quality',
     subtitle: 'Bad audio kills a great video every single time',
     content: (
@@ -217,7 +214,6 @@ const CARDS = [
   },
   {
     id: 'lighting',
-    icon: '💡',
     title: 'Lighting',
     subtitle: 'Natural light is free and it is all you need',
     content: (
@@ -251,7 +247,6 @@ const CARDS = [
   },
   {
     id: 'appearance',
-    icon: '👗',
     title: 'How To Look On Camera',
     subtitle: 'You do not need to be glamorous — you need to look intentional',
     content: (
@@ -318,7 +313,6 @@ const CARDS = [
   },
   {
     id: 'energy',
-    icon: '🙌',
     title: 'Energy and Body Language',
     subtitle: 'Your energy is contagious — make sure it is the right kind',
     content: (
@@ -388,7 +382,6 @@ const CARDS = [
   },
   {
     id: 'text',
-    icon: '📝',
     title: 'On-Screen Text',
     subtitle: 'Text on screen should help viewers — not overwhelm them',
     content: (
@@ -458,7 +451,6 @@ const CARDS = [
   },
   {
     id: 'brandsafe',
-    icon: '🛡️',
     title: 'Brand-Safe Behaviour',
     subtitle: 'Know what brands will and will not tolerate before you film',
     content: (
@@ -531,7 +523,6 @@ const CARDS = [
   },
   {
     id: 'vibe',
-    icon: '✨',
     title: 'The Overall Vibe Every UGC Video Must Have',
     subtitle: 'This is what separates creators brands hire once from creators they hire on retainer',
     content: (
@@ -598,7 +589,6 @@ const CARDS = [
   },
   {
     id: 'broll',
-    icon: '🎥',
     title: 'B-Roll — The Shot Nobody Sees That Makes Every Brand Stop And Watch',
     subtitle: 'The creators brands keep rehiring all have one thing in common — they shoot B-roll',
     content: (
@@ -626,13 +616,13 @@ const CARDS = [
               🧴 The product being applied or used — hands only, no face needed
             </li>
             <li style={{ fontSize: '13px', color: '#d0c9e0', marginBottom: '6px', lineHeight: '1.5' }}>
-              📦 The unboxing moment — tissue paper, packaging, the first reveal
+              The unboxing moment — tissue paper, packaging, the first reveal
             </li>
             <li style={{ fontSize: '13px', color: '#d0c9e0', marginBottom: '6px', lineHeight: '1.5' }}>
               🔍 An extreme close-up of the texture, the label, the finish
             </li>
             <li style={{ fontSize: '13px', color: '#d0c9e0', marginBottom: '6px', lineHeight: '1.5' }}>
-              📱 Scrolling through an app, a website or a results page
+              Scrolling through an app, a website or a results page
             </li>
             <li style={{ fontSize: '13px', color: '#d0c9e0', marginBottom: '6px', lineHeight: '1.5' }}>
               ☕ A lifestyle moment — morning routine, desk, gym, kitchen
@@ -656,7 +646,7 @@ const CARDS = [
 
           <div style={{ marginBottom: '12px' }}>
             <div style={{ fontSize: '13px', fontWeight: 600, color: '#f0ebff', marginBottom: '4px' }}>
-              👁️ It holds attention longer than a talking head ever will
+              It holds attention longer than a talking head ever will
             </div>
             <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.6', marginBottom: 0, fontStyle: 'italic' }}>
               Every visual change gives the brain a reason to stay. Brands measure this. More visual variety equals longer watch time equals more sales. Creators who deliver that get booked again.
@@ -665,7 +655,7 @@ const CARDS = [
 
           <div style={{ marginBottom: '12px' }}>
             <div style={{ fontSize: '13px', fontWeight: 600, color: '#f0ebff', marginBottom: '4px' }}>
-              ✂️ It is your best editing tool
+              It is your best editing tool
             </div>
             <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.6', marginBottom: 0, fontStyle: 'italic' }}>
               Stumbled over a word? Cut to a product close-up. Needed a breath between sentences? Cover it with a lifestyle shot. B-roll does not just make your video look better — it makes the editing process forgiving.
@@ -674,7 +664,7 @@ const CARDS = [
 
           <div style={{ marginBottom: '12px' }}>
             <div style={{ fontSize: '13px', fontWeight: 600, color: '#f0ebff', marginBottom: '4px' }}>
-              🎬 It signals professional experience immediately
+              It signals professional experience immediately
             </div>
             <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.6', marginBottom: 0, fontStyle: 'italic' }}>
               A brand watching your portfolio can tell within three seconds whether you understand B-roll. The ones who do look like they have been doing this for years. The ones who do not look like they just pressed record and hoped for the best.
@@ -683,7 +673,7 @@ const CARDS = [
 
           <div style={{ marginBottom: 0 }}>
             <div style={{ fontSize: '13px', fontWeight: 600, color: '#f0ebff', marginBottom: '4px' }}>
-              🌍 It puts the product inside a real life
+              It puts the product inside a real life
             </div>
             <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.6', marginBottom: 0, fontStyle: 'italic' }}>
               Anyone can hold up a product and talk about it. What brands actually need is to see their product existing naturally in someone's world. B-roll is how you show that without saying a single extra word.
@@ -769,7 +759,7 @@ export default function BeforeYouRecord() {
   return (
     <div style={{ marginBottom: '32px' }}>
       <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-        🎬 Before You Press Record — Set Yourself Up For A Brand-Ready Video
+        Before You Press Record — Set Yourself Up For A Brand-Ready Video
       </h2>
       <p style={{ fontSize: '13px', color: '#9b8fb5', marginBottom: '24px', fontStyle: 'italic' }}>
         The difference between a video brands ignore and one they pay for is often decided before you say a single word. Get these right every time.
@@ -807,7 +797,7 @@ export default function BeforeYouRecord() {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
-                  <span style={{ fontSize: '24px' }}>{card.icon}</span>
+                  {card.icon && <span style={{ fontSize: '24px' }}>{card.icon}</span>}
                   <div>
                     <div style={{ fontSize: '16px', fontWeight: 700, color: '#f0ebff', marginBottom: '2px' }}>
                       {card.title}

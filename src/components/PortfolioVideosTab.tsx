@@ -182,7 +182,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
     <div>
       <div style={{ marginBottom: '32px' }}>
         <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '32px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-          ⭐ Your Two Foundation Videos
+          Your Two Foundation Videos
         </h2>
         <p style={{ fontSize: '14px', color: '#9b8fb5', lineHeight: '1.6', marginBottom: '24px', fontStyle: 'italic' }}>
           Film these first before anything else. Scripts for both are in the Script Builder tab.
@@ -346,7 +346,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
                   border: '1px solid rgba(201,168,76,0.2)',
                 }}
               >
-                ⭐ Creator Introduction — Portfolio Anchor
+                Creator Introduction — Portfolio Anchor
               </div>
             </div>
           ) : (
@@ -753,14 +753,14 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
                         }}
                       >
                         <option value="">Select type...</option>
-                        <optgroup label="🎥 Face Forward">
+                        <optgroup label="Face Forward">
                           {FACE_FORWARD_TYPES.map((type) => (
                             <option key={type} value={type}>
                               {type}
                             </option>
                           ))}
                         </optgroup>
-                        <optgroup label="🎭 Faceless">
+                        <optgroup label="Faceless">
                           {FACELESS_TYPES.map((type) => (
                             <option key={type} value={type}>
                               {type}
@@ -789,7 +789,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
                             cursor: 'pointer',
                           }}
                         >
-                          🎥 Face Forward
+                          Face Forward
                         </button>
                         <button
                           onClick={() => handleUpdateVideo(index, 'isFaceForward', false)}
@@ -805,7 +805,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
                             cursor: 'pointer',
                           }}
                         >
-                          🎭 Faceless
+                          Faceless
                         </button>
                       </div>
                     </div>
@@ -875,7 +875,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
           {getReadinessMessage()}
         </p>
         <p style={{ fontSize: '12px', color: '#9b8fb5', fontStyle: 'italic', margin: 0 }}>
-          💡 Tip: Include at least one Faceless video in your portfolio — brands that run paid ads specifically look for faceless content creators.
+          Tip: Include at least one Faceless video in your portfolio — brands that run paid ads specifically look for faceless content creators.
         </p>
       </div>
 

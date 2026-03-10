@@ -17,7 +17,7 @@ export function getFormatBanner(platforms: string[]): FormatBanner | null {
 
   if (hasStories) {
     return {
-      text: '📐 Stories Format — 9:16 vertical aspect ratio optimised',
+      text: 'Stories Format — 9:16 vertical aspect ratio optimised',
       background: 'rgba(201,168,76,0.08)',
       borderColor: '#c9a84c',
     };
@@ -25,7 +25,7 @@ export function getFormatBanner(platforms: string[]): FormatBanner | null {
 
   if (hasShortForm) {
     return {
-      text: '📐 Short-Form Video — 9:16 vertical, max 60–90 seconds',
+      text: 'Short-Form Video — 9:16 vertical, max 60–90 seconds',
       background: 'rgba(46,139,87,0.08)',
       borderColor: '#2e8b57',
     };
@@ -33,7 +33,7 @@ export function getFormatBanner(platforms: string[]): FormatBanner | null {
 
   if (hasLongForm) {
     return {
-      text: '📐 Long-Form Video — 16:9 landscape recommended',
+      text: 'Long-Form Video — 16:9 landscape recommended',
       background: 'rgba(124,58,237,0.08)',
       borderColor: '#7c3aed',
     };
@@ -41,7 +41,7 @@ export function getFormatBanner(platforms: string[]): FormatBanner | null {
 
   if (hasFeed) {
     return {
-      text: '📐 Feed Content — Square or portrait format, text-first',
+      text: 'Feed Content — Square or portrait format, text-first',
       background: 'rgba(201,168,76,0.08)',
       borderColor: '#c9a84c',
     };
@@ -167,12 +167,12 @@ export const linkedInAngles = [
 ];
 
 export const threadsAngles = [
-  '⚡ Hot Takes — Bold opinions that divide the room',
-  '🔥 Contrarian — "Everyone says X. Here\'s why they\'re wrong."',
-  '💡 Unpopular Opinion — Opens with "Unpopular opinion:"',
-  '📋 Quick Tips — Fast value in list format',
-  '🎭 Behind the Scenes — Raw, unfiltered thoughts',
-  '📖 Story-led — Personal narrative, relatable moment',
+  'Hot Takes — Bold opinions that divide the room',
+  'Contrarian — "Everyone says X. Here\'s why they\'re wrong."',
+  'Unpopular Opinion — Opens with "Unpopular opinion:"',
+  'Quick Tips — Fast value in list format',
+  'Behind the Scenes — Raw, unfiltered thoughts',
+  'Story-led — Personal narrative, relatable moment',
 ];
 
 export const categoryScriptAngles: Record<string, string[]> = {
@@ -308,8 +308,8 @@ export const categoryCTAs: Record<string, string[]> = {
 };
 
 export const categoryTips: Record<string, string> = {
-  'eBook / Digital Download': '✦ For low-ticket digital products, lead with the transformation not the price. Mention price only in the CTA.',
-  'Print on Demand': '✦ POD content performs best when it leads with identity — make the viewer feel the product was made specifically for them.',
-  'Faith & Ministry': '✦ Faith-based content performs best when it leads with the human struggle before the spiritual solution. Meet people where they are — then lift them higher.',
-  'Church / Religious Organisation': '✦ Faith-based content performs best when it leads with the human struggle before the spiritual solution. Meet people where they are — then lift them higher.',
+  'eBook / Digital Download': 'For low-ticket digital products, lead with the transformation not the price. Mention price only in the CTA.',
+  'Print on Demand': 'POD content performs best when it leads with identity — make the viewer feel the product was made specifically for them.',
+  'Faith & Ministry': 'Faith-based content performs best when it leads with the human struggle before the spiritual solution. Meet people where they are — then lift them higher.',
+  'Church / Religious Organisation': 'Faith-based content performs best when it leads with the human struggle before the spiritual solution. Meet people where they are — then lift them higher.',
 };

@@ -71,10 +71,9 @@ export default function Toast() {
           onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
           onMouseLeave={(e) => e.currentTarget.style.opacity = '0.7'}
         >
-          ✕
+          Close
         </button>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-          <span style={{ fontSize: '20px', flexShrink: 0 }}>✍️</span>
           <p
             style={{
               color: '#ffffff',

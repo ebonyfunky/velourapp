@@ -4,7 +4,6 @@ import { useCampaignStore } from '../store/campaignStore';
 const GEAR_CARDS = [
   {
     id: 'email',
-    icon: '📧',
     title: 'Your UGC Business Email',
     description: 'A dedicated professional email for all brand communications. Never pitch from your personal email — it signals amateur immediately.',
     tip: 'Create a free Gmail — yourname.ugc@gmail.com or yourname.creates@gmail.com',
@@ -17,7 +16,6 @@ const GEAR_CARDS = [
   },
   {
     id: 'phone',
-    icon: '📱',
     title: 'Your Phone',
     description: 'The only camera you need. Use the back camera — always higher quality than the front.',
     tip: 'Set to 1080p HD at 60fps before every single shoot.',
@@ -30,7 +28,6 @@ const GEAR_CARDS = [
   },
   {
     id: 'lighting',
-    icon: '💡',
     title: 'Lighting',
     description: 'Natural window light is free and beats most ring lights. Face the window — never have it behind you.',
     tip: 'No window? Search \'LED video panel light\' on Amazon. Anti-glare only — avoid harsh shadows.',
@@ -43,7 +40,6 @@ const GEAR_CARDS = [
   },
   {
     id: 'tripod',
-    icon: '📐',
     title: 'Phone Stand or Tripod',
     description: 'Your phone must be stable and at eye level. A stack of books works perfectly when starting out.',
     tip: 'Search \'adjustable phone tripod\' on Amazon when you are ready to upgrade — under $25.',
@@ -56,7 +52,6 @@ const GEAR_CARDS = [
   },
   {
     id: 'microphone',
-    icon: '🎤',
     title: 'Microphone (Optional but Recommended)',
     description: 'Your earphones already have a mic — plug them in for an instant audio upgrade. In noisy environments a noise cancelling clip mic is a game changer.',
     tip: 'If background noise is unavoidable search \'noise cancelling clip mic for phone\' on Amazon.',
@@ -70,7 +65,6 @@ const GEAR_CARDS = [
   },
   {
     id: 'teleprompter',
-    icon: '📋',
     title: 'Teleprompter App',
     description: 'Read your Velour script naturally without memorising a single word. Eyes stay on the lens — not on a piece of paper.',
     tip: 'Search \'teleprompter app\' in your App Store. Free tier is enough. Copy your Velour script and paste straight in.',
@@ -84,7 +78,6 @@ const GEAR_CARDS = [
   },
   {
     id: 'capcut',
-    icon: '✂️',
     title: 'CapCut',
     description: 'The free editing app that turns raw phone footage into brand-ready content. Used by creators worldwide.',
     tip: 'Download free from your App Store or capcut.com. Your full CapCut editing guide is in the section below.',
@@ -98,13 +91,13 @@ const GEAR_CARDS = [
 ];
 
 const PRIORITY_LIST = [
-  '📧 Set up your UGC business email — do this first',
-  '📱 Your phone — back camera 1080p 60fps',
-  '💡 Find your best window — face it directly',
-  '📋 Download a teleprompter app — paste your Velour script in',
-  '🎤 Plug in your earphones — instant audio upgrade',
-  '📐 Stabilise your phone — books or tripod',
-  '✂️ Edit in CapCut — free and beginner friendly',
+  'Set up your UGC business email — do this first',
+  'Your phone — back camera 1080p 60fps',
+  'Find your best window — face it directly',
+  'Download a teleprompter app — paste your Velour script in',
+  'Plug in your earphones — instant audio upgrade',
+  'Stabilise your phone — books or tripod',
+  'Edit in CapCut — free and beginner friendly',
 ];
 
 export default function UGCGearGuide() {
@@ -137,7 +130,7 @@ export default function UGCGearGuide() {
             fontFamily: 'Cormorant Garamond, serif',
           }}
         >
-          📱 Your UGC Creator Gear Guide
+          Your UGC Creator Gear Guide
         </h3>
         <p style={{ fontSize: '15px', color: '#f0ebff', marginBottom: '4px' }}>
           Everything you need to start filming today
@@ -167,7 +160,7 @@ export default function UGCGearGuide() {
                 padding: '20px',
               }}
             >
-              <div style={{ fontSize: '32px', marginBottom: '12px' }}>{card.icon}</div>
+              {card.icon && <div style={{ fontSize: '32px', marginBottom: '12px' }}>{card.icon}</div>}
               <h4
                 style={{
                   fontSize: '15px',

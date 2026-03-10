@@ -75,7 +75,6 @@ const UGC_PLATFORMS = [
 const SOCIAL_PLATFORMS = [
   {
     id: 'reddit',
-    icon: '🔴',
     name: 'Reddit',
     description: 'One of the most underused places to find UGC work. Brands and agencies post paid opportunities daily.',
     strategies: [
@@ -86,7 +85,6 @@ const SOCIAL_PLATFORMS = [
   },
   {
     id: 'facebook',
-    icon: '🔵',
     name: 'Facebook',
     description: 'Facebook Groups are full of brands actively looking for creators right now.',
     strategies: [
@@ -97,7 +95,6 @@ const SOCIAL_PLATFORMS = [
   },
   {
     id: 'instagram',
-    icon: '📸',
     name: 'Instagram',
     description: 'DM brands directly. Small to mid size brands respond more than you think.',
     strategies: [
@@ -108,7 +105,6 @@ const SOCIAL_PLATFORMS = [
   },
   {
     id: 'tiktok',
-    icon: '🎵',
     name: 'TikTok',
     description: 'Search your niche plus the word brand or small business. Follow brands that already post UGC style content — they are already buying.',
     strategies: [
@@ -119,7 +115,6 @@ const SOCIAL_PLATFORMS = [
   },
   {
     id: 'linkedin',
-    icon: '💼',
     name: 'LinkedIn & Twitter/X',
     description: 'Brands post UGC briefs here too — especially agencies and marketing managers.',
     strategies: [
@@ -181,7 +176,7 @@ Would you be open to a quick chat?
   {
     id: 'instagram-dm',
     label: 'Instagram DM Pitch',
-    template: `Hi [Brand Name] 👋 I am a UGC creator specialising in [niche] content. I love your [specific product] and would love to create authentic video content for your brand. My portfolio: [link]. Would love to chat if you are open to it.`
+    template: `Hi [Brand Name], I am a UGC creator specialising in [niche] content. I love your [specific product] and would love to create authentic video content for your brand. My portfolio: [link]. Would love to chat if you are open to it.`
   },
   {
     id: 'follow-up',
@@ -365,7 +360,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
   return (
     <div>
       <h1 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '42px', fontWeight: 600, color: '#f0ebff', marginBottom: '12px' }}>
-        🎯 Where To Find Brands & How To Reach Them
+        Where To Find Brands & How To Reach Them
       </h1>
       <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#c9a84c', marginBottom: '32px' }}>
         Finding brands is only half the job. Knowing exactly what to say when you find them is the other half. This page covers both.
@@ -388,7 +383,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
             transition: 'all 0.2s',
           }}
         >
-          🎯 Find Brands
+          Find Brands
         </button>
         <button
           onClick={() => setActiveTab('generator')}
@@ -405,7 +400,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
             transition: 'all 0.2s',
           }}
         >
-          ✍️ Pitch Generator
+          Pitch Generator
         </button>
       </div>
 
@@ -427,7 +422,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
             paddingBottom: '12px',
           }}
         >
-          🗂️ Four Ways To Find Brand Deals
+          Four Ways To Find Brand Deals
         </h2>
         <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#9b8fb5', marginBottom: '40px' }}>
           Start with the platforms — they are the fastest way to land your first deal. Then work through the rest.
@@ -444,7 +439,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
               fontFamily: 'Cormorant Garamond, serif',
             }}
           >
-            📱 UGC Platforms (Brands Come To You)
+            UGC Platforms (Brands Come To You)
           </h3>
           <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#9b8fb5', marginBottom: '24px' }}>
             Create a profile, apply to campaigns, get paid. No cold pitching needed.
@@ -516,7 +511,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
               fontFamily: 'Cormorant Garamond, serif',
             }}
           >
-            📣 Social Platforms (Go Find Them)
+            Social Platforms (Go Find Them)
           </h3>
           <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#9b8fb5', marginBottom: '24px' }}>
             Brands are hiding in plain sight on every platform you already use. Here is exactly where to look.
@@ -550,7 +545,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
                 >
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: '20px', fontWeight: 700, color: '#e8c96a', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span>{platform.icon}</span>
+                      {platform.icon && <span>{platform.icon}</span>}
                       <span>{platform.name}</span>
                     </div>
                     <div style={{ fontSize: '13px', color: '#9b8fb5', fontStyle: 'italic' }}>
@@ -587,7 +582,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
               fontFamily: 'Cormorant Garamond, serif',
             }}
           >
-            💬 Discord Servers (Hidden Deals)
+            Discord Servers (Hidden Deals)
           </h3>
           <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#9b8fb5', marginBottom: '24px' }}>
             Discord servers are where brands and agencies post deals that never make it to the big platforms. Free to join.
@@ -664,7 +659,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
               fontFamily: 'Cormorant Garamond, serif',
             }}
           >
-            📧 Cold Outreach (You Go To Them)
+            Cold Outreach (You Go To Them)
           </h3>
           <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#9b8fb5', marginBottom: '24px' }}>
             The highest paying deals come from brands you pitch directly. No platform fees. No competition. Just you and the brand.
@@ -869,7 +864,7 @@ export default function WhereToFindBrands({ onNavigate }: WhereToFindBrandsProps
             fontFamily: 'Cormorant Garamond, serif',
           }}
         >
-          ✉️ Now You Know Where They Are — Here Is Exactly What To Say
+          Now You Know Where They Are — Here Is Exactly What To Say
         </h2>
         <p style={{ fontSize: '14px', fontStyle: 'italic', color: '#c9a84c', marginBottom: '32px' }}>
           The pitch that gets a response is not the cleverest one. It is the clearest one. Short, specific and easy to say yes to.

@@ -301,41 +301,35 @@ export const SEARCH_DATA: SearchResult[] = [
 export const QUICK_ACCESS_ITEMS = [
   {
     id: 'quick-script-builder',
-    icon: '🎯',
     label: 'Script Builder',
     targetSection: 'ugc-portfolio-videos',
     scrollToId: 'script-builder-tab',
   },
   {
     id: 'quick-rate-card',
-    icon: '💰',
     label: 'Rate Card',
     targetSection: 'ugc-rates',
   },
   {
     id: 'quick-pitch',
-    icon: '📧',
     label: 'Pitch Templates',
     targetSection: 'ugc-outreach-brands',
     scrollToId: 'pitch-templates',
   },
   {
     id: 'quick-broll',
-    icon: '🎥',
     label: 'B-Roll Guide',
     targetSection: 'ugc-portfolio-videos',
     scrollToId: 'broll-card',
   },
   {
     id: 'quick-income',
-    icon: '💸',
     label: 'Income Tracker',
     targetSection: 'ugc-deal',
     scrollToId: 'income-centre',
   },
   {
     id: 'quick-photos',
-    icon: '📸',
     label: 'Portfolio Photos',
     targetSection: 'ugc-portfolio-photos',
   },

@@ -10,12 +10,12 @@ interface SidebarProps {
 }
 
 const steps = [
-  { number: 1, title: 'Campaign Identity', subtitle: 'Brand, platforms & goals' },
-  { number: 2, title: 'AI Twin Studio', subtitle: 'Vibe & persona only' },
-  { number: 3, title: 'Product & Offer', subtitle: 'What you are selling' },
-  { number: 4, title: 'Script Generator', subtitle: 'Your viral scripts' },
-  { number: 5, title: 'Content Calendar', subtitle: 'Your 30-day plan' },
-  { number: 6, title: 'Campaign Pack', subtitle: 'Download everything' },
+  { number: 1, title: 'Who Are You?', subtitle: 'Profession, identity & how you show up' },
+  { number: 2, title: 'Audience Avatar', subtitle: 'Who you're really talking to' },
+  { number: 3, title: 'Content Project', subtitle: 'What you're building' },
+  { number: 4, title: 'AI Twin Studio', subtitle: 'Vibe & persona' },
+  { number: 5, title: 'Product & Offer', subtitle: 'What you are selling' },
+  { number: 6, title: 'Campaign Pack', subtitle: 'Your empire' },
 ];
 
 export default function Sidebar({ currentStep, onStepClick, completedSteps }: SidebarProps) {

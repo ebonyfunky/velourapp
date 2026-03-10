@@ -136,9 +136,9 @@ const featuredLanguages = [
   { code: 'ar', label: '🇸🇦 Arabic' },
   { code: 'hi', label: '🇮🇳 Hindi' },
   { code: 'pidgin', label: '🗣 Pidgin English' },
-  { code: 'yo', label: '🌍 Yoruba' },
-  { code: 'ig', label: '🌍 Igbo' },
-  { code: 'ha', label: '🌍 Hausa' },
+  { code: 'yo', label: 'Yoruba' },
+  { code: 'ig', label: 'Igbo' },
+  { code: 'ha', label: 'Hausa' },
 ];
 
 export default function Step1({ onNext }: Step1Props) {
@@ -328,7 +328,7 @@ export default function Step1({ onNext }: Step1Props) {
               color: '#b8aed0',
             }}
           >
-            ✦ Velour supports 50+ languages — your scripts, hooks and CTAs will be generated in your chosen language by Claude AI. For best results with African languages, select from the featured options above.
+            Velour supports 50+ languages — your scripts, hooks and CTAs will be generated in your chosen language by Claude AI. For best results with African languages, select from the featured options above.
           </div>
         </div>
 
@@ -466,7 +466,6 @@ export default function Step1({ onNext }: Step1Props) {
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.2, ease: [0.34, 1.56, 0.64, 1] }}
                     >
-                      ✓
                     </motion.div>
                   )}
                   <div className={`selection-icon-container ${isSelected ? 'selected' : ''}`}>

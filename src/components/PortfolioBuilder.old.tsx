@@ -632,7 +632,6 @@ function PortfolioReadinessBanner() {
           lineHeight: 1,
         }}
       >
-        {totalPieces >= 8 ? '🌟' : totalPieces >= 5 ? '✅' : totalPieces >= 3 ? '📈' : '💪'}
       </div>
       <div style={{ flex: 1 }}>
         <div style={{ fontSize: '15px', fontWeight: 700, color, marginBottom: '4px' }}>
@@ -759,7 +758,7 @@ export default function PortfolioBuilder() {
           gap: '16px',
         }}
       >
-        <div style={{ fontSize: '24px', lineHeight: 1 }}>💡</div>
+        <div style={{ fontSize: '24px', lineHeight: 1 }} />
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: '15px', fontWeight: 700, color: '#e8c96a', marginBottom: '8px' }}>
             Use Scripts to Film Your Portfolio
@@ -912,11 +911,11 @@ export default function PortfolioBuilder() {
         {showFormula && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px', marginTop: '24px' }}>
             {[
-              { emoji: '🎯', title: 'Hook in 2 seconds', desc: 'Your first frame must create instant curiosity or emotion. No slow intros.' },
-              { emoji: '💡', title: 'Natural lighting always wins', desc: 'Ring lights look fake. Sit near a window. Soft natural light reads as authentic.' },
-              { emoji: '🎙️', title: 'Audio is non-negotiable', desc: 'Bad audio kills great video. Use earphones as a mic if you have nothing else.' },
-              { emoji: '📱', title: 'Shoot vertical 9:16', desc: 'Always. Every time. No exceptions for TikTok and Reels.' },
-              { emoji: '🧴', title: 'Feature the product in the first 3 seconds', desc: 'Brands pay for product visibility not your personality alone.' },
+              { title: 'Hook in 2 seconds', desc: 'Your first frame must create instant curiosity or emotion. No slow intros.' },
+              { title: 'Natural lighting always wins', desc: 'Ring lights look fake. Sit near a window. Soft natural light reads as authentic.' },
+              { title: 'Audio is non-negotiable', desc: 'Bad audio kills great video. Use earphones as a mic if you have nothing else.' },
+              { title: 'Shoot vertical 9:16', desc: 'Always. Every time. No exceptions for TikTok and Reels.' },
+              { title: 'Feature the product in the first 3 seconds', desc: 'Brands pay for product visibility not your personality alone.' },
             ].map((principle, i) => (
               <div
                 key={i}
@@ -927,7 +926,6 @@ export default function PortfolioBuilder() {
                   padding: '20px',
                 }}
               >
-                <div style={{ fontSize: '32px', marginBottom: '12px' }}>{principle.emoji}</div>
                 <div style={{ fontSize: '16px', fontWeight: 700, color: '#e8c96a', marginBottom: '8px' }}>{principle.title}</div>
                 <div style={{ fontSize: '13px', color: '#b8b0cc', lineHeight: 1.5 }}>{principle.desc}</div>
               </div>
@@ -1212,7 +1210,7 @@ export default function PortfolioBuilder() {
                     fontWeight: 700,
                   }}
                 >
-                  ❌ Weak Portfolio
+                  Weak Portfolio
                 </th>
                 <th
                   style={{
@@ -1225,7 +1223,7 @@ export default function PortfolioBuilder() {
                     fontWeight: 700,
                   }}
                 >
-                  ✅ Winning Portfolio
+                  Winning Portfolio
                 </th>
               </tr>
             </thead>

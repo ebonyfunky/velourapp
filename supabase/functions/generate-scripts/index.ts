@@ -639,7 +639,7 @@ RULES:
       const vibeDirection = vibeMap[selectedVibe] || 'Natural authentic setting';
       const personaDirection = personaMap[selectedPersona] || 'conversational tone';
 
-      const filmingDirection = `\n\n🎬 SCENE DIRECTION: ${vibeDirection}, ${personaDirection}`;
+      const filmingDirection = `\n\nSCENE DIRECTION: ${vibeDirection}, ${personaDirection}`;
 
       // Append filming direction to each script
       scriptText = scriptText.replace(/(SCRIPT [123][\s\S]*?)(?=SCRIPT [123]|$)/g, (match) => {

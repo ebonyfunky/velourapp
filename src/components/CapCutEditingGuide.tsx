@@ -122,7 +122,7 @@ export default function CapCutEditingGuide() {
         }}
       >
         <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '32px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-          ✂️ Edit Your Videos With CapCut — Free & Beginner Friendly
+          Edit Your Videos With CapCut — Free & Beginner Friendly
         </h2>
         <p style={{ fontSize: '14px', color: '#9b8fb5', marginBottom: '24px', lineHeight: '1.6' }}>
           Filming is only half the job. How you edit your video is what makes brands stop scrolling. CapCut is free, powerful and used by the world's top UGC creators.
@@ -142,7 +142,7 @@ export default function CapCutEditingGuide() {
         >
           <div>
             <div style={{ fontSize: '15px', fontWeight: 700, color: '#e8c96a', marginBottom: '4px' }}>
-              📱 Don't have CapCut yet?
+              Don't have CapCut yet?
             </div>
             <p style={{ fontSize: '13px', color: '#d0c9e0', margin: 0 }}>
               Download the free app to start editing like a pro
@@ -323,7 +323,7 @@ export default function CapCutEditingGuide() {
                             fontStyle: 'italic',
                           }}
                         >
-                          💡 {step.tip}
+                          {step.tip}
                         </div>
                       )}
                     </div>
@@ -406,7 +406,7 @@ export default function CapCutEditingGuide() {
               }}
             >
               <div style={{ fontSize: '16px', fontWeight: 700, color: '#e8c96a', marginBottom: '8px' }}>
-                📱 CapCut App
+                CapCut App
               </div>
               <p style={{ fontSize: '13px', color: '#d0c9e0', marginBottom: '16px', lineHeight: '1.5' }}>
                 Download the free app on iOS or Android
@@ -443,7 +443,7 @@ export default function CapCutEditingGuide() {
               }}
             >
               <div style={{ fontSize: '16px', fontWeight: 700, color: '#e8c96a', marginBottom: '8px' }}>
-                🎓 CapCut Tutorial Library
+                CapCut Tutorial Library
               </div>
               <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.5', margin: 0 }}>
                 Free video tutorials inside the CapCut app — tap the Learn tab after downloading
@@ -459,7 +459,7 @@ export default function CapCutEditingGuide() {
               }}
             >
               <div style={{ fontSize: '16px', fontWeight: 700, color: '#e8c96a', marginBottom: '8px' }}>
-                ✨ CapCut Templates
+                CapCut Templates
               </div>
               <p style={{ fontSize: '13px', color: '#d0c9e0', lineHeight: '1.5', margin: 0 }}>
                 Browse thousands of trending UGC video templates — tap Templates inside the app to find styles that match your content

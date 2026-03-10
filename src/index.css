@@ -206,6 +206,26 @@
     100% { left: 100%; }
   }
 
+  .next-btn-glow {
+    position: relative;
+    overflow: hidden;
+  }
+  .next-btn-glow::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+    animation: next-shimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes next-shimmer {
+    0% { left: -100%; }
+    60% { left: 150%; }
+    100% { left: 150%; }
+  }
+
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
