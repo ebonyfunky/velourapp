@@ -5,21 +5,23 @@ import { useCampaignStore } from '../../store/campaignStore';
 const fadeTransition = { duration: 0.25 };
 
 const PERSONA_OPTIONS = [
-  { id: 'teacher', title: 'The Teacher', description: 'You educate and break things down simply' },
-  { id: 'friend', title: 'The Friend', description: 'You share your journey like talking to a bestie' },
-  { id: 'coach', title: 'The Coach', description: 'You push people to take action' },
-  { id: 'expert', title: 'The Expert', description: 'You lead with authority and results' },
-  { id: 'storyteller', title: 'The Storyteller', description: 'You connect through real personal stories' },
-  { id: 'rebel', title: 'The Rebel', description: 'You challenge the mainstream and speak hard truths' },
+  { id: 'authority', title: 'THE AUTHORITY', description: 'You educate, lead and build credibility through knowledge' },
+  { id: 'insider', title: 'THE INSIDER', description: 'You share real talk like a trusted peer in the room' },
+  { id: 'activator', title: 'THE ACTIVATOR', description: 'You push people from stuck to moving - fast' },
+  { id: 'specialist', title: 'THE SPECIALIST', description: 'Your niche is deep and your results do the talking' },
+  { id: 'connector', title: 'THE CONNECTOR', description: 'You turn real experiences into movements people follow' },
+  { id: 'disruptor', title: 'THE DISRUPTOR', description: 'You challenge what everyone else accepts as normal' },
+  { id: 'visionary', title: 'THE VISIONARY', description: 'You paint the future and people follow your lead' },
+  { id: 'builder', title: 'THE BUILDER', description: 'You document the journey of creating something from nothing' },
 ];
 
 const STYLE_OPTIONS = [
-  { id: 'natural', title: 'Natural and Authentic', description: 'Real, raw, unfiltered' },
-  { id: 'bold', title: 'Bold and Confident', description: 'Strong opinions, strong presence' },
-  { id: 'minimal', title: 'Minimal and Clean', description: 'Simple, clear, focused' },
-  { id: 'luxury', title: 'Luxury and Premium', description: 'Elevated, aspirational, polished' },
-  { id: 'casual', title: 'Casual and Relatable', description: 'Everyday, human and warm' },
-  { id: 'power', title: 'Power and Authority', description: 'Commanding, credible, results focused' },
+  { id: 'natural', title: 'NATURAL AND AUTHENTIC', description: 'Real, raw, unfiltered' },
+  { id: 'bold', title: 'BOLD AND CONFIDENT', description: 'Strong opinions, strong presence' },
+  { id: 'minimal', title: 'MINIMAL AND CLEAN', description: 'Simple, clear, focused' },
+  { id: 'luxury', title: 'LUXURY AND PREMIUM', description: 'Elevated, aspirational, polished' },
+  { id: 'casual', title: 'CASUAL AND RELATABLE', description: 'Everyday, human and warm' },
+  { id: 'power', title: 'POWER AND AUTHORITY', description: 'Commanding, credible, results focused' },
 ];
 
 const NICHE_OPTIONS = [
@@ -70,33 +72,33 @@ const FACELESS_OPTIONS = [
   {
     id: 'faceless',
     title: 'FACELESS',
-    subtext: 'My presence. My voice. My message. No camera required. Faceless creators are building empires every single day using voiceover, text on screen, stock footage and graphics.',
+    subtext: 'My presence. My voice. My AI twin/ avatar. No camera, still my brand.',
     affirmation: 'Smart. Faceless creators are winning right now. Your voice is enough.',
   },
   {
     id: 'face-forward',
     title: 'FACE FORWARD',
-    subtext: 'I am the brand. Camera on. Full presence. The most trusted creators show up consistently - and people buy from people.',
+    subtext: 'Full presence, camera on, my brand.',
     affirmation: 'Bold move. Showing up consistently is the fastest way to build trust and sales.',
   },
 ];
 
 const FREQUENCY_OPTIONS = [
-  { id: 'multiple-daily', label: 'Multiple Times Daily', sublabel: 'I post 2 to 3 times every day' },
-  { id: 'daily', label: 'Daily', sublabel: 'One piece of content every day' },
-  { id: '3-4-week', label: '3 to 4 Times a Week', sublabel: 'Consistent but not every day' },
-  { id: 'weekly', label: 'Weekly', sublabel: 'One strong piece per week' },
-  { id: 'biweekly', label: 'Bi-Weekly', sublabel: 'Twice a month' },
-  { id: 'monthly', label: 'Monthly', sublabel: 'One powerful piece per month' },
-  { id: 'batching', label: 'Batching', sublabel: 'I create in bulk every 30, 60 or 90 days' },
+  { id: 'multiple-daily', label: 'MULTIPLE TIMES DAILY', sublabel: 'I post 2 to 3 times every day' },
+  { id: 'daily', label: 'DAILY', sublabel: 'One piece of content every day' },
+  { id: '3-4-week', label: '3 TO 4 TIMES A WEEK', sublabel: 'Consistent but not every day' },
+  { id: 'weekly', label: 'WEEKLY', sublabel: 'One strong piece per week' },
+  { id: 'biweekly', label: 'BI-WEEKLY', sublabel: 'Twice a month' },
+  { id: 'monthly', label: 'MONTHLY', sublabel: 'One powerful piece per month' },
+  { id: 'batching', label: 'BATCHING', sublabel: 'I create in bulk every 30, 60 or 90 days' },
 ];
 
 const BATCH_OPTIONS = [
-  { id: '1', label: 'Generate 1 Script', sublabel: 'I need one right now' },
-  { id: 'week', label: 'Generate a Week of Scripts', sublabel: '7 days worth' },
-  { id: 'month', label: 'Generate a Month of Scripts', sublabel: '30 days worth' },
-  { id: '3months', label: 'Generate 3 Months of Scripts', sublabel: '90 days, I am batching' },
-  { id: 'quarter', label: 'Generate a Full Quarter', sublabel: 'Full content strategy batch' },
+  { id: '1', label: 'GENERATE 1 SCRIPT', sublabel: 'I need one right now' },
+  { id: 'week', label: 'GENERATE A WEEK OF SCRIPTS', sublabel: '7 days worth' },
+  { id: 'month', label: 'GENERATE A MONTH OF SCRIPTS', sublabel: '30 days worth' },
+  { id: '3months', label: 'GENERATE 3 MONTHS OF SCRIPTS', sublabel: '90 days, I am batching' },
+  { id: 'quarter', label: 'GENERATE A FULL QUARTER', sublabel: 'Full content strategy batch' },
 ];
 
 const Q1_CHIPS = ['Restless', 'Drained', 'Doubtful', 'Unheard', 'Lost', 'Anxious', 'Uninspired', 'Trapped', 'Desperate for Change', 'Like Time is Running Out'];
@@ -401,10 +403,10 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
           </div>
           <div>
             <h3 className="text-[#c9a84c] text-sm font-bold mb-2 uppercase tracking-wide">Section A - Your Persona</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               {PERSONA_OPTIONS.map((p) => (
                 <Card key={p.id} selected={creatorIdentityPersona === p.id} onClick={() => setField('creatorIdentityPersona', p.id)}>
-                  <h4 className="text-sm font-bold text-[#f0ebff]">{p.title}</h4>
+                  <h4 className="text-sm font-bold text-[#c9a84c] uppercase">{p.title}</h4>
                   <p className="mt-1 text-xs text-[#b8aed0]">{p.description}</p>
                 </Card>
               ))}
@@ -415,7 +417,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {STYLE_OPTIONS.map((s) => (
                 <Card key={s.id} selected={creatorIdentityStyle === s.id} onClick={() => setField('creatorIdentityStyle', s.id)}>
-                  <h4 className="text-sm font-bold text-[#f0ebff]">{s.title}</h4>
+                  <h4 className="text-sm font-bold text-[#c9a84c] uppercase">{s.title}</h4>
                   <p className="mt-1 text-xs text-[#b8aed0]">{s.description}</p>
                 </Card>
               ))}
@@ -610,7 +612,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
                     selected ? 'border-[#c9a84c] bg-[rgba(201,168,76,0.15)] shadow-[0_0_24px_rgba(201,168,76,0.25)]' : 'border-[rgba(201,168,76,0.2)] bg-[rgba(28,26,53,0.8)] hover:border-[rgba(201,168,76,0.5)]'
                   }`}
                 >
-                  <span className="block text-sm font-bold text-[#f0ebff]">{n.label}</span>
+                  <span className="block text-sm font-bold text-[#c9a84c] uppercase">{n.label}</span>
                 </motion.button>
               );
             })}
@@ -658,7 +660,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
                     selected ? 'border-[#c9a84c] bg-[rgba(201,168,76,0.15)] shadow-[0_0_24px_rgba(201,168,76,0.25)]' : 'border-[rgba(201,168,76,0.2)] bg-[rgba(28,26,53,0.8)] hover:border-[rgba(201,168,76,0.5)]'
                   }`}
                 >
-                  <span className="block text-sm font-bold text-[#f0ebff]">{c.label}</span>
+                  <span className="block text-sm font-bold text-[#c9a84c] uppercase">{c.label}</span>
                 </motion.button>
               );
             })}
@@ -698,7 +700,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
                   contentCreatorFaceType === opt.id ? 'border-[#c9a84c] bg-[rgba(201,168,76,0.15)] shadow-[0_0_28px_rgba(201,168,76,0.3)]' : 'border-[rgba(201,168,76,0.2)] bg-[rgba(28,26,53,0.8)] hover:border-[rgba(201,168,76,0.5)]'
                 }`}
               >
-                <h3 className="text-lg font-bold text-[#f0ebff]">{opt.title}</h3>
+                <h3 className="text-lg font-bold text-[#c9a84c] uppercase">{opt.title}</h3>
                 <p className="mt-2 text-sm text-[#b8aed0]" style={{ whiteSpace: 'pre-line' }}>{opt.subtext}</p>
               </motion.button>
             ))}
@@ -724,7 +726,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {FREQUENCY_OPTIONS.map((f) => (
                   <Card key={f.id} selected={contentCreatorPostingFrequency === f.id} onClick={() => setField('contentCreatorPostingFrequency', f.id)}>
-                    <span className="text-sm font-bold text-[#f0ebff]">{f.label}</span>
+                    <span className="text-sm font-bold text-[#c9a84c] uppercase">{f.label}</span>
                     <p className="mt-1 text-xs text-[#b8aed0]">{f.sublabel}</p>
                   </Card>
                 ))}
@@ -737,7 +739,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {BATCH_OPTIONS.map((b) => (
                   <Card key={b.id} selected={contentCreatorScriptBatchSize === b.id} onClick={() => setField('contentCreatorScriptBatchSize', b.id)}>
-                    <span className="text-sm font-bold text-[#f0ebff]">{b.label}</span>
+                    <span className="text-sm font-bold text-[#c9a84c] uppercase">{b.label}</span>
                     <p className="mt-1 text-xs text-[#b8aed0]">{b.sublabel}</p>
                   </Card>
                 ))}
@@ -814,9 +816,9 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
           <button type="button" onClick={generateCalendar} className="px-4 py-2 rounded-lg font-semibold border border-[#c9a84c] text-[#c9a84c] hover:bg-[rgba(201,168,76,0.1)]">
             Regenerate Calendar
           </button>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="rounded-xl border border-[rgba(201,168,76,0.2)] p-4 bg-[#17152e]">
-              <h3 className="text-[#c9a84c] font-bold mb-2">Posting Frequency Guide</h3>
+              <h3 className="text-[#c9a84c] font-bold mb-2 uppercase">Posting frequency guide</h3>
               <ul className="text-[#d4cce8] text-sm space-y-1">
                 <li>Instagram Reels: 4 to 5 times per week</li>
                 <li>Instagram Stories: Daily - 3 to 7 frames</li>
@@ -828,7 +830,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
               </ul>
             </div>
             <div className="rounded-xl border border-[rgba(201,168,76,0.2)] p-4 bg-[#17152e]">
-              <h3 className="text-[#c9a84c] font-bold mb-2">DOs and DONTs</h3>
+              <h3 className="text-[#c9a84c] font-bold mb-2 uppercase">DOs and DONTs</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-[#5eead4] font-semibold mb-1">DOs</p>

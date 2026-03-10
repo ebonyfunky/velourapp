@@ -630,12 +630,14 @@ RULES:
       };
 
       const personaMap: Record<string, string> = {
-        'teacher': 'clear explanatory pace, friendly approachable tone',
-        'friend': 'warm conversational style, like texting your best mate',
-        'coach': 'motivational energy, direct eye contact, push them forward',
-        'rebel': 'bold unapologetic delivery, challenge the status quo',
-        'expert': 'calm authoritative tone, data-driven confident energy',
-        'storyteller': 'expressive emotional delivery, paint the picture'
+        'authority': 'clear explanatory pace, educated leader tone, credibility through knowledge',
+        'insider': 'warm conversational style, trusted peer in the room, real talk',
+        'activator': 'motivational energy, direct eye contact, push them forward fast',
+        'specialist': 'calm authoritative tone, niche depth, results-focused delivery',
+        'connector': 'expressive emotional delivery, turn experiences into movements',
+        'disruptor': 'bold unapologetic delivery, challenge the status quo',
+        'visionary': 'paint the future, inspiring lead, forward-looking energy',
+        'builder': 'document the journey, authentic step-by-step, creating from nothing'
       };
 
       const vibeDirection = vibeMap[selectedVibe] || 'Natural authentic setting';
