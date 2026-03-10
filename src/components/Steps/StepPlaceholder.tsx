@@ -42,10 +42,10 @@ export default function StepPlaceholder({ stepNumber, title, subtitle, onNext, o
 
       <div className="flex gap-3">
         <button onClick={onBack} className="flex-1 py-3 px-6 rounded-xl bg-card-bg border border-gold/20 text-text-primary font-semibold hover:border-gold/50 transition-all">
-          ← Back
+          Back
         </button>
         <button onClick={onNext} className="btn-primary flex-1">
-          Continue →
+          Continue
         </button>
       </div>
     </motion.div>

@@ -124,7 +124,7 @@ export default function PortfolioVideos() {
             }}
           >
             <FileText size={18} />
-            📝 Script Builder
+            Script Builder
           </button>
           <button
             onClick={() => handleTabChange('my-videos')}

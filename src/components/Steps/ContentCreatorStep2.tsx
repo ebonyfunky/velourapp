@@ -156,7 +156,7 @@ export default function ContentCreatorStep2({ onNext, onBack, onSubProgress }: C
 
   const statement =
     contentCreatorAudienceStatement ||
-    `I create content for people who feel ${emotionText || '…'} because they want ${wantText || '…'} but are tired of ${triedText || '…'}.`;
+    `I create content for people who feel ${emotionText || '...'} because they want ${wantText || '...'} but are tired of ${triedText || '...'}.`;
 
   const handleBack = () => {
     if (questionIndex === 0) onBack();
@@ -254,7 +254,7 @@ export default function ContentCreatorStep2({ onNext, onBack, onSubProgress }: C
               </h2>
               <p className="text-[#9a8fa8] text-sm font-medium mb-4">Not everyone. ONE person. The version of you from before.</p>
               <p className="text-lg font-semibold text-[#e8c96a]">This person wakes up every morning feeling...</p>
-              <p className="text-[#c9a84c] font-semibold text-sm mt-2">Select 3 to 5 — {emotionsArray.length} selected</p>
+              <p className="text-[#c9a84c] font-semibold text-sm mt-2">Select 3 to 5 - {emotionsArray.length} selected</p>
             </div>
             <div className="flex flex-wrap gap-2">
               {Q1_CHIPS.map((label) => {
@@ -414,7 +414,7 @@ export default function ContentCreatorStep2({ onNext, onBack, onSubProgress }: C
                 {fearLabel && <p className="text-[#f0ebff] font-medium">Fear: {fearLabel}</p>}
                 {contentCreatorAudienceAges.length > 0 && <p className="text-[#f0ebff] font-medium">Age: {contentCreatorAudienceAges.join(', ')}</p>}
                 {lifeArray.length > 0 && <p className="text-[#f0ebff] font-medium">Life: {lifeArray.join(', ')}</p>}
-                {contentCreatorAudiencePainPoints.length > 0 && <p className="text-[#f0ebff] font-medium">Pain: {contentCreatorAudiencePainPoints.join(' · ')}</p>}
+                {contentCreatorAudiencePainPoints.length > 0 && <p className="text-[#f0ebff] font-medium">Pain: {contentCreatorAudiencePainPoints.join(', ')}</p>}
               </motion.div>
             )}
           </motion.div>

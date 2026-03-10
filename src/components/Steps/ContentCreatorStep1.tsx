@@ -163,7 +163,7 @@ export default function ContentCreatorStep1({ onNext, onBack, onSubProgress }: C
               <p className="text-[#9a8fa8] text-sm font-medium mb-4">Your persona and content style</p>
             </div>
             <div>
-              <h3 className="text-[#c9a84c] text-sm font-bold mb-2 uppercase tracking-wide">Section 1 — Your persona</h3>
+              <h3 className="text-[#c9a84c] text-sm font-bold mb-2 uppercase tracking-wide">Section 1 - Your persona</h3>
               <p className="text-[#9a8fa8] text-xs mb-3">How do you show up as a creator?</p>
               <div className="grid grid-cols-2 gap-3">
                 {PERSONA_OPTIONS.map((opt) => (
@@ -186,7 +186,7 @@ export default function ContentCreatorStep1({ onNext, onBack, onSubProgress }: C
               </div>
             </div>
             <div>
-              <h3 className="text-[#c9a84c] text-sm font-bold mb-2 uppercase tracking-wide">Section 2 — Your content style</h3>
+              <h3 className="text-[#c9a84c] text-sm font-bold mb-2 uppercase tracking-wide">Section 2 - Your content style</h3>
               <p className="text-[#9a8fa8] text-xs mb-3">What vibe do you bring to your content?</p>
               <div className="grid grid-cols-2 gap-3">
                 {STYLE_OPTIONS.map((opt) => (
@@ -223,7 +223,7 @@ export default function ContentCreatorStep1({ onNext, onBack, onSubProgress }: C
                 className="text-2xl md:text-3xl font-bold text-[#f0ebff] mb-2"
                 style={{ fontFamily: 'Cormorant Garamond, serif' }}
               >
-                First things first — what's your world?
+                First things first - what's your world?
               </h2>
               <p className="text-[#9a8fa8] text-sm font-medium">Pick the one that fits you best right now</p>
             </div>

@@ -339,7 +339,7 @@ export default function Step12() {
                       }}
                     >
                       <span style={{ fontSize: '14px', fontWeight: 600, color: '#f0ebff' }}>{item.videos}</span>
-                      <span style={{ fontSize: '14px', color: '#c9a84c' }}>→</span>
+                      <span style={{ fontSize: '14px', color: '#c9a84c' }}> to </span>
                       <span style={{ fontSize: '14px', fontWeight: 600, color: '#c9a84c' }}>{item.multiplier}</span>
                     </div>
                   ))}
@@ -593,7 +593,7 @@ export default function Step12() {
                             position: 'relative',
                           }}
                         >
-                          <span style={{ position: 'absolute', left: 0, color: '#c9a84c' }}>•</span>
+                          <span style={{ position: 'absolute', left: 0, color: '#c9a84c' }}>-</span>
                           {item}
                         </div>
                       ))}
@@ -922,7 +922,7 @@ export default function Step12() {
                     }}
                   >
                     <Plus size={16} />
-                    Add Win →
+                    Add Win
                   </button>
                 </div>
                 <p style={{ fontSize: '13px', fontStyle: 'italic', color: '#c9a84c', margin: 0 }}>

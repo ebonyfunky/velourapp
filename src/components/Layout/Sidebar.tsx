@@ -290,7 +290,6 @@ export default function Sidebar({ currentStep, onStepClick, completedSteps }: Si
                 letterSpacing: '4px',
               }}
             >
-              ◆ ◆ ◆
             </div>
             <p
               style={{

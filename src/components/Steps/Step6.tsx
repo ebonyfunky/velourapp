@@ -320,7 +320,7 @@ Result or transformation example.
           <div className="mb-2 font-bold">LinkedIn Best Angles:</div>
           <ul className="space-y-1 text-[13px]">
             {linkedInAngles.map((angle, i) => (
-              <li key={i}>• {angle}</li>
+              <li key={i}>- {angle}</li>
             ))}
           </ul>
           <div className="mt-3 italic text-gold">
@@ -364,7 +364,7 @@ Result or transformation example.
           <div className="mb-2 font-bold">{contentCategory} Script Angles:</div>
           <ul className="space-y-1 text-[13px]">
             {categoryAngles.map((angle, i) => (
-              <li key={i}>• {angle}</li>
+              <li key={i}>- {angle}</li>
             ))}
           </ul>
           {categoryTip && (
@@ -868,10 +868,10 @@ Result or transformation example.
           onClick={onBack}
           className="flex-1 py-3 px-6 rounded-xl bg-card-bg border border-gold/20 text-text-primary font-bold tracking-wider hover:border-gold/50 transition-all"
         >
-          ← BACK
+          Back
         </button>
         <button onClick={handleContinue} className="btn-primary flex-1">
-          Continue to Content Calendar →
+          Continue to Content Calendar
         </button>
       </div>
     </motion.div>

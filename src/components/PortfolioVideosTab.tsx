@@ -545,7 +545,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
                   border: '1px solid rgba(201,168,76,0.2)',
                 }}
               >
-                📨 Pitch Video — Outreach Tool
+                Pitch Video — Outreach Tool
               </div>
             </div>
           ) : (
@@ -596,7 +596,7 @@ export default function PortfolioVideosTab({ onNavigateToScriptBuilder, onNaviga
 
       <div style={{ marginBottom: '32px' }}>
         <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '28px', fontWeight: 600, color: '#f0ebff', marginBottom: '8px' }}>
-          📹 Your Portfolio Videos
+          Your Portfolio Videos
         </h2>
         <p style={{ fontSize: '14px', color: '#9b8fb5', marginBottom: '24px', fontStyle: 'italic' }}>
           Add at least 5 videos covering different formats and styles

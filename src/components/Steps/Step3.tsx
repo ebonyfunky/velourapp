@@ -334,7 +334,7 @@ export default function Step3({ onNext, onBack }: Step3Props) {
             e.currentTarget.style.background = 'transparent';
           }}
         >
-          ← Back
+          Back
         </button>
         <button
           onClick={onNext}
@@ -355,7 +355,7 @@ export default function Step3({ onNext, onBack }: Step3Props) {
             overflow: 'visible',
           }}
         >
-          Continue →
+          Continue
         </button>
       </div>
     </div>

@@ -390,7 +390,7 @@ Return the response in this exact JSON format:
               fontSize: '11px',
               fontWeight: 600,
             }}>
-              📌 Pin this to your desk
+              Pin this to your desk
             </div>
             <div style={{
               padding: '8px 14px',
@@ -483,7 +483,7 @@ Return the response in this exact JSON format:
                         color: '#d4cce8',
                         fontSize: '13px',
                       }}>
-                        • {trigger}
+                        - {trigger}
                       </div>
                     ))}
                   </div>
@@ -630,7 +630,7 @@ Return the response in this exact JSON format:
             cursor: canProceed ? 'pointer' : 'not-allowed',
           }}
         >
-          Next →
+          Next
         </button>
       </div>
     </div>

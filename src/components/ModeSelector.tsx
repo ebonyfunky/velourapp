@@ -51,7 +51,7 @@ export default function ModeSelector() {
           Where Creators Become Empires
         </p>
         <p style={{ fontSize: '13px', color: '#9a8fa8', marginTop: '12px', fontFamily: 'Inter, sans-serif', lineHeight: '1.6', overflow: 'visible' }}>
-          Choose your path — we will build the right experience for you
+          Choose your path - we will build the right experience for you
         </p>
       </div>
 
@@ -183,7 +183,7 @@ export default function ModeSelector() {
               overflow: 'visible',
             }}
           >
-            Start Creating →
+            Start Creating
           </button>
         </div>
 
@@ -235,7 +235,7 @@ export default function ModeSelector() {
             }}
           >
             You get paid by brands to create authentic content for them. No massive following needed
-            — just your phone, your niche and the ability to create genuine content that converts.
+            - just your phone, your niche and the ability to create genuine content that converts.
           </p>
           <div
             style={{
@@ -290,7 +290,7 @@ export default function ModeSelector() {
               overflow: 'visible',
             }}
           >
-            Enter UGC Hub →
+            Enter UGC Hub
           </button>
         </div>
       </div>

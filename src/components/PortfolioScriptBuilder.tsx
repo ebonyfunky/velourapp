@@ -425,7 +425,7 @@ export default function PortfolioScriptBuilder() {
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
                 <div style={{ fontSize: '15px', fontWeight: 700, color: '#e8c96a' }}>
-                  📨 Pitch Video
+                  Pitch Video
                 </div>
                 <div
                   style={{

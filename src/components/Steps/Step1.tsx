@@ -127,15 +127,15 @@ const goals = [
 ];
 
 const featuredLanguages = [
-  { code: 'en', label: '🇬🇧 English' },
-  { code: 'fr', label: '🇫🇷 French' },
-  { code: 'es', label: '🇪🇸 Spanish' },
-  { code: 'pt', label: '🇵🇹 Portuguese' },
-  { code: 'de', label: '🇩🇪 German' },
-  { code: 'zh', label: '🇨🇳 Chinese' },
-  { code: 'ar', label: '🇸🇦 Arabic' },
-  { code: 'hi', label: '🇮🇳 Hindi' },
-  { code: 'pidgin', label: '🗣 Pidgin English' },
+  { code: 'en', label: 'English' },
+  { code: 'fr', label: 'French' },
+  { code: 'es', label: 'Spanish' },
+  { code: 'pt', label: 'Portuguese' },
+  { code: 'de', label: 'German' },
+  { code: 'zh', label: 'Chinese' },
+  { code: 'ar', label: 'Arabic' },
+  { code: 'hi', label: 'Hindi' },
+  { code: 'pidgin', label: 'Pidgin English' },
   { code: 'yo', label: 'Yoruba' },
   { code: 'ig', label: 'Igbo' },
   { code: 'ha', label: 'Hausa' },
@@ -494,7 +494,7 @@ export default function Step1({ onNext }: Step1Props) {
       </div>
 
       <button onClick={handleContinue} disabled={!canProceed} className="btn-primary">
-        Continue to Audience Avatar →
+        Continue to Audience Avatar
       </button>
     </motion.div>
   );

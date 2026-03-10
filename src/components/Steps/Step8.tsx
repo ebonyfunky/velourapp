@@ -262,12 +262,12 @@ export default function Step6({ onNext, onBack }: Step6Props) {
                 Based on your settings, you'll create:
               </p>
               <ul className="space-y-1 text-[13px] text-text-dim">
-                <li>• {getFrequencyLabel()}</li>
-                <li>• Campaign duration: {localDuration}</li>
-                <li>• Total posts: {calculateTotalPosts()}</li>
-                {startDate && <li>• Start date: {new Date(startDate).toLocaleDateString()}</li>}
-                {startDate && <li>• Est. end date: {new Date(calculateEndDate()).toLocaleDateString()}</li>}
-                <li>• Optimized for {localTimezone === 'auto' ? 'your timezone' : localTimezone.split('/')[1]?.replace('_', ' ')}</li>
+                <li>- {getFrequencyLabel()}</li>
+                <li>- Campaign duration: {localDuration}</li>
+                <li>- Total posts: {calculateTotalPosts()}</li>
+                {startDate && <li>- Start date: {new Date(startDate).toLocaleDateString()}</li>}
+                {startDate && <li>- Est. end date: {new Date(calculateEndDate()).toLocaleDateString()}</li>}
+                <li>- Optimized for {localTimezone === 'auto' ? 'your timezone' : localTimezone.split('/')[1]?.replace('_', ' ')}</li>
               </ul>
             </div>
           </div>
@@ -276,10 +276,10 @@ export default function Step6({ onNext, onBack }: Step6Props) {
 
       <div className="flex gap-4">
         <button onClick={onBack} className="btn-secondary">
-          ← Back
+          Back
         </button>
         <button onClick={handleContinue} disabled={!canProceed} className="btn-primary flex-1">
-          Continue to Campaign Pack →
+          Continue to Campaign Pack
         </button>
       </div>
     </motion.div>

@@ -622,7 +622,7 @@ ${divider}
             lineHeight: 1.8,
           }}
         >
-          ◆ Velour is built for creators everywhere — Nigeria, UK, USA, Canada, Ghana, Kenya, South Africa, Jamaica,
+          Velour is built for creators everywhere — Nigeria, UK, USA, Canada, Ghana, Kenya, South Africa, Jamaica,
           Philippines, India and beyond. Your story deserves to be heard. Your empire starts here.
         </p>
       </div>

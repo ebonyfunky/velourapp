@@ -550,11 +550,11 @@ Bonus: 10 Canva templates included"
                 className="input-field"
                 rows={4}
                 placeholder="e.g.
-• 47-page eBook ($47 value)
-• 10 Canva templates ($97 value)
-• Checklist PDF ($17 value)
-• Bonus: Private community access
-Total value: $161 — your price: $27"
+- 47-page eBook ($47 value)
+- 10 Canva templates ($97 value)
+- Checklist PDF ($17 value)
+- Bonus: Private community access
+Total value: $161 - your price: $27"
               />
             </div>
 
@@ -722,10 +722,10 @@ Total value: $161 — your price: $27"
 
       <div className="flex gap-4">
         <button onClick={onBack} className="btn-secondary">
-          ← Back
+          Back
         </button>
         <button onClick={handleContinue} disabled={!canProceed} className="btn-primary flex-1">
-          Continue to Scene Builder →
+          Continue to Scene Builder
         </button>
       </div>
     </motion.div>

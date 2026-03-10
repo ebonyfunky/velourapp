@@ -186,7 +186,6 @@ export default function WelcomeScreen({ onDismiss }: WelcomeScreenProps) {
                 opacity: 0.6,
               }}
             >
-              ◆ ◆ ◆
             </div>
 
             {/* Feature pills */}

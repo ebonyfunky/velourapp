@@ -1031,7 +1031,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
             e.currentTarget.style.background = 'transparent';
           }}
         >
-          ← Back
+          Back
         </button>
         <button
           onClick={onNext}
@@ -1049,7 +1049,7 @@ export default function Step2({ onNext, onBack }: Step2Props) {
             transition: 'all 0.2s',
           }}
         >
-          Continue →
+          Continue
         </button>
       </div>
     </div>
