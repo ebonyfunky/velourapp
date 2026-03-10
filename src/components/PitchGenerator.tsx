@@ -105,14 +105,14 @@ export default function PitchGenerator() {
       return;
     }
 
+    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      return;
+    }
+
     setIsGenerating(true);
 
     try {
-      const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
-      if (!apiKey) {
-        throw new Error('Anthropic API key not found');
-      }
-
       const anthropic = new Anthropic({
         apiKey,
         dangerouslyAllowBrowser: true
@@ -204,7 +204,6 @@ Portfolio link: ${pitchInputs.portfolioLink}`;
       });
     } catch (error) {
       console.error('Error generating pitch:', error);
-      alert('Failed to generate pitch. Please check your API key and try again.');
     } finally {
       setIsGenerating(false);
     }

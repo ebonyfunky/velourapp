@@ -85,7 +85,8 @@ export default function BriefUploader({ onBriefExtracted, onBriefCleared }: Brie
     try {
       const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
       if (!apiKey) {
-        throw new Error('Anthropic API key not found');
+        setIsProcessing(false);
+        return;
       }
 
       const anthropic = new Anthropic({
@@ -202,7 +203,6 @@ Example output:
       onBriefExtracted(brief);
     } catch (error) {
       console.error('Error extracting brief:', error);
-      alert('Failed to extract brief. Please try again or use the manual paste option.');
     } finally {
       setIsProcessing(false);
     }

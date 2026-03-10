@@ -36,15 +36,13 @@ export default function AudienceAvatar({ onNext, onBack }: AudienceAvatarProps) 
   const generateAvatar = async () => {
     if (!canGenerate) return;
 
+    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      return;
+    }
+
     setIsGenerating(true);
     try {
-      const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
-      if (!apiKey) {
-        alert('Anthropic API key not configured. Please add VITE_ANTHROPIC_API_KEY to your .env file.');
-        setIsGenerating(false);
-        return;
-      }
-
       const client = new Anthropic({
         apiKey,
         dangerouslyAllowBrowser: true,
@@ -117,7 +115,6 @@ Return the response in this exact JSON format:
       }
     } catch (error) {
       console.error('Error generating avatar:', error);
-      alert('Failed to generate avatar. Please try again.');
     } finally {
       setIsGenerating(false);
     }

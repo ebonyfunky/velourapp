@@ -93,7 +93,7 @@ Audience Statement: "I help people who feel ${avatarFeelBlank} because they want
 
 CRITICAL INSTRUCTION:
 Write every script speaking DIRECTLY to this one specific person.
-Use THEIR language — the words in their voice, their fears, their secret hope.
+Use THEIR language - the words in their voice, their fears, their secret hope.
 Never write for "everyone."
 Never use marketing buzzwords.
 Make them feel: "This creator gets me completely."
@@ -111,43 +111,43 @@ LANGUAGE: Write entirely in ${contentLanguage || 'English'}${avatarSection}
 
 Write the Live script with these sections:
 
-PART 1 — OPEN (First 2 minutes)
+PART 1 - OPEN (First 2 minutes)
 Energetic opening. Greet joiners. Tell them what the Live is about.
 Give them a reason to stay.
 Include a comment prompt to boost algorithm.
 Example: "Drop where you're watching from in the comments!"
 
-PART 2 — VALUE (Minutes 3-12)
+PART 2 - VALUE (Minutes 3-12)
 3 genuine teaching points about the niche.
 Each point 2-3 minutes.
 End each with a question to the audience.
 Add [READ COMMENTS] reminder after each.
 
-PART 3 — SOCIAL PROOF (Minutes 13-17)
+PART 3 - SOCIAL PROOF (Minutes 13-17)
 Creator's own transformation story.
 One student or customer result.
 A specific moment that changed everything.
 
-PART 4 — THE OFFER (Minutes 18-22)
+PART 4 - THE OFFER (Minutes 18-22)
 Natural transition from value to offer.
 Present product and price.
-Stack the value — what they get.
+Stack the value - what they get.
 Create urgency honestly.
 Clear action step.
 
-PART 5 — OBJECTION HANDLING (Minutes 23-27)
+PART 5 - OBJECTION HANDLING (Minutes 23-27)
 Warm honest responses to:
 1. "I don't have the money right now"
 2. "I've tried things like this before"
 3. "I need to think about it"
 4. "Is this a scam?"
 
-PART 6 — RE-ENGAGEMENT LINES
+PART 6 - RE-ENGAGEMENT LINES
 5 lines to drop throughout the Live:
 To boost algorithm and keep viewers.
 Examples: comment prompts, share requests, replay greetings.
 
-PART 7 — CLOSE (Final 3 minutes)
+PART 7 - CLOSE (Final 3 minutes)
 Recap what was covered.
 Restate offer one final time.
 Thank everyone personally.
@@ -162,7 +162,7 @@ RULES:
 - Conversational and warm throughout
 - Native ${contentLanguage || 'English'} tone
 
-IMPORTANT: Always complete Part 7 — Close fully. Never cut off mid-sentence. If you are running long, shorten earlier sections but always write a complete ending. The script must end with a memorable closing line.`;
+IMPORTANT: Always complete Part 7 - Close fully. Never cut off mid-sentence. If you are running long, shorten earlier sections but always write a complete ending. The script must end with a memorable closing line.`;
 
       const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -205,7 +205,7 @@ IMPORTANT: Always complete Part 7 — Close fully. Never cut off mid-sentence. I
     if (type === 'ugc-script') {
       const ugcScriptPrompt = `Write 3 UGC video scripts for a brand content creator.
 
-This is USER GENERATED CONTENT — the creator makes content FOR a brand.
+This is USER GENERATED CONTENT - the creator makes content FOR a brand.
 
 BRAND: ${ugcBrandName || brandName || ''}
 PRODUCT: ${ugcProductName || productName || ''}
@@ -223,7 +223,7 @@ Each with a different hook and angle.
 
 You have been trained on the following hook and CTA examples. These represent the gold standard of UGC writing quality. Never reproduce them word for word. Use them to calibrate your tone, specificity and conversational style. Every hook and CTA you generate must feel as natural, specific and compelling as these examples.
 
-Hook Style References — use these to calibrate quality only:
+Hook Style References - use these to calibrate quality only:
 
 Curiosity style:
 - A hook that admits initial disbelief before a personal breakthrough
@@ -267,7 +267,7 @@ Trust-building style:
 - A hook about not hyping products but this one earned it
 - A hook framed as an honest review after real use
 
-CTA Style References — use these to calibrate quality only:
+CTA Style References - use these to calibrate quality only:
 
 Soft trust and curiosity CTAs:
 - Sign-based permission CTAs that feel like the viewer's timing is right
@@ -287,7 +287,7 @@ Problem-solution CTAs:
 - There is an easier way style CTAs
 
 Trust-building CTAs:
-- Personal endorsement CTAs — I only recommend what works
+- Personal endorsement CTAs - I only recommend what works
 - The only one I use style CTAs
 - Lives up to the hype CTAs
 
@@ -304,85 +304,85 @@ Engagement CTAs:
 - Who needs this community sharing CTAs
 
 Rules for applying these references:
-- Match the CTA style to the video type — soft CTAs for portfolio practice scripts, stronger conversion CTAs for paid brand deal scripts
-- Match the hook style to the content style selected by the creator — Authentic and Raw gets problem-based and relatable hooks, Fun and Energetic gets pattern interrupt and transformation hooks, Calm and Trustworthy gets trust-building hooks
-- Every generated hook must feel like it was written for one specific person watching at one specific moment — never generic
+- Match the CTA style to the video type - soft CTAs for portfolio practice scripts, stronger conversion CTAs for paid brand deal scripts
+- Match the hook style to the content style selected by the creator - Authentic and Raw gets problem-based and relatable hooks, Fun and Energetic gets pattern interrupt and transformation hooks, Calm and Trustworthy gets trust-building hooks
+- Every generated hook must feel like it was written for one specific person watching at one specific moment - never generic
 - Every generated CTA must be a complete sentence that ends with energy not a full stop
-- Never copy any of the above examples verbatim — always generate original content that matches their quality and feel
-- The goal is for every Velour script to feel like it was written by a creator who has been doing UGC for years — not by an AI
+- Never copy any of the above examples verbatim - always generate original content that matches their quality and feel
+- The goal is for every Velour script to feel like it was written by a creator who has been doing UGC for years - not by an AI
 
-VELOUR 7-PART SCRIPT FORMULA — MANDATORY STRUCTURE FOR EVERY SCRIPT:
+VELOUR 7-PART SCRIPT FORMULA - MANDATORY STRUCTURE FOR EVERY SCRIPT:
 
-Every script you generate must invisibly follow the Velour 7-Part Script Formula in this exact order. Never label the parts. Never number the sections. The script reads as one natural flowing piece of content — but underneath it always follows this structure:
+Every script you generate must invisibly follow the Velour 7-Part Script Formula in this exact order. Never label the parts. Never number the sections. The script reads as one natural flowing piece of content - but underneath it always follows this structure:
 
-Part 1 — The Grab: The very first line must drop the viewer into a feeling, moment or truth they instantly recognise as their own. Maximum 8 words. Never open with a greeting. Never start with the product name. Start in the middle of a real human moment.
+Part 1 - The Grab: The very first line must drop the viewer into a feeling, moment or truth they instantly recognise as their own. Maximum 8 words. Never open with a greeting. Never start with the product name. Start in the middle of a real human moment.
 
-Part 2 — The Mirror: The next 1-2 sentences must reflect the viewer's exact struggle back at them with painful precision. Specific beats generic every single time. The viewer must feel seen and understood before they hear about any product.
+Part 2 - The Mirror: The next 1-2 sentences must reflect the viewer's exact struggle back at them with painful precision. Specific beats generic every single time. The viewer must feel seen and understood before they hear about any product.
 
-Part 3 — The Squeeze: 1-2 sentences that make the consequence of doing nothing feel uncomfortable. Reference what staying stuck actually costs — embarrassment, wasted money, missed results, frustration. Make inaction feel worse than taking action.
+Part 3 - The Squeeze: 1-2 sentences that make the consequence of doing nothing feel uncomfortable. Reference what staying stuck actually costs - embarrassment, wasted money, missed results, frustration. Make inaction feel worse than taking action.
 
-Part 4 — The Discovery: One single sentence that brings the product in naturally as something discovered — never as something promoted. It should feel like a turning point not a sponsorship. Never use phrases like 'I was sent this' or 'this brand reached out to me' or 'ad' or 'collab.'
+Part 4 - The Discovery: One single sentence that brings the product in naturally as something discovered - never as something promoted. It should feel like a turning point not a sponsorship. Never use phrases like 'I was sent this' or 'this brand reached out to me' or 'ad' or 'collab.'
 
-Part 5 — The Transformation: 2-3 sentences focused entirely on life after the product. Never describe features. Only describe outcomes, feelings and changes. How does the viewer's life look different? What can they do now that they could not before?
+Part 5 - The Transformation: 2-3 sentences focused entirely on life after the product. Never describe features. Only describe outcomes, feelings and changes. How does the viewer's life look different? What can they do now that they could not before?
 
-Part 6 — The Receipt: 1-2 sentences of specific personal proof. A real timeline, a result someone else noticed, a before and after that cannot be argued with. Never generic statements like 'it really works' — always specific evidence.
+Part 6 - The Receipt: 1-2 sentences of specific personal proof. A real timeline, a result someone else noticed, a before and after that cannot be argued with. Never generic statements like 'it really works' - always specific evidence.
 
-Part 7 — The Move: One complete confident sentence telling the viewer exactly what to do and exactly what they get by doing it. Urgent. Specific. Ends with energy not a full stop.
+Part 7 - The Move: One complete confident sentence telling the viewer exactly what to do and exactly what they get by doing it. Urgent. Specific. Ends with energy not a full stop.
 
 Additional rules that apply to every script regardless of format:
-- The Grab must always be the hook — it is the same line that appears in the Hook Options section
-- Never write a script that could work for any product — every script must feel written specifically for the product and category the creator entered
-- Never use the word 'amazing', 'incredible', 'game changer', 'life changing' or 'obsessed' — these are overused and kill credibility
+- The Grab must always be the hook - it is the same line that appears in the Hook Options section
+- Never write a script that could work for any product - every script must feel written specifically for the product and category the creator entered
+- Never use the word 'amazing', 'incredible', 'game changer', 'life changing' or 'obsessed' - these are overused and kill credibility
 - Never start any sentence with 'So', 'Basically', 'Honestly' or 'Literally'
-- Every sentence must earn its place — if a sentence does not move the viewer closer to the CTA cut it
-- The entire script must sound like one person telling another person something important — not a script being read aloud
-- For Faceless scripts replace Part 6 personal proof with observed proof: results others have reported, platform ratings, before and after statistics — never first person
-- For Text on Screen scripts each part is compressed to one punchy line on screen — 7 lines total maximum 8 words each following the same 7-part order
+- Every sentence must earn its place - if a sentence does not move the viewer closer to the CTA cut it
+- The entire script must sound like one person telling another person something important - not a script being read aloud
+- For Faceless scripts replace Part 6 personal proof with observed proof: results others have reported, platform ratings, before and after statistics - never first person
+- For Text on Screen scripts each part is compressed to one punchy line on screen - 7 lines total maximum 8 words each following the same 7-part order
 
 CRITICAL RULES:
 - Never sound like an advertisement
 - Never use corporate language
 - Write like a real customer who genuinely loves this product
 - Speak like recommending to a friend
-- Be specific — real details convert
+- Be specific - real details convert
 - First line is always the hook
 - Add [pause] markers
 - Add [SHOW PRODUCT] directions
 - Add [CLOSE UP ON] directions
 - Add [REACTION] emotion markers
 
-Every script generated must assume the creator will follow these filming standards: clean uncluttered background appropriate to the product niche, eye level framing vertical 9:16, clean audio in a quiet room, natural energy and open body language, on-brand appearance for the product category, brand-safe language with no competitor mentions or medical claims, and an overall vibe that feels trustworthy, relatable and conversational. Never write a script that would require the creator to break any of these standards. Every script must sound like someone recommending something they love to one person — never like an ad being read aloud.
+Every script generated must assume the creator will follow these filming standards: clean uncluttered background appropriate to the product niche, eye level framing vertical 9:16, clean audio in a quiet room, natural energy and open body language, on-brand appearance for the product category, brand-safe language with no competitor mentions or medical claims, and an overall vibe that feels trustworthy, relatable and conversational. Never write a script that would require the creator to break any of these standards. Every script must sound like someone recommending something they love to one person - never like an ad being read aloud.
 
-Every Face Forward script must include a minimum of 3 B-roll directions embedded naturally within the stage directions. B-roll directions appear at moments in the script where the product is being used, a result is being described or a transformation is taking place. Format them as gold italic stage directions: [B-roll: hands applying product to skin — slow close-up] or [B-roll: lifestyle shot — product on morning routine shelf with soft natural light] or [B-roll: genuine reaction — eyes widening, small satisfied smile]. The Hook must always be face to camera — never open with B-roll. Every B-roll direction must feel like a natural filmmaking instruction not a technical note. The goal is for the creator to read the script and know exactly what to film without needing to think about it.
+Every Face Forward script must include a minimum of 3 B-roll directions embedded naturally within the stage directions. B-roll directions appear at moments in the script where the product is being used, a result is being described or a transformation is taking place. Format them as gold italic stage directions: [B-roll: hands applying product to skin - slow close-up] or [B-roll: lifestyle shot - product on morning routine shelf with soft natural light] or [B-roll: genuine reaction - eyes widening, small satisfied smile]. The Hook must always be face to camera - never open with B-roll. Every B-roll direction must feel like a natural filmmaking instruction not a technical note. The goal is for the creator to read the script and know exactly what to film without needing to think about it.
 
-CTAs: Generate 3 CTAs that feel like the creator is naturally continuing the conversation with their viewer — not selling to them. Each CTA must be a complete sentence with energy, personality and a clear next step. Use these as style guides but always make them specific to the product and category:
+CTAs: Generate 3 CTAs that feel like the creator is naturally continuing the conversation with their viewer - not selling to them. Each CTA must be a complete sentence with energy, personality and a clear next step. Use these as style guides but always make them specific to the product and category:
 
-Soft CTA — curiosity and community focused:
+Soft CTA - curiosity and community focused:
 "Comment READY below and I will send you everything you need to get started"
 "Drop a YES in the comments if you want me to do a full review of this"
 "Comment LINK and I will personally DM you where to get this right now"
-"Save this video — future you will be so glad you did"
+"Save this video - future you will be so glad you did"
 
-Medium CTA — warm and personal with clear direction:
+Medium CTA - warm and personal with clear direction:
 "For the full details and where to get yours visit the link in my bio right now"
 "Everything you need to know including the link is waiting for you in my bio"
-"I have left all the details in my bio — go check it out and thank me later"
-"Head to my bio for the link — I promise it is worth the click"
+"I have left all the details in my bio - go check it out and thank me later"
+"Head to my bio for the link - I promise it is worth the click"
 
-Strong CTA — urgent, benefit-driven and impossible to ignore:
-"Use my code [CODE] at checkout for 10% off — link in my bio and it expires soon"
-"My exclusive discount is in my bio right now — grab it before it disappears"
-"The deal I negotiated for you is in my bio — link is live right now go go go"
-"Bio link is live — use code [CODE] and get yours before stock runs out again"
+Strong CTA - urgent, benefit-driven and impossible to ignore:
+"Use my code [CODE] at checkout for 10% off - link in my bio and it expires soon"
+"My exclusive discount is in my bio right now - grab it before it disappears"
+"The deal I negotiated for you is in my bio - link is live right now go go go"
+"Bio link is live - use code [CODE] and get yours before stock runs out again"
 
 Rules for every CTA:
 - Must be a complete sentence that makes total sense on its own
 - Must feel like the creator is talking TO the viewer not AT them
-- Must have energy — use dashes, natural pauses and conversational language
+- Must have energy - use dashes, natural pauses and conversational language
 - Must tell the viewer exactly what to do AND what they will get by doing it
-- Never end flat — end with momentum, urgency or warmth
+- Never end flat - end with momentum, urgency or warmth
 - Maximum 20 words
-- Always specific to the product being featured — never generic
+- Always specific to the product being featured - never generic
 
 Label each:
 UGC SCRIPT 1, UGC SCRIPT 2, UGC SCRIPT 3
@@ -465,13 +465,15 @@ Audience Statement: "I help people who feel ${avatarFeelBlank} because they want
 
 CRITICAL INSTRUCTION:
 Write every script speaking DIRECTLY to this one specific person.
-Use THEIR language — the words in their voice, their fears, their secret hope.
+Use THEIR language - the words in their voice, their fears, their secret hope.
 Never write for "everyone."
 Never use marketing buzzwords.
 Make them feel: "This creator gets me completely."
 The best performing content makes the viewer think "How did they know exactly what I was thinking?"` : '';
 
     const promptContent = `Write 3 complete viral social media scripts.
+
+CRITICAL: Never use emojis or unicode symbols in any output. Use only plain ASCII text (letters, numbers, standard punctuation such as hyphens and commas). No exceptions.
 
 CREATOR: ${creatorName || 'Creator'}
 BRAND: ${brandName || 'Brand'}
@@ -498,12 +500,12 @@ CRITICAL RULES FOR AFFILIATE SCRIPTS:
 - Write as if the creator genuinely discovered this product and cannot stop talking about it
 - The affiliate link or code is mentioned ONCE at the very end
 - Structure every script:
-  1. Relatable problem or personal story — NO product mention yet
+  1. Relatable problem or personal story - NO product mention yet
   2. Build emotional connection
   3. Introduce product naturally as the solution they found
   4. Share a specific result or benefit
   5. CTA with link or code at the end
-- Make the audience feel like they got a recommendation from a trusted friend — not a paid promo
+- Make the audience feel like they got a recommendation from a trusted friend - not a paid promo
 ` : ''}
 ${['ebook','template','guide-workbook','mini-course','spreadsheet-tracker','swipe-file','printable'].includes(productType) ? `
 
@@ -515,7 +517,7 @@ The Transformation: ${digitalProductTransformation || ''}
 Delivery Method: ${digitalProductDelivery || ''}
 Value Stack: ${digitalProductValueStack || ''}
 
-SCRIPT STRUCTURE — USE THIS EXACTLY:
+SCRIPT STRUCTURE - USE THIS EXACTLY:
 
 1. HOOK
 Lead with the transformation result not the product itself.
@@ -544,7 +546,7 @@ e.g. "All of that for just $27"
 
 6. URGENCY
 Give a real reason to act now.
-Limited time, price going up, limited spots — keep it honest.
+Limited time, price going up, limited spots - keep it honest.
 
 7. CTA
 One clear action.
@@ -571,7 +573,7 @@ CTA: End each script with this woven in naturally: "${cta}"
 DETECT FACELESS VS FACE FORWARD VIDEO TYPES:
 
 For FACELESS video types (if delivery mode indicates AI avatar or voiceover without face):
-- Voiceover scripts should be conversational spoken word only with no face or body directions. Stage directions should only describe what the camera shows — the product, the background, close up shots. Maximum 40 words for very short content.
+- Voiceover scripts should be conversational spoken word only with no face or body directions. Stage directions should only describe what the camera shows - the product, the background, close up shots. Maximum 40 words for very short content.
 - Scripts with B-roll focus should only include [B-ROLL: description] markers and product/scene directions.
 
 For FACE FORWARD video types (direct-to-camera real person):
@@ -585,7 +587,7 @@ RULES:
 - Label them SCRIPT 1, SCRIPT 2, SCRIPT 3
 - Each script has a completely different hook and angle
 - 60-90 seconds when spoken aloud
-- First line is always the hook — no preamble
+- First line is always the hook - no preamble
 - Human authentic voice, no corporate language
 - Short punchy sentences that hit emotionally
 - Never start with "Are you tired of"

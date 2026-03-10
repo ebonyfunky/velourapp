@@ -1,10 +1,9 @@
 import js from '@eslint/js';
 import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import noEmoji from 'eslint-plugin-no-emoji';
 
+/** ESLint config that only runs the no-emoji rule. Used in build so build fails if any emoji is added. */
 export default tseslint.config(
   { ignores: ['dist', 'node_modules'] },
   {
@@ -14,18 +13,13 @@ export default tseslint.config(
       ecmaVersion: 2020,
       globals: globals.browser,
     },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      'no-emoji': noEmoji,
-    },
+    plugins: { 'no-emoji': noEmoji },
     rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
       'no-emoji/no-emoji': 'error',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      'react-hooks/exhaustive-deps': 'off',
+      'react-refresh/only-export-components': 'off',
     },
   }
 );

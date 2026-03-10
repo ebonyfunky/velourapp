@@ -97,7 +97,6 @@ export default function ScriptStudio() {
 
     const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
     if (!apiKey) {
-      alert('Please add your Anthropic API key to the .env file as VITE_ANTHROPIC_API_KEY');
       return;
     }
 
@@ -268,7 +267,6 @@ ESTIMATED READ TIME:
       setSelectedCTA(null);
     } catch (error) {
       console.error('Error generating script:', error);
-      alert('Failed to generate script. Please check your API key and try again.');
     } finally {
       setField('scriptStudioIsGenerating', false);
     }

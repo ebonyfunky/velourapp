@@ -47,20 +47,29 @@ export default function CreatorIdentity({ onNext, onBack }: CreatorIdentityProps
     : '';
 
   const canGenerate = selectedPersona && selectedStyle && niche && storyPart1 && storyPart2 && storyPart3;
-  const canProceed = canGenerate && identityCard;
+  const hasApiKey = !!import.meta.env.VITE_ANTHROPIC_API_KEY;
+  const canProceed = (canGenerate && identityCard) || (selectedPersona && selectedStyle);
+
+  const handleNext = () => {
+    if (selectedPersona) setField('creatorIdentityPersona', selectedPersona);
+    if (selectedStyle) setField('creatorIdentityStyle', selectedStyle);
+    if (identityCard) setField('creatorIdentityCard', identityCard);
+    if (niche) setField('creatorIdentityNiche', niche);
+    if (storyPreview) setField('creatorIdentityStory', storyPreview);
+    onNext();
+  };
 
   const generateIdentityCard = async () => {
     if (!canGenerate) return;
 
+    const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      setIsGenerating(false);
+      return;
+    }
+
     setIsGenerating(true);
     try {
-      const apiKey = import.meta.env.VITE_ANTHROPIC_API_KEY;
-      if (!apiKey) {
-        alert('Anthropic API key not configured. Please add VITE_ANTHROPIC_API_KEY to your .env file.');
-        setIsGenerating(false);
-        return;
-      }
-
       const client = new Anthropic({
         apiKey,
         dangerouslyAllowBrowser: true,
@@ -113,7 +122,6 @@ Return the response in this exact JSON format:
       }
     } catch (error) {
       console.error('Error generating identity card:', error);
-      alert('Failed to generate identity card. Please try again.');
     } finally {
       setIsGenerating(false);
     }
@@ -313,9 +321,14 @@ Return the response in this exact JSON format:
           <h3 style={{ color: '#c9a84c', fontSize: '14px', fontWeight: 700, marginBottom: '12px', letterSpacing: '0.05em' }}>
             SECTION 5 - GENERATE YOUR IDENTITY CARD
           </h3>
+          {!hasApiKey && (
+            <p style={{ color: '#9a8fa8', fontSize: '12px', marginBottom: '12px' }}>
+              Add VITE_ANTHROPIC_API_KEY to .env to enable AI-generated identity cards. You can continue without it.
+            </p>
+          )}
           <button
             onClick={generateIdentityCard}
-            disabled={!canGenerate || isGenerating}
+            disabled={!canGenerate || isGenerating || !hasApiKey}
             style={{
               width: '100%',
               padding: '16px',
@@ -411,7 +424,7 @@ Return the response in this exact JSON format:
         <div className="w-24" />
         <button
           type="button"
-          onClick={onNext}
+          onClick={handleNext}
           disabled={!canProceed}
           className="px-6 py-3 rounded-lg font-bold border-0 transition-all next-btn-glow disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[#4a4560] disabled:shadow-none bg-[#c9a84c] text-[#0d0b1a] hover:bg-[#e8c96a] shadow-[0_0_20px_rgba(201,168,76,0.25)]"
         >

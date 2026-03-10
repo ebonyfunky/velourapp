@@ -1,0 +1,16 @@
+---
+description: No emojis or unicode symbols anywhere in the app - text only
+alwaysApply: true
+---
+
+# No Emojis - Text Only
+
+This project must never contain emojis or decorative unicode symbols in the codebase or UI.
+
+- **Do not add** any emoji characters (e.g. from Unicode blocks for symbols, emoticons, etc.) in any file.
+- **Do not add** unicode symbols such as: checkmarks, bullets, arrows, em dashes, or similar in UI copy, buttons, titles, subtitles, placeholders, affirmations, or generated content.
+- Use **plain ASCII only** for all user-facing text: letters, numbers, standard punctuation (hyphen, comma, period, etc.).
+- This applies to: `.tsx`, `.ts`, `.jsx`, `.js`, `.html`, `.css`, `.json`, Supabase functions, and any generated or templated content.
+- If you are editing or adding copy, use only ASCII. Replace any existing non-ASCII with ASCII equivalents (e.g. em dash with hyphen `-`).
+
+Do not add emojis or unicode symbols under any circumstances.
