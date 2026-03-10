@@ -152,7 +152,7 @@ export default function ContentCreatorStep1({ onNext, onBack, onSubProgress }: C
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 12, transition: { duration: 0.15 } }}
             transition={{ duration: 0.2 }}
-            className="space-y-6"
+            className="space-y-6 border border-[rgba(201,168,76,0.4)] rounded-2xl bg-[rgba(13,11,26,0.9)] shadow-[0_0_30px_rgba(201,168,76,0.25)] px-4 py-4"
           >
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-[#f0ebff] mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
@@ -184,7 +184,7 @@ export default function ContentCreatorStep1({ onNext, onBack, onSubProgress }: C
               </div>
             </div>
             <div>
-              <h3 className="text-[#c9a84c] text-sm font-bold mb-2 uppercase tracking-wide">Section 2 - Your content style</h3>
+              <h3 className="text-[#5eead4] text-sm font-bold mb-2 uppercase tracking-wide">Section 2 - Your content style</h3>
               <p className="text-[#9a8fa8] text-xs mb-3">What vibe do you bring to your content?</p>
               <div className="grid grid-cols-2 gap-3">
                 {STYLE_OPTIONS.map((opt) => (

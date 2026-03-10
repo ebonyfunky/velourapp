@@ -1,15 +1,9 @@
-// Content Creator flow: Step 1 (Who Are You), Step 2 (Audience Avatar), Step 3 (Content Project), Step 4 (Creator Identity), Step 5 (AI Twin Studio), Step 6 (Product & Offer), Step 7 (Campaign Pack).
+// Content Creator flow: 7 steps (Creator Identity, Audience Avatar, Niche, Content Type, Faceless/Face, Script Generator, 30 Day Calendar).
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useCampaignStore } from './store/campaignStore';
 import Sidebar from './components/Layout/Sidebar';
 import ProgressBar from './components/Layout/ProgressBar';
-import ContentCreatorStep1 from './components/Steps/ContentCreatorStep1';
-import ContentCreatorStep2 from './components/Steps/ContentCreatorStep2';
-import ContentCreatorStep3 from './components/Steps/ContentCreatorStep3';
-import CreatorIdentity from './components/Steps/CreatorIdentity';
-import CreatorPlatform from './components/Steps/CreatorPlatform';
-import Step3 from './components/Steps/Step3';
-import Step9 from './components/Steps/Step9';
+import ContentCreatorFlow from './components/ContentCreator/ContentCreatorFlow';
 import WelcomeScreen from './components/WelcomeScreen';
 import ModeSelector from './components/ModeSelector';
 import UGCHub from './components/UGCHub';
@@ -131,31 +125,12 @@ function App() {
               opacity: 1,
             }}
           >
-            <div style={{ display: currentStep === 1 ? 'block' : 'none' }}>
-              <ContentCreatorStep1 onNext={handleNext} onBack={handleBack} onSubProgress={setSubProgress} />
-            </div>
-            <div style={{ display: currentStep === 2 ? 'block' : 'none' }}>
-              <ContentCreatorStep2 onNext={handleNext} onBack={handleBack} onSubProgress={setSubProgress} />
-            </div>
-            <div style={{ display: currentStep === 3 ? 'block' : 'none' }}>
-              <ContentCreatorStep3 onNext={handleNext} onBack={handleBack} />
-            </div>
-            <div style={{ display: currentStep === 4 ? 'block' : 'none' }}>
-              <CreatorIdentity onNext={handleNext} onBack={handleBack} />
-            </div>
-            <div style={{ display: currentStep === 5 ? 'block' : 'none' }}>
-              <CreatorPlatform onNext={handleNext} onBack={handleBack} />
-            </div>
-            <div style={{ display: currentStep === 6 ? 'block' : 'none' }}>
-              <Step3 onNext={handleNext} onBack={handleBack} />
-            </div>
-            <div style={{ display: currentStep === 7 ? 'block' : 'none' }}>
-              <Step9
-                onNext={() => {
-                  setCurrentStep(1);
-                  setCompletedSteps([]);
-                }}
+            <div style={{ display: 'block' }}>
+              <ContentCreatorFlow
+                currentStep={currentStep}
+                onNext={handleNext}
                 onBack={handleBack}
+                onSubProgress={setSubProgress}
               />
             </div>
           </div>

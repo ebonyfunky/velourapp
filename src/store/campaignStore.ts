@@ -97,6 +97,9 @@ export interface CampaignStore {
   creatorIdentityStyle: string;
   creatorIdentityNiche: string;
   creatorIdentityStory: string;
+  creatorIdentityStoryUsedTo: string;
+  creatorIdentityStoryUntilI: string;
+  creatorIdentityStoryNowIShow: string;
   creatorIdentityCard: {
     statement: string;
     voice: string;
@@ -140,6 +143,28 @@ export interface CampaignStore {
   contentCreatorAudienceStatement: string;
   contentCreatorProjectTypes: string[];
   contentCreatorProjectOther: string;
+  contentCreatorContentTypes: string[];
+  contentCreatorContentTypesOther: string;
+  contentCreatorPostingFrequency: string;
+  contentCreatorScriptBatchSize: string;
+  contentCreatorGeneratedScripts: Array<{
+    id: string;
+    dayLabel?: string;
+    weekLabel?: string;
+    monthLabel?: string;
+    type: string;
+    hook: string;
+    problem?: string;
+    solution?: string;
+    cta: string;
+    fullScript?: string;
+  }>;
+  contentCreatorNicheHooks: string[];
+  contentCreatorCalendarSlots: Array<{
+    dayNumber: number;
+    contentType: string;
+    topic: string;
+  }>;
 
   // Affiliate Product Fields
   affiliateBrandName: string;
@@ -667,6 +692,9 @@ const initialState = {
   creatorIdentityStyle: '',
   creatorIdentityNiche: '',
   creatorIdentityStory: '',
+  creatorIdentityStoryUsedTo: '',
+  creatorIdentityStoryUntilI: '',
+  creatorIdentityStoryNowIShow: '',
   creatorIdentityCard: null,
   audienceAvatar: null,
   contentCreatorProfession: '',
@@ -682,6 +710,13 @@ const initialState = {
   contentCreatorAudienceStatement: '',
   contentCreatorProjectTypes: [],
   contentCreatorProjectOther: '',
+  contentCreatorContentTypes: [],
+  contentCreatorContentTypesOther: '',
+  contentCreatorPostingFrequency: '',
+  contentCreatorScriptBatchSize: '',
+  contentCreatorGeneratedScripts: [],
+  contentCreatorNicheHooks: [],
+  contentCreatorCalendarSlots: [],
 };
 
 export const useCampaignStore = (() => {
