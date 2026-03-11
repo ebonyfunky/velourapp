@@ -24,6 +24,26 @@ const STYLE_OPTIONS = [
   { id: 'power', title: 'POWER AND AUTHORITY', description: 'Commanding, credible, results focused' },
 ];
 
+const PERSONA_BORDER_COLORS: Record<string, string> = {
+  authority: '#C9A84C',
+  insider: '#7C6EF5',
+  activator: '#E85D5D',
+  specialist: '#4ECDC4',
+  connector: '#A8D8A8',
+  disruptor: '#FF6B35',
+  visionary: '#64B5F6',
+  builder: '#F4A261',
+};
+
+const STYLE_BORDER_COLORS: Record<string, string> = {
+  natural: '#A8D8A8',
+  bold: '#E85D5D',
+  minimal: '#64B5F6',
+  luxury: '#C9A84C',
+  casual: '#F4A261',
+  power: '#7C6EF5',
+};
+
 const NICHE_OPTIONS = [
   { id: 'digital-marketing', label: 'Digital Marketing' },
   { id: 'high-ticket-affiliate-marketing', label: 'High Ticket Affiliate Marketing' },
@@ -101,7 +121,7 @@ const BATCH_OPTIONS = [
   { id: 'quarter', label: 'GENERATE A FULL QUARTER', sublabel: 'Full content strategy batch' },
 ];
 
-const Q1_CHIPS = ['Restless', 'Drained', 'Doubtful', 'Unheard', 'Lost', 'Anxious', 'Uninspired', 'Trapped', 'Desperate for Change', 'Like Time is Running Out'];
+const Q1_CHIPS = ['Restless', 'Drained', 'Doubtful', 'Unheard', 'Lost', 'Anxious', 'Uninspired', 'Trapped', 'Desperate for Change', 'Time-Starved', 'Overwhelmed', 'Invisible', 'Stuck', 'Undervalued', 'Burned Out'];
 const Q2_CHIPS = ['More Income', 'Time Freedom', 'Location Freedom', 'Financial Security', 'To Be Their Own Boss', 'Confidence Online', 'A Loyal Audience', 'Recognition and Influence', 'To Turn Their Knowledge Into Cash', 'A Simple System That Actually Works'];
 const Q3_CHIPS = ['YouTube tutorials', 'Free courses', 'Paid programs', 'Coaching or mentorship', 'Social media posting', 'Network marketing', 'Dropshipping or e-commerce', 'Affiliate marketing', 'Nothing yet - this is their first step', 'Too many things to count'];
 const Q4_CARDS = [
@@ -402,58 +422,92 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             <p className="text-[#9a8fa8] text-sm font-medium">How do you show up as a creator?</p>
           </div>
           <div>
-            <h3 className="text-[#c9a84c] text-sm font-bold mb-2 uppercase tracking-wide">Section A - Your Persona</h3>
+            <h3 className="text-xs uppercase tracking-widest text-[#C9A84C]/60 border-l-2 border-[#C9A84C]/40 pl-3 mb-6">YOUR PERSONA</h3>
             <div className="grid grid-cols-2 gap-3">
-              {PERSONA_OPTIONS.map((p) => (
-                <Card key={p.id} selected={creatorIdentityPersona === p.id} onClick={() => setField('creatorIdentityPersona', p.id)}>
-                  <h4 className="text-sm font-bold text-[#c9a84c] uppercase">{p.title}</h4>
-                  <p className="mt-1 text-xs text-[#b8aed0]">{p.description}</p>
-                </Card>
-              ))}
+              {PERSONA_OPTIONS.map((p) => {
+                const selected = creatorIdentityPersona === p.id;
+                const leftBorderColor = PERSONA_BORDER_COLORS[p.id] || '#C9A84C';
+                return (
+                  <motion.button
+                    key={p.id}
+                    type="button"
+                    onClick={() => setField('creatorIdentityPersona', p.id)}
+                    whileHover={{ scale: selected ? 1 : 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    style={!selected ? { borderLeftWidth: '4px', borderLeftColor: leftBorderColor } : undefined}
+                    className={`relative rounded-xl border-2 p-4 text-left transition-all duration-200 bg-gradient-to-br from-[#1a1a2e] to-[#12122a] shadow-[0_4px_24px_rgba(0,0,0,0.4)]
+                      ${selected
+                        ? 'border-[#C9A84C] bg-[#2a2218] shadow-[0_0_20px_rgba(201,168,76,0.25)]'
+                        : 'border-[rgba(201,168,76,0.2)] hover:border-[#C9A84C]/60'}
+                    `}
+                  >
+                    {selected && <span className="absolute top-3 right-3 text-[#C9A84C] text-xs font-bold">&#10003;</span>}
+                    <h4 className="text-base font-bold text-[#C9A84C] uppercase tracking-[0.12em]">{p.title}</h4>
+                    <p className="mt-1 text-xs text-white/70">{p.description}</p>
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
           <div>
-            <h3 className="text-[#5eead4] text-sm font-bold mb-2 uppercase tracking-wide">Section B - Your Content Style</h3>
+            <h3 className="text-xs uppercase tracking-widest text-[#C9A84C]/60 border-l-2 border-[#C9A84C]/40 pl-3 mb-6">YOUR CONTENT STYLE</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {STYLE_OPTIONS.map((s) => (
-                <Card key={s.id} selected={creatorIdentityStyle === s.id} onClick={() => setField('creatorIdentityStyle', s.id)}>
-                  <h4 className="text-sm font-bold text-[#c9a84c] uppercase">{s.title}</h4>
-                  <p className="mt-1 text-xs text-[#b8aed0]">{s.description}</p>
-                </Card>
-              ))}
+              {STYLE_OPTIONS.map((s) => {
+                const selected = creatorIdentityStyle === s.id;
+                const leftBorderColor = STYLE_BORDER_COLORS[s.id] || '#C9A84C';
+                return (
+                  <motion.button
+                    key={s.id}
+                    type="button"
+                    onClick={() => setField('creatorIdentityStyle', s.id)}
+                    whileHover={{ scale: selected ? 1 : 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    style={selected ? { borderWidth: '2px', borderColor: '#C9A84C' } : { borderLeftWidth: '4px', borderLeftColor: leftBorderColor }}
+                    className={`relative rounded-xl border-2 p-4 text-left transition-all duration-200 bg-gradient-to-br from-[#1a1a2e] to-[#12122a] shadow-[0_4px_24px_rgba(0,0,0,0.4)]
+                      ${selected
+                        ? 'bg-[#2a2218] shadow-[0_0_20px_rgba(201,168,76,0.25)]'
+                        : 'border-[rgba(201,168,76,0.2)] hover:border-[#C9A84C]/60'}
+                    `}
+                  >
+                    {selected && <span className="absolute top-3 right-3 text-[#C9A84C] text-xs font-bold">&#10003;</span>}
+                    <h4 className="text-base font-bold text-[#C9A84C] uppercase tracking-[0.12em]">{s.title}</h4>
+                    <p className="mt-1 text-xs text-white/70">{s.description}</p>
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
           <div>
-            <h3 className="text-[#c9a84c] text-sm font-bold mb-2 uppercase tracking-wide">Section C - Your Story in One Line</h3>
+            <h3 className="text-xs uppercase tracking-widest text-[#C9A84C]/60 border-l-2 border-[#C9A84C]/40 pl-3 mb-6">YOUR STORY IN ONE LINE</h3>
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-semibold text-[#d4cce8] mb-1">I used to...</label>
+                <label className="block text-xs font-semibold text-[#C9A84C]/80 italic mb-1">I used to...</label>
                 <input
                   type="text"
                   value={creatorIdentityStoryUsedTo}
                   onChange={(e) => setField('creatorIdentityStoryUsedTo', e.target.value)}
                   placeholder="e.g. struggle with money while working full time"
-                  className="w-full rounded-lg border border-[rgba(201,168,76,0.3)] bg-[#17152e] px-4 py-3 text-[#f0ebff] placeholder-[#6a5f80] focus:outline-none focus:ring-2 focus:ring-[#c9a84c]"
+                  className="w-full rounded-lg border border-[#C9A84C]/30 bg-[#17152e] px-4 py-3 text-[#f0ebff] placeholder-[#6a5f80] focus:outline-none focus:ring-2 focus:ring-[#c9a84c] focus:border-[#C9A84C]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#d4cce8] mb-1">Until I...</label>
+                <label className="block text-xs font-semibold text-[#C9A84C]/80 italic mb-1">Until I...</label>
                 <input
                   type="text"
                   value={creatorIdentityStoryUntilI}
                   onChange={(e) => setField('creatorIdentityStoryUntilI', e.target.value)}
                   placeholder="e.g. discovered digital income"
-                  className="w-full rounded-lg border border-[rgba(201,168,76,0.3)] bg-[#17152e] px-4 py-3 text-[#f0ebff] placeholder-[#6a5f80] focus:outline-none focus:ring-2 focus:ring-[#c9a84c]"
+                  className="w-full rounded-lg border border-[#C9A84C]/30 bg-[#17152e] px-4 py-3 text-[#f0ebff] placeholder-[#6a5f80] focus:outline-none focus:ring-2 focus:ring-[#c9a84c] focus:border-[#C9A84C]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-[#d4cce8] mb-1">Now I show...</label>
+                <label className="block text-xs font-semibold text-[#C9A84C]/80 italic mb-1">Now I show...</label>
                 <input
                   type="text"
                   value={creatorIdentityStoryNowIShow}
                   onChange={(e) => setField('creatorIdentityStoryNowIShow', e.target.value)}
                   placeholder="e.g. burnt-out professionals how to earn online"
-                  className="w-full rounded-lg border border-[rgba(201,168,76,0.3)] bg-[#17152e] px-4 py-3 text-[#f0ebff] placeholder-[#6a5f80] focus:outline-none focus:ring-2 focus:ring-[#c9a84c]"
+                  className="w-full rounded-lg border border-[#C9A84C]/30 bg-[#17152e] px-4 py-3 text-[#f0ebff] placeholder-[#6a5f80] focus:outline-none focus:ring-2 focus:ring-[#c9a84c] focus:border-[#C9A84C]"
                 />
               </div>
             </div>
@@ -469,16 +523,34 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
           <AnimatePresence mode="sync" initial={false}>
             {step2QuestionIndex === 0 && (
               <motion.div key="q1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6">
-                <h2 className="text-2xl md:text-3xl font-bold text-[#f0ebff] mb-1" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Who are you really talking to?</h2>
-                <p className="text-[#9a8fa8] text-sm font-medium mb-2">Not everyone. ONE person. The version of you from before.</p>
-                <p className="text-[#c9a84c] text-sm font-semibold">The more specific you are, the more powerful your content becomes.</p>
-                <p className="text-lg font-semibold text-[#e8c96a]">This person wakes up every morning feeling...</p>
-                <p className="text-[#c9a84c] font-semibold text-sm">Select 3 to 5 - {emotionsArray.length} selected</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-[#C9A84C] mb-1" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Who are you really talking to?</h2>
+                <p className="text-white/80 text-base leading-relaxed mb-2">Not everyone. ONE person. The version of you from before.</p>
+                <p className="text-white/80 text-base leading-relaxed">The more specific you are, the more powerful your content becomes.</p>
+                <p className="text-white/80 text-base leading-relaxed">This person wakes up every morning feeling...</p>
+                <p className="text-[#C9A84C] font-semibold text-sm">Select 3 to 5 - {emotionsArray.length} selected</p>
                 <div className="flex flex-wrap gap-2">
                   {Q1_CHIPS.map((label) => {
                     const selected = emotionsArray.includes(label);
                     const disabled = !selected && emotionsArray.length >= 5;
-                    return <Chip key={label} selected={selected} onClick={() => toggleMulti('contentCreatorAudienceEmotions', label, 5)} label={label} disabled={disabled} />;
+                    return (
+                      <motion.button
+                        key={label}
+                        type="button"
+                        onClick={() => toggleMulti('contentCreatorAudienceEmotions', label, 5)}
+                        disabled={disabled}
+                        whileHover={!disabled ? { scale: 1.05 } : {}}
+                        whileTap={!disabled ? { scale: 0.98 } : {}}
+                        className={`rounded-full px-5 py-3 border transition-all duration-200 ${
+                          selected
+                            ? 'bg-[#C9A84C] text-[#12122a] font-bold border-[#C9A84C] scale-105'
+                            : disabled
+                              ? 'border-[#C9A84C]/40 text-white/50 cursor-not-allowed opacity-50'
+                              : 'border border-[#C9A84C]/40 text-white/80 hover:border-[#C9A84C] hover:text-[#C9A84C] hover:scale-105'
+                        }`}
+                      >
+                        {label}
+                      </motion.button>
+                    );
                   })}
                 </div>
               </motion.div>
