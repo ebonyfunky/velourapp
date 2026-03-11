@@ -56,8 +56,31 @@ const NICHE_OPTIONS = [
   { id: 'ai-arbitrage', label: 'AI Arbitrage' },
   { id: 'healthcare-services', label: 'Healthcare Services' },
   { id: 'religious-services', label: 'Religious Services' },
-  { id: 'other', label: 'Other' },
+  { id: 'mindset-coach', label: 'Mindset Coach' },
+  { id: 'tech-software', label: 'Tech / Software' },
+  { id: 'content-creator', label: 'Content Creator' },
+  { id: 'personal-brand', label: 'Personal Brand' },
+  { id: 'other', label: 'Something Else' },
 ];
+
+const NICHE_BORDER_COLORS: Record<string, string> = {
+  'digital-marketing': '#64B5F6',
+  'high-ticket-affiliate-marketing': '#64B5F6',
+  'real-estate': '#A8D8A8',
+  'immigration-consulting': '#7C6EF5',
+  'healthcare-services': '#E85D5D',
+  'financial-services': '#C9A84C',
+  'fashion-beauty': '#F4A261',
+  'coaching-services': '#FF6B35',
+  'ecommerce': '#64B5F6',
+  'ai-arbitrage': '#64B5F6',
+  'religious-services': '#A8D8A8',
+  'mindset-coach': '#7C6EF5',
+  'tech-software': '#4ECDC4',
+  'content-creator': '#FF6B35',
+  'personal-brand': '#C9A84C',
+  'other': 'rgba(255,255,255,0.2)',
+};
 
 const NICHE_AFFIRMATIONS: Record<string, string> = {
   'digital-marketing': 'Your own product. Your own income. Lets build it.',
@@ -71,6 +94,10 @@ const NICHE_AFFIRMATIONS: Record<string, string> = {
   'ai-arbitrage': 'Smart strategy. Lets build it.',
   'healthcare-services': 'Your knowledge can change lives. Lets share it.',
   'religious-services': 'Your message deserves a bigger stage.',
+  'mindset-coach': 'Your path is yours. Lets build it.',
+  'tech-software': 'Your path is yours. Lets build it.',
+  'content-creator': 'Your path is yours. Lets build it.',
+  'personal-brand': 'Your path is yours. Lets build it.',
   'other': 'Your path is yours. Lets build it.',
 };
 
@@ -664,12 +691,13 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
       return (
         <motion.div key="step3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fadeTransition} className="space-y-6">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#f0ebff] mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>What is your world?</h2>
-            <p className="text-[#9a8fa8] text-sm font-medium">Pick the one that fits you best right now</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-[#C9A84C] mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>First things first - what&apos;s your world?</h2>
+            <p className="text-white/70 text-sm">Pick the one that fits you best right now</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {NICHE_OPTIONS.map((n) => {
               const selected = contentCreatorProfession === n.id;
+              const leftBorderColor = NICHE_BORDER_COLORS[n.id] || 'rgba(255,255,255,0.2)';
               return (
                 <motion.button
                   key={n.id}
@@ -680,11 +708,15 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
                   }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className={`rounded-xl border-2 px-4 py-4 text-left transition-all duration-200 ${
-                    selected ? 'border-[#c9a84c] bg-[rgba(201,168,76,0.15)] shadow-[0_0_24px_rgba(201,168,76,0.25)]' : 'border-[rgba(201,168,76,0.2)] bg-[rgba(28,26,53,0.8)] hover:border-[rgba(201,168,76,0.5)]'
+                  style={selected ? { borderWidth: '2px', borderColor: '#C9A84C' } : { borderLeftWidth: '4px', borderLeftColor: leftBorderColor }}
+                  className={`relative rounded-xl border-2 px-4 py-4 text-left transition-all duration-200 ${
+                    selected
+                      ? 'bg-[#2a2218] shadow-[0_0_20px_rgba(201,168,76,0.25)]'
+                      : 'border-[rgba(201,168,76,0.2)] bg-[rgba(28,26,53,0.8)] hover:border-[#C9A84C]/60 hover:scale-[1.02]'
                   }`}
                 >
-                  <span className="block text-sm font-bold text-[#c9a84c] uppercase">{n.label}</span>
+                  {selected && <span className="absolute top-2 right-2 text-[#C9A84C] text-xs font-bold">&#10003;</span>}
+                  <span className="block text-sm font-bold text-white tracking-[0.08em]">{n.label}</span>
                 </motion.button>
               );
             })}
