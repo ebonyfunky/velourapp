@@ -858,7 +858,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
           {wrapHeadingRowWithReset(
             <>
               <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
-                First things first - what&apos;s your world?
+                Tell us your area of focus or expertise
               </h2>
               <p className={ccSubtitleClassName}>Pick the one that fits you best right now</p>
             </>
