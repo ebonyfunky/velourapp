@@ -1,5 +1,6 @@
-import { Video, Users, ChevronDown } from 'lucide-react';
-import { WizardState, CampaignMode } from '../types';
+import { useEffect, useRef } from 'react';
+import { Video, ChevronDown } from 'lucide-react';
+import { WizardState } from '../types';
 
 interface Step1Props {
   state: WizardState;
@@ -17,7 +18,14 @@ const objectives = [
 ];
 
 export default function Step1({ state, onChange, onNext }: Step1Props) {
-  const canProceed = state.campaignName && state.brandName && state.campaignMode && state.campaignObjective;
+  const didInit = useRef(false);
+  useEffect(() => {
+    if (didInit.current) return;
+    didInit.current = true;
+    onChange({ campaignMode: 'vlog' });
+  }, [onChange]);
+
+  const canProceed = state.campaignName && state.brandName && state.campaignObjective;
 
   return (
     <div className="space-y-6">
@@ -64,29 +72,14 @@ export default function Step1({ state, onChange, onNext }: Step1Props) {
         </div>
 
         <div>
-          <label className="block text-sm text-text-muted mb-3">Campaign Mode</label>
-          <div className="grid grid-cols-2 gap-4">
-            <button
-              onClick={() => onChange({ campaignMode: 'vlog' })}
-              className={`glass-card p-6 rounded-xl text-left transition-all duration-300 hover:border-gold group ${
-                state.campaignMode === 'vlog' ? 'border-gold bg-green/10 shadow-[0_0_20px_rgba(201,168,76,0.2)]' : ''
-              }`}
-            >
-              <Video className={`w-8 h-8 mb-3 transition-colors ${state.campaignMode === 'vlog' ? 'text-gold' : 'text-text-muted group-hover:text-gold'}`} />
-              <h3 className="font-semibold text-text-primary mb-1">Vlog Mode</h3>
-              <p className="text-xs text-text-muted">Personal storytelling and lifestyle content</p>
-            </button>
-
-            <button
-              onClick={() => onChange({ campaignMode: 'ugc' })}
-              className={`glass-card p-6 rounded-xl text-left transition-all duration-300 hover:border-gold group ${
-                state.campaignMode === 'ugc' ? 'border-gold bg-green/10 shadow-[0_0_20px_rgba(201,168,76,0.2)]' : ''
-              }`}
-            >
-              <Users className={`w-8 h-8 mb-3 transition-colors ${state.campaignMode === 'ugc' ? 'text-gold' : 'text-text-muted group-hover:text-gold'}`} />
-              <h3 className="font-semibold text-text-primary mb-1">UGC / Influencer</h3>
-              <p className="text-xs text-text-muted">Product reviews and authentic testimonials</p>
-            </button>
+          <label className="block text-sm text-text-muted mb-3">Campaign mode</label>
+          <div
+            className="glass-card p-6 rounded-xl text-left border-gold bg-green/10 shadow-[0_0_20px_rgba(201,168,76,0.2)]"
+            role="status"
+          >
+            <Video className="w-8 h-8 mb-3 text-gold" />
+            <h3 className="font-semibold text-text-primary mb-1">Vlog mode</h3>
+            <p className="text-xs text-text-muted">Personal storytelling and lifestyle content</p>
           </div>
         </div>
 
@@ -98,7 +91,9 @@ export default function Step1({ state, onChange, onNext }: Step1Props) {
               onChange={(e) => onChange({ campaignObjective: e.target.value })}
               className="w-full bg-bg-card border border-gold/20 rounded-lg px-4 py-3 pr-10 text-text-primary focus:outline-none focus:border-gold focus:shadow-[0_0_12px_rgba(201,168,76,0.10)] transition-all appearance-none cursor-pointer"
             >
-              <option value="" disabled>Select an objective</option>
+              <option value="" disabled>
+                Select an objective
+              </option>
               {objectives.map((obj) => (
                 <option key={obj} value={obj} className="bg-bg-card text-text-primary">
                   {obj}

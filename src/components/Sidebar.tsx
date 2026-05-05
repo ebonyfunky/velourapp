@@ -1,6 +1,6 @@
 /**
  * DEPRECATED - DO NOT USE FOR CONTENT CREATOR FLOW.
- * This is the OLD UGC/Campaign sidebar (4 steps: Campaign Identity, Character & Assets, Style & Aesthetics, Review & Launch).
+ * Legacy wizard sidebar (4 steps). Not wired into the current Velour shell.
  * For Content Creator flow, use ContentCreatorSidebar from components/ContentCreator/ContentCreatorSidebar.
  * This file is kept for legacy reference only. App.tsx MUST NOT import this.
  */

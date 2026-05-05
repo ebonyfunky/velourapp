@@ -1,4 +1,4 @@
-export type CampaignMode = 'vlog' | 'ugc';
+export type CampaignMode = 'vlog';
 export type AspectRatio = '9:16' | '16:9' | '1:1';
 export type ContentStyle = 'western' | 'african' | 'faith' | 'universal';
 export type Currency = 'USD' | 'GBP' | 'EUR' | 'NGN' | 'CAD' | 'AUD' | 'ZAR' | 'KES' | 'GHS' | 'INR' | 'PHP' | 'OTHER';

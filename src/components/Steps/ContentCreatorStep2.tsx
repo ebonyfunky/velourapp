@@ -27,6 +27,13 @@ const Q2_CHIPS = [
   'A Business That Works While They Sleep',
   'Recognition and Influence',
   'To Finally See Results',
+  'PASSIVE INCOME WHILE I SLEEP',
+  'TO BE SEEN AS THE EXPERT',
+  'A WAITLIST OF READY BUYERS',
+  'CONSISTENT PAYING CLIENTS',
+  'TO QUIT THEIR 9-5',
+  'GENERATIONAL WEALTH',
+  'TO STOP TRADING TIME FOR MONEY',
 ];
 const Q2_MIN_SELECT = 3;
 const Q2_MAX_SELECT = 5;
@@ -276,20 +283,33 @@ export default function ContentCreatorStep2({ onNext, onBack, onSubProgress }: C
 
         {questionIndex === 1 && (
           <motion.div key="q2" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6">
-            <h2 className="text-xl md:text-2xl font-bold text-[#f0ebff]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>What they REALLY want is...</h2>
-            <p className="text-[#c9a84c] font-semibold text-sm">{wantsArray.length}/{Q2_MAX_SELECT} selected</p>
+            <div>
+              <h2 className="text-xl md:text-2xl font-bold text-[#C9A84C]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>What they REALLY want is...</h2>
+              <p className="text-white/60 text-sm italic mb-4">Be specific. The deeper you go, the more your content will stop people mid-scroll.</p>
+              <p className="text-[#C9A84C] font-semibold text-sm">{wantsArray.length} of 5 selected</p>
+            </div>
             <div className="flex flex-wrap gap-2">
               {Q2_CHIPS.map((label) => {
                 const selected = wantsArray.includes(label);
                 const disabled = !selected && wantsArray.length >= Q2_MAX_SELECT;
                 return (
-                  <Chip
+                  <motion.button
                     key={label}
-                    selected={selected}
+                    type="button"
                     onClick={() => toggleMulti('contentCreatorAudienceWants', label, Q2_MAX_SELECT)}
-                    label={label}
                     disabled={disabled}
-                  />
+                    whileHover={!disabled ? { scale: 1.05 } : {}}
+                    whileTap={!disabled ? { scale: 0.98 } : {}}
+                    className={`rounded-full px-5 py-3 border transition-all duration-200 ${
+                      selected
+                        ? 'bg-[#C9A84C] text-[#12122a] font-bold border-[#C9A84C] scale-105'
+                        : disabled
+                          ? 'border-[#C9A84C]/40 text-white/50 cursor-not-allowed opacity-50'
+                          : 'border border-[#C9A84C]/40 text-white/80 font-semibold tracking-[0.06em] hover:border-[#C9A84C] hover:text-[#C9A84C] hover:scale-105'
+                    }`}
+                  >
+                    {label}
+                  </motion.button>
                 );
               })}
             </div>

@@ -262,39 +262,6 @@ export default function Sidebar({ currentStep, onStepClick, completedSteps }: Si
               paddingTop: '0',
             }}
           >
-            <button
-              type="button"
-              onClick={() => {
-                const { setField } = useCampaignStore.getState();
-                setField('creatorMode', 'ugc-creator');
-              }}
-              style={{
-                background: 'rgba(201,168,76,0.06)',
-                border: '1px solid rgba(201,168,76,0.5)',
-                borderRadius: '8px',
-                padding: '8px 12px',
-                fontSize: '11px',
-                fontWeight: 700,
-                color: '#e8c96a',
-                cursor: 'pointer',
-                textAlign: 'center',
-                width: '100%',
-                marginBottom: '12px',
-                boxShadow: '0 0 12px rgba(201,168,76,0.25), inset 0 0 20px rgba(201,168,76,0.04)',
-                transition: 'box-shadow 0.2s, border-color 0.2s',
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.boxShadow = '0 0 16px rgba(201,168,76,0.4), inset 0 0 20px rgba(201,168,76,0.06)';
-                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.7)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.boxShadow = '0 0 12px rgba(201,168,76,0.25), inset 0 0 20px rgba(201,168,76,0.04)';
-                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.5)';
-              }}
-            >
-              Switch to UGC Hub
-            </button>
-
             <div
               style={{
                 display: 'block',

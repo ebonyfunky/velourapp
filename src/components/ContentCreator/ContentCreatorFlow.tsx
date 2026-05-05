@@ -1,8 +1,24 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, type ReactNode } from 'react';
+import type { CSSProperties } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCampaignStore } from '../../store/campaignStore';
+import ResetModal from '../ResetModal';
 
 const fadeTransition = { duration: 0.25 };
+
+const CC_HEADING_STYLE: CSSProperties = {
+  fontFamily: "'Cormorant Garamond', serif",
+  color: '#D4A93C',
+};
+const ccHeadingClassName =
+  'mb-2 font-normal leading-snug tracking-[-0.02em] text-[clamp(28px,3.6vw,36px)]';
+const ccSubtitleClassName = 'font-sans text-sm font-normal leading-relaxed text-white/70';
+const ccSectionLabelClassName =
+  'mb-6 border-l-2 border-[#D4A93C]/40 pl-3 font-sans text-[12px] font-medium uppercase tracking-[0.2em] text-[#D4A93C] md:text-[13px]';
+const ccSectionHeadingInsetClassName =
+  'mb-3 border-l-2 border-[#D4A93C]/40 pl-3 font-sans text-[12px] font-medium uppercase tracking-[0.2em] text-[#D4A93C] md:text-[13px]';
+
+const GOLD_RGB_NAV = '212, 169, 60';
 
 const PERSONA_OPTIONS = [
   { id: 'authority', title: 'THE AUTHORITY', description: 'You educate, lead and build credibility through knowledge' },
@@ -149,7 +165,7 @@ const BATCH_OPTIONS = [
 ];
 
 const Q1_CHIPS = ['Restless', 'Drained', 'Doubtful', 'Unheard', 'Lost', 'Anxious', 'Uninspired', 'Trapped', 'Desperate for Change', 'Time-Starved', 'Overwhelmed', 'Invisible', 'Stuck', 'Undervalued', 'Burned Out'];
-const Q2_CHIPS = ['More Income', 'Time Freedom', 'Location Freedom', 'Financial Security', 'To Be Their Own Boss', 'Confidence Online', 'A Loyal Audience', 'Recognition and Influence', 'To Turn Their Knowledge Into Cash', 'A Simple System That Actually Works'];
+const Q2_CHIPS = ['More Income', 'Time Freedom', 'Location Freedom', 'Financial Security', 'To Be Their Own Boss', 'Confidence Online', 'A Loyal Audience', 'Recognition and Influence', 'To Turn Their Knowledge Into Cash', 'A Simple System That Actually Works', 'PASSIVE INCOME WHILE I SLEEP', 'TO BE SEEN AS THE EXPERT', 'A WAITLIST OF READY BUYERS', 'CONSISTENT PAYING CLIENTS', 'TO QUIT THEIR 9-5', 'GENERATIONAL WEALTH', 'TO STOP TRADING TIME FOR MONEY'];
 const Q3_CHIPS = ['YouTube tutorials', 'Free courses', 'Paid programs', 'Coaching or mentorship', 'Social media posting', 'Network marketing', 'Dropshipping or e-commerce', 'Affiliate marketing', 'Nothing yet - this is their first step', 'Too many things to count'];
 const Q4_CARDS = [
   { id: 'fear-fail', label: 'What if this does not work either?' },
@@ -227,10 +243,13 @@ interface ContentCreatorFlowProps {
   onNext: () => void;
   onBack: () => void;
   onSubProgress?: (fraction: number) => void;
+  /** Report Step 2 sub-question index (0-7) for sidebar; pass null when not on Step 2. */
+  onAudienceAvatarQuestionIndex?: (questionIndex: number | null) => void;
 }
 
-export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubProgress }: ContentCreatorFlowProps) {
+export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubProgress, onAudienceAvatarQuestionIndex }: ContentCreatorFlowProps) {
   const setField = useCampaignStore((s) => s.setField);
+  const clearContentCreatorStep = useCampaignStore((s) => s.clearContentCreatorStep);
   const creatorIdentityPersona = useCampaignStore((s) => s.creatorIdentityPersona);
   const creatorIdentityStyle = useCampaignStore((s) => s.creatorIdentityStyle);
   const creatorIdentityStoryUsedTo = useCampaignStore((s) => s.creatorIdentityStoryUsedTo ?? '');
@@ -260,6 +279,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
   const [step2ShowConfetti, setStep2ShowConfetti] = useState(false);
   const [step6ScriptsGenerated, setStep6ScriptsGenerated] = useState(false);
   const [step6IsGenerating, setStep6IsGenerating] = useState(false);
+  const [showResetThisStepModal, setShowResetThisStepModal] = useState(false);
 
   const emotionsArray = useMemo(() => {
     const raw = Array.isArray(contentCreatorAudienceEmotions) ? contentCreatorAudienceEmotions : [];
@@ -281,6 +301,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
   const audienceStatement =
     contentCreatorAudienceStatement ||
     `I create content for people who feel ${emotionsArray[0]?.toLowerCase() || '...'} because they want ${wantsArray[0]?.toLowerCase() || '...'} but are tired of ${contentCreatorAudiencePainPoints[0]?.toLowerCase() || '...'}.`;
+
+  useEffect(() => {
+    if (currentStep !== 2) {
+      onAudienceAvatarQuestionIndex?.(null);
+      return;
+    }
+    onAudienceAvatarQuestionIndex?.(step2QuestionIndex);
+  }, [currentStep, step2QuestionIndex, onAudienceAvatarQuestionIndex]);
 
   useEffect(() => {
     if (currentStep !== 2) return;
@@ -438,18 +466,75 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
     }
   };
 
+  const confirmResetCurrentStepEntries = useCallback(() => {
+    clearContentCreatorStep(currentStep);
+    if (currentStep === 2) {
+      setStep2QuestionIndex(0);
+      setStep2ShowCardReveal(false);
+      setStep2ShowConfetti(false);
+    }
+    if (currentStep === 6) {
+      setStep6ScriptsGenerated(false);
+      setStep6IsGenerating(false);
+    }
+  }, [clearContentCreatorStep, currentStep]);
+
+  const resetThisStepControl = (
+    <button
+      type="button"
+      className="shrink-0 cursor-pointer border border-solid border-[rgba(212,169,60,0.3)] bg-transparent transition-all duration-200"
+      style={{
+        padding: '8px 20px',
+        borderRadius: '20px',
+        fontFamily: 'Inter, sans-serif',
+        fontSize: '11px',
+        fontWeight: 500,
+        letterSpacing: '0.15em',
+        textTransform: 'uppercase',
+        color: 'rgba(212, 169, 60, 0.8)',
+        transform: 'translateY(0)',
+      }}
+      onMouseEnter={(e) => {
+        const t = e.currentTarget;
+        t.style.backgroundColor = 'rgba(212, 169, 60, 0.1)';
+        t.style.borderColor = 'rgba(212, 169, 60, 0.6)';
+        t.style.color = '#D4A93C';
+        t.style.transform = 'translateY(-1px)';
+      }}
+      onMouseLeave={(e) => {
+        const t = e.currentTarget;
+        t.style.backgroundColor = 'transparent';
+        t.style.borderColor = 'rgba(212, 169, 60, 0.3)';
+        t.style.color = 'rgba(212, 169, 60, 0.8)';
+        t.style.transform = 'translateY(0)';
+      }}
+      onClick={() => setShowResetThisStepModal(true)}
+    >
+      RESET THIS STEP
+    </button>
+  );
+
+  const wrapHeadingRowWithReset = (left: ReactNode) => (
+    <div className="mb-6">
+      <div className="w-full">{left}</div>
+      <div className="mt-6 flex justify-end">{resetThisStepControl}</div>
+    </div>
+  );
+
   const renderStepContent = () => {
     if (currentStep === 1) {
       return (
         <motion.div key="step1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fadeTransition} className="space-y-8">
+          {wrapHeadingRowWithReset(
+            <>
+              <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                Let's build your creator identity
+              </h2>
+              <p className={ccSubtitleClassName}>How do you show up as a creator?</p>
+            </>
+          )}
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#f0ebff] mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-              Let's build your creator identity
-            </h2>
-            <p className="text-[#9a8fa8] text-sm font-medium">How do you show up as a creator?</p>
-          </div>
-          <div>
-            <h3 className="text-xs uppercase tracking-widest text-[#C9A84C]/60 border-l-2 border-[#C9A84C]/40 pl-3 mb-6">YOUR PERSONA</h3>
+            <h3 className={ccSectionLabelClassName}>YOUR PERSONA</h3>
             <div className="grid grid-cols-2 gap-3">
               {PERSONA_OPTIONS.map((p) => {
                 const selected = creatorIdentityPersona === p.id;
@@ -477,7 +562,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             </div>
           </div>
           <div>
-            <h3 className="text-xs uppercase tracking-widest text-[#C9A84C]/60 border-l-2 border-[#C9A84C]/40 pl-3 mb-6">YOUR CONTENT STYLE</h3>
+            <h3 className={ccSectionLabelClassName}>YOUR CONTENT STYLE</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {STYLE_OPTIONS.map((s) => {
                 const selected = creatorIdentityStyle === s.id;
@@ -505,7 +590,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             </div>
           </div>
           <div>
-            <h3 className="text-xs uppercase tracking-widest text-[#C9A84C]/60 border-l-2 border-[#C9A84C]/40 pl-3 mb-6">YOUR STORY IN ONE LINE</h3>
+            <h3 className={ccSectionLabelClassName}>YOUR STORY IN ONE LINE</h3>
             <div className="space-y-3">
               <div>
                 <label className="block text-xs font-semibold text-[#C9A84C]/80 italic mb-1">I used to...</label>
@@ -546,14 +631,24 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
     if (currentStep === 2) {
       return (
         <div className="min-h-[400px] flex flex-col pb-20">
-          <p className="text-[#6a5f80] text-xs font-medium mb-4">{step2QuestionIndex === 7 ? 'Summary' : `Question ${step2QuestionIndex + 1} of 7`}</p>
           <AnimatePresence mode="sync" initial={false}>
             {step2QuestionIndex === 0 && (
               <motion.div key="q1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6">
-                <h2 className="text-2xl md:text-3xl font-bold text-[#C9A84C] mb-1" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Who are you really talking to?</h2>
-                <p className="text-white/80 text-base leading-relaxed mb-2">Not everyone. ONE person. The version of you from before.</p>
-                <p className="text-white/80 text-base leading-relaxed">The more specific you are, the more powerful your content becomes.</p>
-                <p className="text-white/80 text-base leading-relaxed">This person wakes up every morning feeling...</p>
+                {wrapHeadingRowWithReset(
+                  <>
+                    <p className="mb-3 text-xs font-medium text-[#6a5f80]">{`Question ${step2QuestionIndex + 1} of 7`}</p>
+                    <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                      Who are you really talking to?
+                    </h2>
+                    <p className={`${ccSubtitleClassName} mb-2`}>
+                      Not everyone. ONE person. The version of you from before.
+                    </p>
+                    <p className={`${ccSubtitleClassName} mb-2`}>
+                      The more specific you are, the more powerful your content becomes.
+                    </p>
+                    <p className={`${ccSubtitleClassName} mb-2`}>This person wakes up every morning feeling...</p>
+                  </>
+                )}
                 <p className="text-[#C9A84C] font-semibold text-sm">Select 3 to 5 - {emotionsArray.length} selected</p>
                 <div className="flex flex-wrap gap-2">
                   {Q1_CHIPS.map((label) => {
@@ -584,20 +679,55 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             )}
             {step2QuestionIndex === 1 && (
               <motion.div key="q2" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6">
-                <h2 className="text-xl md:text-2xl font-bold text-[#f0ebff]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>What they REALLY want is...</h2>
-                <p className="text-[#c9a84c] font-semibold text-sm">{wantsArray.length} of 5 selected</p>
+                {wrapHeadingRowWithReset(
+                  <>
+                    <p className="mb-3 text-xs font-medium text-[#6a5f80]">{`Question ${step2QuestionIndex + 1} of 7`}</p>
+                    <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                      What they REALLY want is...
+                    </h2>
+                    <p className={`${ccSubtitleClassName} mb-4 italic`}>
+                      Be specific. The deeper you go, the more your content will stop people mid-scroll.
+                    </p>
+                  </>
+                )}
+                <p className="text-[#C9A84C] font-semibold text-sm">{wantsArray.length} of 5 selected</p>
                 <div className="flex flex-wrap gap-2">
                   {Q2_CHIPS.map((label) => {
                     const selected = wantsArray.includes(label);
                     const disabled = !selected && wantsArray.length >= 5;
-                    return <Chip key={label} selected={selected} onClick={() => toggleMulti('contentCreatorAudienceWants', label, 5)} label={label} disabled={disabled} />;
+                    return (
+                      <motion.button
+                        key={label}
+                        type="button"
+                        onClick={() => toggleMulti('contentCreatorAudienceWants', label, 5)}
+                        disabled={disabled}
+                        whileHover={!disabled ? { scale: 1.05 } : {}}
+                        whileTap={!disabled ? { scale: 0.98 } : {}}
+                        className={`rounded-full px-5 py-3 border transition-all duration-200 ${
+                          selected
+                            ? 'bg-[#C9A84C] text-[#12122a] font-bold border-[#C9A84C] scale-105'
+                            : disabled
+                              ? 'border-[#C9A84C]/40 text-white/50 cursor-not-allowed opacity-50'
+                              : 'border border-[#C9A84C]/40 text-white/80 font-semibold tracking-[0.06em] hover:border-[#C9A84C] hover:text-[#C9A84C] hover:scale-105'
+                        }`}
+                      >
+                        {label}
+                      </motion.button>
+                    );
                   })}
                 </div>
               </motion.div>
             )}
             {step2QuestionIndex === 2 && (
               <motion.div key="q3" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6">
-                <h2 className="text-xl md:text-2xl font-bold text-[#f0ebff]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>They have already tried...</h2>
+                {wrapHeadingRowWithReset(
+                  <>
+                    <p className="mb-3 text-xs font-medium text-[#6a5f80]">{`Question ${step2QuestionIndex + 1} of 7`}</p>
+                    <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                      They have already tried...
+                    </h2>
+                  </>
+                )}
                 <p className="text-[#c9a84c] font-semibold text-sm">Up to 3 - {triedArray.length} selected</p>
                 <div className="flex flex-wrap gap-2">
                   {Q3_CHIPS.map((label) => {
@@ -610,7 +740,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             )}
             {step2QuestionIndex === 3 && (
               <motion.div key="q4" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6">
-                <h2 className="text-xl md:text-2xl font-bold text-[#f0ebff]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Their biggest fear is...</h2>
+                {wrapHeadingRowWithReset(
+                  <>
+                    <p className="mb-3 text-xs font-medium text-[#6a5f80]">{`Question ${step2QuestionIndex + 1} of 7`}</p>
+                    <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                      Their biggest fear is...
+                    </h2>
+                  </>
+                )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {Q4_CARDS.map((c) => (
                     <Card key={c.id} selected={contentCreatorAudienceFear === c.id} onClick={() => setField('contentCreatorAudienceFear', c.id)}>
@@ -622,7 +759,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             )}
             {step2QuestionIndex === 4 && (
               <motion.div key="q5" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6">
-                <h2 className="text-xl md:text-2xl font-bold text-[#f0ebff]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>How old is this person likely?</h2>
+                {wrapHeadingRowWithReset(
+                  <>
+                    <p className="mb-3 text-xs font-medium text-[#6a5f80]">{`Question ${step2QuestionIndex + 1} of 7`}</p>
+                    <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                      How old is this person likely?
+                    </h2>
+                  </>
+                )}
                 <div className="flex flex-wrap gap-2">
                   {Q5_CHIPS.map((label) => (
                     <Chip key={label} selected={contentCreatorAudienceAges.includes(label)} onClick={() => toggleMulti('contentCreatorAudienceAges', label)} label={label} />
@@ -632,7 +776,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             )}
             {step2QuestionIndex === 5 && (
               <motion.div key="q6" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6">
-                <h2 className="text-xl md:text-2xl font-bold text-[#f0ebff]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>What best describes their life right now?</h2>
+                {wrapHeadingRowWithReset(
+                  <>
+                    <p className="mb-3 text-xs font-medium text-[#6a5f80]">{`Question ${step2QuestionIndex + 1} of 7`}</p>
+                    <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                      What best describes their life right now?
+                    </h2>
+                  </>
+                )}
                 <p className="text-[#c9a84c] font-semibold text-sm">Select up to 2 - {lifeArray.length} selected</p>
                 <div className="flex flex-wrap gap-2">
                   {Q6_OPTIONS.map((label) => {
@@ -645,7 +796,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             )}
             {step2QuestionIndex === 6 && (
               <motion.div key="q7" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6">
-                <h2 className="text-xl md:text-2xl font-bold text-[#f0ebff]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Pick their top 3 pain points</h2>
+                {wrapHeadingRowWithReset(
+                  <>
+                    <p className="mb-3 text-xs font-medium text-[#6a5f80]">{`Question ${step2QuestionIndex + 1} of 7`}</p>
+                    <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                      Pick their top 3 pain points
+                    </h2>
+                  </>
+                )}
                 <p className="text-[#c9a84c] font-semibold text-sm">0 of 3 selected - {contentCreatorAudiencePainPoints.length} selected</p>
                 <div className="flex flex-wrap gap-2">
                   {Q7_PAIN.map((label) => {
@@ -659,7 +817,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             {step2QuestionIndex === 7 && (
               <motion.div key="summary" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} transition={{ duration: 0.35 }} className="space-y-6 relative">
                 {step2ShowConfetti && <GoldConfetti />}
-                <h2 className="text-xl md:text-2xl font-bold text-[#f0ebff]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Your audience in one sentence</h2>
+                {wrapHeadingRowWithReset(
+                  <>
+                    <p className="mb-3 text-xs font-medium text-[#6a5f80]">Summary</p>
+                    <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                      Your audience in one sentence
+                    </h2>
+                  </>
+                )}
                 <div className="rounded-2xl border-2 border-[#c9a84c] p-6 bg-[rgba(201,168,76,0.08)] shadow-[0_0_32px_rgba(201,168,76,0.2)]" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
                   <p className="text-[#e8c96a] text-lg md:text-xl leading-relaxed italic">&quot;{audienceStatement}&quot;</p>
                 </div>
@@ -690,10 +855,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
       const affirmation = contentCreatorProfession ? NICHE_AFFIRMATIONS[contentCreatorProfession] || NICHE_AFFIRMATIONS.other : null;
       return (
         <motion.div key="step3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fadeTransition} className="space-y-6">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#C9A84C] mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>First things first - what&apos;s your world?</h2>
-            <p className="text-white/70 text-sm">Pick the one that fits you best right now</p>
-          </div>
+          {wrapHeadingRowWithReset(
+            <>
+              <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                First things first - what&apos;s your world?
+              </h2>
+              <p className={ccSubtitleClassName}>Pick the one that fits you best right now</p>
+            </>
+          )}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {NICHE_OPTIONS.map((n) => {
               const selected = contentCreatorProfession === n.id;
@@ -746,10 +915,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
       };
       return (
         <motion.div key="step4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fadeTransition} className="space-y-6">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#f0ebff] mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>What kind of content are you creating?</h2>
-            <p className="text-[#9a8fa8] text-sm font-medium">Select everything that applies</p>
-          </div>
+          {wrapHeadingRowWithReset(
+            <>
+              <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                What kind of content are you creating?
+              </h2>
+              <p className={ccSubtitleClassName}>Select everything that applies</p>
+            </>
+          )}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {CONTENT_TYPE_OPTIONS.map((c) => {
               const selected = selectedIds.includes(c.id);
@@ -788,10 +961,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
       const selectedAffirmation = contentCreatorFaceType ? FACELESS_OPTIONS.find((o) => o.id === contentCreatorFaceType)?.affirmation : null;
       return (
         <motion.div key="step5" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fadeTransition} className="space-y-6">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#f0ebff] mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Now the big question...</h2>
-            <p className="text-[#9a8fa8] text-sm font-medium">How do YOU want to show up?</p>
-          </div>
+          {wrapHeadingRowWithReset(
+            <>
+              <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                Now the big question...
+              </h2>
+              <p className={ccSubtitleClassName}>How do YOU want to show up?</p>
+            </>
+          )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {FACELESS_OPTIONS.map((opt) => (
               <motion.button
@@ -820,10 +997,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
       const showGenerate = hasFrequency && hasBatch && !step6ScriptsGenerated;
       return (
         <motion.div key="step6" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fadeTransition} className="space-y-8 pb-24">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#f0ebff] mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Your scripts - ready to go</h2>
-            <p className="text-[#9a8fa8] text-sm font-medium">Built from your niche, your identity, and your audience</p>
-          </div>
+          {wrapHeadingRowWithReset(
+            <>
+              <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                Your scripts - ready to go
+              </h2>
+              <p className={ccSubtitleClassName}>Built from your niche, your identity, and your audience</p>
+            </>
+          )}
           {!hasFrequency && (
             <div className="space-y-4">
               <p className="text-[#e8c96a] font-semibold">How often are you publishing?</p>
@@ -879,7 +1060,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
               </div>
               {contentCreatorNicheHooks.length > 0 && (
                 <div className="pt-4 border-t border-[rgba(201,168,76,0.2)]">
-                  <h3 className="text-[#c9a84c] font-bold mb-2">Your Niche Hook Bank</h3>
+                  <h3 className={ccSectionHeadingInsetClassName}>Your Niche Hook Bank</h3>
                   <p className="text-[#9a8fa8] text-xs mb-2">10 scroll-stopping hooks built for your niche - 5 words or fewer each</p>
                   <div className="flex flex-wrap gap-2">
                     {contentCreatorNicheHooks.map((hook, i) => (
@@ -900,10 +1081,14 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
       const slots = contentCreatorCalendarSlots;
       return (
         <motion.div key="step7" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={fadeTransition} className="space-y-8 pb-24">
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-[#f0ebff] mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>Your 30 Day Content Plan</h2>
-            <p className="text-[#9a8fa8] text-sm font-medium">A different plan every month - built around your niche and audience</p>
-          </div>
+          {wrapHeadingRowWithReset(
+            <>
+              <h2 className={ccHeadingClassName} style={CC_HEADING_STYLE}>
+                Your 30 Day Content Plan
+              </h2>
+              <p className={ccSubtitleClassName}>A different plan every month - built around your niche and audience</p>
+            </>
+          )}
           <div className="grid grid-cols-7 gap-2">
             {Array.from({ length: 30 }, (_, i) => i + 1).map((d) => {
               const slot = slots.find((s) => s.dayNumber === d);
@@ -920,9 +1105,9 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
           <button type="button" onClick={generateCalendar} className="px-4 py-2 rounded-lg font-semibold border border-[#c9a84c] text-[#c9a84c] hover:bg-[rgba(201,168,76,0.1)]">
             Regenerate Calendar
           </button>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="rounded-xl border border-[rgba(201,168,76,0.2)] p-4 bg-[#17152e]">
-              <h3 className="text-[#c9a84c] font-bold mb-2 uppercase">Posting frequency guide</h3>
+              <h3 className={ccSectionHeadingInsetClassName}>Posting frequency guide</h3>
               <ul className="text-[#d4cce8] text-sm space-y-1">
                 <li>Instagram Reels: 4 to 5 times per week</li>
                 <li>Instagram Stories: Daily - 3 to 7 frames</li>
@@ -934,7 +1119,7 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
               </ul>
             </div>
             <div className="rounded-xl border border-[rgba(201,168,76,0.2)] p-4 bg-[#17152e]">
-              <h3 className="text-[#c9a84c] font-bold mb-2 uppercase">DOs and DONTs</h3>
+              <h3 className={ccSectionHeadingInsetClassName}>DOs and DONTs</h3>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-[#5eead4] font-semibold mb-1">DOs</p>
@@ -968,12 +1153,39 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
   };
 
   return (
-    <div className="min-h-[400px] flex flex-col pb-24">
+    <div className="flex min-h-[400px] flex-col pb-24">
       <AnimatePresence mode="sync" initial={false}>
         {renderStepContent()}
       </AnimatePresence>
-      <div className="fixed bottom-0 left-0 right-0 flex justify-between items-center px-6 py-4 border-t border-[rgba(201,168,76,0.15)] bg-[#1c1a35] z-[100] md:left-[240px]" style={{ pointerEvents: 'auto' }}>
-        <button type="button" onClick={handleBackClick} className="px-5 py-3 rounded-lg font-bold border border-[#c9a84c] text-[#c9a84c] hover:bg-[rgba(201,168,76,0.1)] transition-all">
+      <div
+        className="fixed bottom-0 left-0 right-0 z-[100] flex items-center justify-between px-6 py-4 md:left-[240px]"
+        style={{
+          pointerEvents: 'auto',
+          background: 'rgba(26, 31, 74, 0.96)',
+          borderTop: '1px solid rgba(212, 169, 60, 0.15)',
+        }}
+      >
+        <button
+          type="button"
+          onClick={handleBackClick}
+          className="rounded-lg bg-transparent px-5 py-3 font-semibold tracking-wide transition-transform duration-200"
+          style={{
+            border: '1px solid rgba(212, 169, 60, 0.5)',
+            color: '#D4A93C',
+            fontFamily: 'Inter, sans-serif',
+            letterSpacing: '0.06em',
+            textTransform: 'uppercase',
+            fontSize: '12px',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = '#D4A93C';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = 'rgba(212, 169, 60, 0.5)';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
+        >
           Back
         </button>
         {showNextButton && (
@@ -981,13 +1193,40 @@ export default function ContentCreatorFlow({ currentStep, onNext, onBack, onSubP
             type="button"
             onClick={handleNextClick}
             disabled={!stepCanNext}
-            className="px-6 py-3 rounded-lg font-bold border-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-[#4a4560] disabled:shadow-none bg-[#c9a84c] text-[#0d0b1a] hover:bg-[#e8c96a] shadow-[0_0_20px_rgba(201,168,76,0.25)]"
+            className="rounded-lg border-0 px-6 py-3 font-semibold tracking-wide transition-[transform,box-shadow] duration-200 disabled:cursor-not-allowed disabled:!transform-none"
+            style={{
+              fontFamily: 'Inter, sans-serif',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              fontSize: '13px',
+              background: !stepCanNext ? '#4a4560' : '#D4A93C',
+              color: !stepCanNext ? 'rgba(255,255,255,0.65)' : '#1A1F4A',
+              boxShadow: !stepCanNext ? 'none' : `0 8px 32px rgba(${GOLD_RGB_NAV}, 0.4)`,
+              transform: 'translateY(0)',
+            }}
+            onMouseEnter={(e) => {
+              if ((e.currentTarget as HTMLButtonElement).disabled) return;
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = `0 12px 40px rgba(${GOLD_RGB_NAV}, 0.58)`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = !stepCanNext
+                ? 'none'
+                : `0 8px 32px rgba(${GOLD_RGB_NAV}, 0.4)`;
+            }}
           >
             Next
           </button>
         )}
         {!showNextButton && <div className="w-24" />}
       </div>
+      <ResetModal
+        isOpen={showResetThisStepModal}
+        onClose={() => setShowResetThisStepModal(false)}
+        onConfirm={confirmResetCurrentStepEntries}
+        type="step-entries"
+      />
     </div>
   );
 }

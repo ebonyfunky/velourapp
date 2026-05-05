@@ -76,7 +76,7 @@ export interface CampaignStore {
     status: string;
   }>;
 
-  // Step 7 - Live Show Planner & UGC Starter Kit
+  // Step 7 - Live Show Planner (legacy fields retained for persisted state)
   liveScript: string;
   isGeneratingLive: boolean;
   ugcNicheResult: string;
@@ -444,7 +444,7 @@ export interface CampaignStore {
   // Global Search
   recentSearches: string[];
 
-  // UGC Gear Guide Expansion States
+  // Gear guide card expansion (unused in current shell; kept for migration)
   gearCardExpanded: {
     email: boolean;
     phone: boolean;
@@ -468,9 +468,9 @@ export interface CampaignStore {
   updateStep5: (data: Partial<Pick<CampaignStore, 'postsPerWeek' | 'campaignDuration' | 'startDate' | 'timezone' | 'calendarPosts'>>) => void;
   reset: () => void;
   resetMode: () => void;
-  resetSection: (section: string) => void;
   resetContentCreatorFlow: () => void;
-  resetUGCFlow: () => void;
+  /** Clears persisted fields for one Content Creator step (steps 1-7); does not change creatorMode. */
+  clearContentCreatorStep: (stepNumber: number) => void;
 }
 
 const initialState = {
@@ -563,7 +563,7 @@ const initialState = {
   ugcNicheQ4: '',
   ugcNicheQ5: '',
   rateCardCreatorName: '',
-  rateCardCreatorTitle: 'UGC Creator',
+  rateCardCreatorTitle: 'Content Creator',
   rateCardEmail: '',
   rateCardPortfolioLink: '',
   rateCardProfilePhoto: '',
@@ -777,173 +777,67 @@ export const useCampaignStore = (() => {
               contentCreatorCalendarSlots: [],
             })),
 
-          resetUGCFlow: () =>
-            set((s) => ({
-              ...s,
-              ugcCurrentSection: 'ugc-dashboard',
-              ugcNicheResult: '',
-              ugcNicheAnswers: {},
-              ugcSelectedNiche: '',
-              ugcPortfolioChecklist: [],
-              ugcPitches: [],
-            })),
-
-          resetSection: (section: string) => {
-            switch (section) {
-              case 'step1':
-                set({
-                  creatorName: '',
-                  brandName: '',
-                  contentCategory: '',
-                  contentLanguage: '',
-                  platformTargets: [],
-                  campaignGoals: [],
-                  avatarRealPerson: '',
-                  avatarCurrently: '',
-                  avatarFeels: '',
-                  avatarFrustratedBy: '',
-                  avatarAlreadyTried: '',
-                  avatarBiggestFear: '',
-                  avatarSecretHope: '',
-                  avatarVoice: '',
-                  guidedFeeling: '',
-                  guidedWish: '',
-                  guidedBarrier: '',
-                  avatarFeelBlank: '',
-                  avatarWantBlank: '',
-                  avatarTiredOfBlank: '',
-                });
-                break;
-              case 'step2':
-                set({ selectedVibe: '', selectedPersona: '' });
-                break;
-              case 'step3':
-                set({
-                  productName: '',
-                  productType: '',
-                  pricePoint: '',
-                  currency: 'USD' as Currency,
-                  benefits: ['', ''],
-                  usp: '',
-                  targetAudience: '',
-                  painPoint: '',
-                  desiredOutcome: '',
-                });
-                break;
-              case 'step4':
-                set({
-                  scriptFormat: 'hook-and-sell',
-                  viralFormula: '',
-                  scriptAngle: '',
-                  tone: [],
-                  platformOptimisation: 'TikTok',
-                  contentStyle: 'western' as ContentStyle,
-                  selectedCTA: '',
-                  customCTAs: [],
-                  generatedScripts: [],
-                });
-                break;
-              case 'step6':
-                set({
-                  postsPerWeek: 3,
-                  campaignDuration: '1 Month',
-                  startDate: '',
-                  calendarPosts: [],
-                });
-                break;
-              case 'ugc-niche':
-                set({
-                  ugcSelectedNiche: '',
-                  ugcNicheQ1: [],
-                  ugcNicheQ2: [],
-                  ugcNicheQ3: [],
-                  ugcNicheQ4: '',
-                  ugcNicheQ5: '',
-                  ugcNicheResult: '',
-                });
-                break;
-              case 'ugc-rates':
-                set({
-                  rateCardCreatorName: '',
-                  rateCardCreatorTitle: 'UGC Creator',
-                  rateCardEmail: '',
-                  rateCardPortfolioLink: '',
-                  rateCardProfilePhoto: '',
-                  rateCardPortfolioPieces: '0',
-                  rateCardContentRates: [
-                    { id: 'shortFormVideo', label: 'Short Form Video (under 60 sec)', rate: '', enabled: true },
-                    { id: 'longFormVideo', label: 'Long Form Video (60+ sec)', rate: '', enabled: true },
-                    { id: 'photoPackage', label: 'Photo Package (3-5 images)', rate: '', enabled: true },
-                    { id: 'unboxingReview', label: 'Unboxing & Review Video', rate: '', enabled: true },
-                    { id: 'testimonial', label: 'Testimonial Video', rate: '', enabled: true },
-                    { id: 'tutorialHowTo', label: 'Tutorial & How-To Video', rate: '', enabled: true },
-                    { id: 'bundlePackage', label: 'Bundle Package (Video + Photos)', rate: '', enabled: true },
-                  ],
-                  rateCardCustomRates: [],
-                  rateCardPackages: [],
-                  rateCardAddOns: [
-                    { id: 'paidAdUsage', name: 'Paid Ad Usage Rights', price: '20% per 30 days', enabled: true },
-                    { id: 'additionalHook', name: 'Additional Hook', price: '$50', enabled: true },
-                    { id: 'additionalCTA', name: 'Additional CTA Variation', price: '$50', enabled: true },
-                    { id: 'rawFootage', name: 'Raw Footage', price: '50% of video cost', enabled: true },
-                    { id: 'rushOrder', name: 'Rush Order (under 7 days)', price: '20% fee', enabled: true },
-                  ],
-                  rateCardContactMethods: [],
-                  rateCardTurnaround: '5-7 business days',
-                  rateCardRevisions: '2 revisions included',
-                  rateCardValidUntil: '',
-                  rateCardConnectHeading: 'Connect With Me',
-                });
-                break;
-              case 'ugc-portfolio':
-                set({
-                  portfolioVideos: [
-                    { id: '1', type: 'Unboxing Video', completed: false, link: '' },
-                    { id: '2', type: 'Testimonial Video', completed: false, link: '' },
-                    { id: '3', type: 'Tutorial & How-To', completed: false, link: '' },
-                    { id: '4', type: 'Before & After Transformation', completed: false, link: '' },
-                    { id: '5', type: 'Get Ready With Me', completed: false, link: '' },
-                    { id: '6', type: 'Honest Product Review', completed: false, link: '' },
-                    { id: '7', type: 'Lifestyle Showcase', completed: false, link: '' },
-                    { id: '8', type: 'Voiceover Ad (faceless)', completed: false, link: '' },
-                    { id: '9', type: 'Text on Screen Ad (faceless)', completed: false, link: '' },
-                    { id: '10', type: 'Mini Commercial', completed: false, link: '' },
-                  ],
-                  portfolioLinks: [],
-                  portfolioNiche: '',
-                  portfolioAvailability: 'Available for paid collaborations',
-                });
-                break;
-              case 'ugc-outreach':
-                set({
-                  outreachPitches: [],
-                  outreachChallengeStartDate: '',
-                });
-                break;
-              case 'ugc-scripts':
-                set({
-                  scriptStudioBrandName: '',
-                  scriptStudioProductName: '',
-                  scriptStudioKeyBenefit: '',
-                  scriptStudioTargetAudience: '',
-                  scriptStudioTone: 'Authentic & Raw',
-                  scriptStudioVideoLength: '30 seconds',
-                  scriptStudioFormat: '',
-                  scriptStudioGeneratedScript: null,
-                  scriptStudioSavedScripts: [],
-                  scriptStudioIsGenerating: false,
-                });
-                break;
-              case 'ugc-plan':
-                set({
-                  actionPlanCompletedDays: [],
-                  actionPlanStartDate: '',
-                });
-                break;
-              default:
-                break;
-            }
-          },
+          clearContentCreatorStep: (stepNumber) =>
+            set((state) => {
+              switch (stepNumber) {
+                case 1:
+                  return {
+                    ...state,
+                    creatorIdentityPersona: '',
+                    creatorIdentityStyle: '',
+                    creatorIdentityNiche: '',
+                    creatorIdentityStory: '',
+                    creatorIdentityStoryUsedTo: '',
+                    creatorIdentityStoryUntilI: '',
+                    creatorIdentityStoryNowIShow: '',
+                    creatorIdentityCard: null,
+                  };
+                case 2:
+                  return {
+                    ...state,
+                    contentCreatorAudienceEmotions: [],
+                    contentCreatorAudienceWants: [],
+                    contentCreatorAudienceTriedOptions: [],
+                    contentCreatorAudienceFear: '',
+                    contentCreatorAudienceAges: [],
+                    contentCreatorAudienceLife: [],
+                    contentCreatorAudiencePainPoints: [],
+                    contentCreatorAudienceStatement: '',
+                  };
+                case 3:
+                  return {
+                    ...state,
+                    contentCreatorProfession: '',
+                    contentCreatorProfessionOther: '',
+                  };
+                case 4:
+                  return {
+                    ...state,
+                    contentCreatorContentTypes: [],
+                    contentCreatorContentTypesOther: '',
+                  };
+                case 5:
+                  return {
+                    ...state,
+                    contentCreatorFaceType: '',
+                  };
+                case 6:
+                  return {
+                    ...state,
+                    contentCreatorPostingFrequency: '',
+                    contentCreatorScriptBatchSize: '',
+                    contentCreatorGeneratedScripts: [],
+                    contentCreatorNicheHooks: [],
+                  };
+                case 7:
+                  return {
+                    ...state,
+                    contentCreatorCalendarSlots: [],
+                  };
+                default:
+                  return state;
+              }
+            }),
         }),
         {
           name: 'velour-storage',
@@ -1050,12 +944,6 @@ export const useCampaignStore = (() => {
               }
               if (typeof s.creatorIdentityStoryNowIShow !== 'string') {
                 s.creatorIdentityStoryNowIShow = '';
-              }
-              if (!Array.isArray(s.ugcPortfolioChecklist)) {
-                s.ugcPortfolioChecklist = [];
-              }
-              if (!Array.isArray(s.ugcPitches)) {
-                s.ugcPitches = [];
               }
             }
           },

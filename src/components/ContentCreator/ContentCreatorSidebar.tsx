@@ -1,12 +1,16 @@
 /**
  * CONTENT CREATOR FLOW SIDEBAR - 7 steps.
  * This is the ONLY sidebar used when creatorMode === 'content-creator'.
- * Used by App.tsx. Do not replace with components/Sidebar (4-step UGC) or Layout/Sidebar.
+ * Used by App.tsx.
  */
 import { Check, ArrowLeft } from 'lucide-react';
 import { useCampaignStore } from '../../store/campaignStore';
 import { useState } from 'react';
 import ResetModal from '../ResetModal';
+
+const WARM_GOLD = '#D4A93C';
+const MIDNIGHT_BLUE = '#1A1F4A';
+const SIDEBAR_BG = '#14193D';
 
 export const CONTENT_CREATOR_STEPS = [
   { number: 1, title: 'Creator Identity' },
@@ -22,12 +26,27 @@ interface ContentCreatorSidebarProps {
   currentStep: number;
   onStepClick: (step: number) => void;
   completedSteps: number[];
+  /** Matches top ProgressBar fill (step 2 substeps, 8 segments internally). */
+  subProgress?: number;
+  /** While on Step 2, 0-based sub-screen index from Content Creator flow (questions 1-7 + summary at 7). */
+  audienceAvatarQuestionIndex?: number | null;
   onResetContentCreator?: () => void;
 }
 
-export default function ContentCreatorSidebar({ currentStep, onStepClick, completedSteps, onResetContentCreator }: ContentCreatorSidebarProps) {
+export default function ContentCreatorSidebar({
+  currentStep,
+  onStepClick,
+  completedSteps,
+  subProgress = 0,
+  audienceAvatarQuestionIndex,
+  onResetContentCreator,
+}: ContentCreatorSidebarProps) {
   const { resetMode, resetContentCreatorFlow } = useCampaignStore();
   const [showResetModal, setShowResetModal] = useState(false);
+
+  const totalSteps = CONTENT_CREATOR_STEPS.length;
+  const progressRatio = Math.min(1, Math.max(0, (currentStep - 1 + subProgress) / totalSteps));
+  const progressPercent = progressRatio * 100;
 
   const handleBackToHome = () => {
     resetMode();
@@ -41,188 +60,176 @@ export default function ContentCreatorSidebar({ currentStep, onStepClick, comple
 
   return (
     <div
-      className="w-[240px] flex flex-col z-20 relative flex-shrink-0"
+      className="relative z-20 flex w-[240px] flex-shrink-0 flex-col self-stretch"
       style={{
-        background: '#0d0b1a',
-        borderRight: '1px solid rgba(201,168,76,0.15)',
+        background: SIDEBAR_BG,
+        borderRight: '1px solid rgba(212, 169, 60, 0.15)',
         alignSelf: 'stretch',
         minHeight: '100%',
         height: 'auto',
       }}
     >
-      <div
-        className="absolute right-0 top-0 pointer-events-none"
-        style={{
-          width: '1px',
-          height: '100%',
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(201,168,76,0.4) 30%, rgba(46,139,87,0.3) 70%, transparent 100%)',
-        }}
-      />
+      <div className="pointer-events-none absolute left-0 top-0 z-[25] flex h-full w-[3px] flex-col" aria-hidden>
+        <div className="relative h-full w-full bg-[rgba(212,169,60,0.15)]">
+          <div className="absolute left-0 right-0 top-0" style={{ height: `${progressPercent}%`, background: WARM_GOLD }} />
+        </div>
+      </div>
 
-      <div className="relative z-10" style={{ background: '#0a0814', padding: '24px 20px 20px 20px', width: '100%' }}>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 220" width="220" height="68" style={{ filter: 'drop-shadow(0 0 12px rgba(201,168,76,0.3))' }}>
-          <defs>
-            <linearGradient id="ccSidebarVl" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#f0d060"/>
-              <stop offset="40%" stopColor="#c9a84c"/>
-              <stop offset="100%" stopColor="#7a5c1a"/>
-            </linearGradient>
-            <linearGradient id="ccSidebarVr" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#e8c96a"/>
-              <stop offset="50%" stopColor="#a07828"/>
-              <stop offset="100%" stopColor="#c9a84c"/>
-            </linearGradient>
-            <linearGradient id="ccSidebarCg" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#f0d060"/>
-              <stop offset="100%" stopColor="#8B6914"/>
-            </linearGradient>
-            <linearGradient id="ccSidebarWg" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#f0d060"/>
-              <stop offset="40%" stopColor="#c9a84c"/>
-              <stop offset="70%" stopColor="#a07828"/>
-              <stop offset="100%" stopColor="#c9a84c"/>
-            </linearGradient>
-          </defs>
-          <g transform="translate(48, 18) scale(1.0)">
-            <path d="M18 22 L55 112 L70 87 L42 22 Z" fill="url(#ccSidebarVl)"/>
-            <path d="M122 22 L85 112 L70 87 L98 22 Z" fill="url(#ccSidebarVr)"/>
-            <rect x="46" y="12" width="48" height="6" rx="2" fill="url(#ccSidebarCg)"/>
-            <path d="M46 18 L46 5 L58 12 L70 3 L82 12 L94 5 L94 18 Z" fill="url(#ccSidebarCg)"/>
-            <circle cx="46" cy="5" r="2.5" fill="#f0d060"/>
-            <circle cx="70" cy="3" r="3.5" fill="#f0d060"/>
-            <circle cx="94" cy="5" r="2.5" fill="#f0d060"/>
-          </g>
-          <text x="185" y="135" fontFamily="Georgia, serif" fontSize="76" fontWeight="bold" letterSpacing="12" fill="url(#ccSidebarWg)">VELOUR</text>
-        </svg>
+      <div
+        className="relative z-10 overflow-hidden border-b border-[rgba(212,169,60,0.12)] px-5"
+        style={{ background: SIDEBAR_BG, width: '100%', paddingTop: '24px', paddingBottom: '20px' }}
+      >
+        <div className="relative mx-auto flex w-full justify-center px-2" style={{ minHeight: '72px' }}>
+          <div
+            className="pointer-events-none absolute left-1/2 top-[45%] h-[clamp(112px,32vw,160px)] w-[min(200px,94%)] max-w-none -translate-x-1/2 -translate-y-1/2"
+            aria-hidden
+            style={{
+              background:
+                'radial-gradient(ellipse 65% 80% at 50% 50%, rgba(212, 169, 60, 0.08) 0%, transparent 72%)',
+            }}
+          />
+          <img
+            src="/velour-logo.png"
+            alt="Velour by Charlen Maison"
+            className="relative mx-auto block h-auto w-full max-w-[150px]"
+            style={{ filter: 'drop-shadow(0 0 24px rgba(212, 169, 60, 0.4))' }}
+          />
+        </div>
         <button
+          type="button"
           onClick={handleBackToHome}
+          className="mt-4 flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 transition-opacity hover:opacity-100"
           style={{
-            background: 'transparent',
-            border: 'none',
-            color: '#f0ebff',
-            fontSize: '12px',
+            fontFamily: 'Inter, sans-serif',
+            fontSize: '11px',
             fontWeight: 600,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 0',
-            marginTop: '12px',
-            transition: 'color 0.2s',
-            marginLeft: '0',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: WARM_GOLD,
+            opacity: 0.92,
           }}
-          onMouseOver={(e) => (e.currentTarget.style.color = '#e8c96a')}
-          onMouseOut={(e) => (e.currentTarget.style.color = '#f0ebff')}
         >
-          <ArrowLeft size={14} style={{ color: '#c9a84c', filter: 'drop-shadow(0 0 4px rgba(201,168,76,0.5))', flexShrink: 0 }} />
+          <ArrowLeft size={14} strokeWidth={2} style={{ color: WARM_GOLD, flexShrink: 0, opacity: 0.95 }} aria-hidden />
           Back to Home
         </button>
       </div>
 
-      <div style={{
-        width: '100%',
-        height: '3px',
-        background: 'linear-gradient(90deg, transparent 0%, #c9a84c 20%, #e8c96a 50%, #c9a84c 80%, transparent 100%)',
-        boxShadow: '0 0 12px rgba(201,168,76,0.8), 0 0 24px rgba(201,168,76,0.4)',
-        flexShrink: 0,
-        margin: '0'
-      }} />
-
-      <div className="flex-1 relative z-10" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '0px', padding: '24px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
+      <div
+        className="relative z-10 flex flex-1 flex-col justify-between gap-0 px-6 py-6"
+        style={{
+          background: SIDEBAR_BG,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <div className="flex flex-col gap-0">
           {CONTENT_CREATOR_STEPS.map((step) => {
-            const isCompleted = completedSteps.includes(step.number);
-            const isCurrent = currentStep === step.number;
-            const isClickable = isCompleted || step.number < currentStep;
-            const isUpcoming = !isCurrent && !isCompleted;
+            /** Visual progression is driven only by comparison to App `currentStep` (re-render on each NEXT). */
+            const isCompleted = step.number < currentStep;
+            const isActive = step.number === currentStep;
+            /** Match App `handleStepClick`: completed list or strictly before current, plus current row stays enabled. */
+            const isClickable =
+              step.number === currentStep || step.number < currentStep || completedSteps.includes(step.number);
+
+            const showAudienceSubProgress = step.number === 2 && isActive;
+            const avIdx = typeof audienceAvatarQuestionIndex === 'number' ? audienceAvatarQuestionIndex : 0;
+            const audienceQuestionBarPct = avIdx >= 7 ? 100 : ((avIdx + 1) / 7) * 100;
+            const audienceQuestionLabel =
+              avIdx < 7 ? `Question ${avIdx + 1} of 7` : 'Review';
 
             return (
               <div key={step.number}>
                 <button
+                  type="button"
                   onClick={() => isClickable && onStepClick(step.number)}
-                  disabled={!isClickable && !isCurrent}
-                  className={`w-full flex items-start gap-3 text-left transition-all duration-200 relative group ${
-                    isClickable || isCurrent ? 'cursor-pointer' : 'cursor-not-allowed'
+                  disabled={!isClickable}
+                  className={`group relative flex w-full items-start gap-3 rounded-lg text-left transition-all duration-200 ${
+                    isClickable ? 'cursor-pointer' : 'cursor-not-allowed'
                   }`}
                   style={{
                     paddingTop: '10px',
                     paddingBottom: '10px',
-                    paddingLeft: '12px',
-                    paddingRight: '12px',
-                    opacity: isUpcoming ? 0.5 : 1,
-                    background: isCurrent ? 'rgba(201,168,76,0.06)' : 'transparent',
-                    borderRadius: isCurrent ? '8px' : '0',
-                    borderLeft: '2px solid transparent',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isCurrent) e.currentTarget.style.borderLeft = '2px solid rgba(201,168,76,0.15)';
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isCurrent) e.currentTarget.style.borderLeft = '2px solid transparent';
+                    paddingLeft: '10px',
+                    paddingRight: '10px',
+                    background: isActive ? 'rgba(212,169,60,0.06)' : 'transparent',
                   }}
                 >
-                  {isCurrent && (
-                    <div
-                      className="absolute left-0 top-0 bottom-0"
-                      style={{
-                        width: '3px',
-                        background: 'linear-gradient(to bottom, #c9a84c, #2e8b57)',
-                        borderRadius: '0 2px 2px 0',
-                        left: '-24px',
-                      }}
-                    />
-                  )}
                   <div
-                    className="rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                    className="flex flex-shrink-0 items-center justify-center rounded-full transition-all duration-300"
                     style={
-                      isCurrent
+                      isActive
                         ? {
                             width: '32px',
                             height: '32px',
-                            background: 'linear-gradient(135deg, #c9a84c, #8B6914)',
-                            color: '#0d0b1a',
+                            background: WARM_GOLD,
+                            color: MIDNIGHT_BLUE,
                             fontSize: '13px',
-                            fontWeight: 800,
-                            boxShadow: '0 0 20px rgba(201,168,76,0.6), 0 0 40px rgba(201,168,76,0.2)',
+                            fontWeight: 700,
                           }
                         : isCompleted
-                        ? {
-                            width: '32px',
-                            height: '32px',
-                            background: 'linear-gradient(135deg, #1a5c35, #2e8b57)',
-                            color: '#ffffff',
-                            fontSize: '13px',
-                            fontWeight: 800,
-                            boxShadow: '0 0 12px rgba(46,139,87,0.4)',
-                          }
-                        : {
-                            width: '32px',
-                            height: '32px',
-                            background: 'rgba(255,255,255,0.08)',
-                            border: '1.5px solid rgba(255,255,255,0.15)',
-                            color: '#8a7a9a',
-                            fontSize: '12px',
-                            fontWeight: 600,
-                          }
+                          ? {
+                              width: '32px',
+                              height: '32px',
+                              background: WARM_GOLD,
+                              color: MIDNIGHT_BLUE,
+                              fontSize: '13px',
+                              fontWeight: 700,
+                            }
+                          : {
+                              width: '32px',
+                              height: '32px',
+                              background: 'transparent',
+                              border: '1px solid rgba(212,169,60,0.3)',
+                              color: 'rgba(212,169,60,0.5)',
+                              fontSize: '12px',
+                              fontWeight: 600,
+                            }
                     }
                   >
-                    {isCompleted ? <Check className="w-4 h-4" /> : step.number}
+                    {isActive ? step.number : isCompleted ? <Check className="h-4 w-4" strokeWidth={3} aria-hidden /> : step.number}
                   </div>
-                  <div className="flex-1 py-0.5">
+                  <div className="min-w-0 flex-1 py-0.5">
                     <p
                       className="transition-colors duration-300"
                       style={{
                         fontFamily: 'Inter, sans-serif',
-                        fontSize: isCurrent ? '14px' : '13px',
-                        fontWeight: isCurrent ? 700 : isCompleted ? 600 : 600,
-                        color: isCurrent ? '#ffffff' : isCompleted ? '#d4cce8' : '#b8aed0',
-                        textTransform: 'none',
-                        lineHeight: '1.6',
-                        overflow: 'visible',
+                        fontSize: isActive ? '14px' : '13px',
+                        fontWeight: isActive ? 500 : 400,
+                        color: WARM_GOLD,
+                        opacity: isCompleted ? 0.8 : isActive ? 1 : 0.4,
+                        lineHeight: '1.5',
                       }}
                     >
                       {step.title}
                     </p>
+                    {showAudienceSubProgress && (
+                      <>
+                        <div
+                          className="mt-2 h-[5px] w-full overflow-hidden rounded-full"
+                          style={{ backgroundColor: 'rgba(212, 169, 60, 0.15)' }}
+                          aria-hidden
+                        >
+                          <div
+                            className="h-full rounded-full bg-[#D4A93C]"
+                            style={{
+                              width: `${audienceQuestionBarPct}%`,
+                              transition: 'width 0.35s ease-out',
+                            }}
+                          />
+                        </div>
+                        <p
+                          className="mt-1 font-sans"
+                          style={{
+                            fontSize: '10px',
+                            letterSpacing: '0.1em',
+                            color: '#D4A93C',
+                            fontWeight: 500,
+                          }}
+                        >
+                          {audienceQuestionLabel}
+                        </p>
+                      </>
+                    )}
                   </div>
                 </button>
               </div>
@@ -230,105 +237,82 @@ export default function ContentCreatorSidebar({ currentStep, onStepClick, comple
           })}
         </div>
 
-        <div>
-          <div style={{
-            width: '80%',
-            height: '1px',
-            margin: '0 auto 16px auto',
-            background: 'linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.3) 50%, transparent 100%)'
-          }} />
+        <div className="mt-6">
+          <div
+            className="mb-4 h-px w-[80%] opacity-70"
+            style={{
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              background:
+                'linear-gradient(90deg, transparent 0%, rgba(212,169,60,0.35) 50%, transparent 100%)',
+            }}
+            aria-hidden
+          />
 
-          <div className="w-full text-center pb-2 relative z-10" style={{ background: '#0a0814', paddingTop: '0' }}>
-            <button
-              type="button"
-              onClick={() => {
-                const { setField } = useCampaignStore.getState();
-                setField('creatorMode', 'ugc-creator');
-              }}
-              style={{
-                background: 'rgba(201,168,76,0.06)',
-                border: '1px solid rgba(201,168,76,0.5)',
-                borderRadius: '8px',
-                padding: '8px 12px',
-                fontSize: '11px',
-                fontWeight: 700,
-                color: '#e8c96a',
-                cursor: 'pointer',
-                textAlign: 'center',
-                width: '100%',
-                marginBottom: '12px',
-                boxShadow: '0 0 12px rgba(201,168,76,0.25), inset 0 0 20px rgba(201,168,76,0.04)',
-                transition: 'box-shadow 0.2s, border-color 0.2s',
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.boxShadow = '0 0 16px rgba(201,168,76,0.4), inset 0 0 20px rgba(201,168,76,0.06)';
-                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.7)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.boxShadow = '0 0 12px rgba(201,168,76,0.25), inset 0 0 20px rgba(201,168,76,0.04)';
-                e.currentTarget.style.borderColor = 'rgba(201,168,76,0.5)';
-              }}
-            >
-              Switch to UGC Hub
-            </button>
-
+          <div className="relative z-10 pb-2 text-center">
             <p
               style={{
                 fontFamily: 'Inter, sans-serif',
                 fontSize: '12px',
-                fontWeight: 600,
+                fontWeight: 500,
                 fontStyle: 'italic',
-                color: '#c9a84c',
-                textAlign: 'center',
-                lineHeight: '1.8',
-                textTransform: 'none',
-                textShadow: '0 0 20px rgba(201,168,76,0.5), 0 0 40px rgba(201,168,76,0.2)',
-                overflow: 'visible',
+                color: WARM_GOLD,
+                opacity: 0.75,
+                lineHeight: 1.6,
               }}
             >
               Where Creators Become Empires.
             </p>
 
-            <button
-              onClick={() => setShowResetModal(true)}
-              style={{
-                background: 'rgba(180,80,80,0.08)',
-                border: '1px solid rgba(200,100,100,0.4)',
-                borderRadius: '8px',
-                color: '#e8a0a0',
-                fontSize: '11px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                padding: '8px 12px',
-                marginTop: '16px',
-                textAlign: 'center',
-                width: '100%',
-                transition: 'color 0.2s, box-shadow 0.2s, border-color 0.2s',
-                boxShadow: '0 0 10px rgba(180,80,80,0.2)',
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.color = '#f0b0b0';
-                e.currentTarget.style.boxShadow = '0 0 14px rgba(180,80,80,0.35)';
-                e.currentTarget.style.borderColor = 'rgba(200,100,100,0.6)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.color = '#e8a0a0';
-                e.currentTarget.style.boxShadow = '0 0 10px rgba(180,80,80,0.2)';
-                e.currentTarget.style.borderColor = 'rgba(200,100,100,0.4)';
-              }}
-            >
-              Reset / Start Fresh
-            </button>
+            <div className="mt-4 flex w-full flex-col items-center px-1">
+              <button
+                type="button"
+                onClick={() => setShowResetModal(true)}
+                className="w-full max-w-[200px] cursor-pointer rounded-[20px] border border-solid bg-transparent px-4 py-2 text-center transition-all duration-200"
+                style={{
+                  borderColor: 'rgba(220, 100, 100, 0.4)',
+                  color: 'rgba(220, 100, 100, 0.8)',
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                }}
+                onMouseEnter={(e) => {
+                  const t = e.currentTarget;
+                  t.style.borderColor = 'rgba(220, 100, 100, 0.7)';
+                  t.style.backgroundColor = 'rgba(220, 100, 100, 0.05)';
+                  t.style.color = 'rgba(220, 100, 100, 0.95)';
+                }}
+                onMouseLeave={(e) => {
+                  const t = e.currentTarget;
+                  t.style.borderColor = 'rgba(220, 100, 100, 0.4)';
+                  t.style.backgroundColor = 'transparent';
+                  t.style.color = 'rgba(220, 100, 100, 0.8)';
+                }}
+              >
+                START OVER
+              </button>
+              <p
+                className="mt-1 font-sans"
+                style={{
+                  fontSize: '9px',
+                  fontStyle: 'italic',
+                  fontWeight: 400,
+                  color: WARM_GOLD,
+                  opacity: 0.5,
+                  textAlign: 'center',
+                  lineHeight: 1.35,
+                  maxWidth: '200px',
+                }}
+              >
+                Clears all entries from all steps
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      <ResetModal
-        isOpen={showResetModal}
-        onClose={() => setShowResetModal(false)}
-        onConfirm={handleGlobalReset}
-        type="global"
-      />
+      <ResetModal isOpen={showResetModal} onClose={() => setShowResetModal(false)} onConfirm={handleGlobalReset} type="global" />
     </div>
   );
 }

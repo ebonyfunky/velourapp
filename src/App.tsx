@@ -1,31 +1,27 @@
 /**
  * SIDEBAR ROUTING - DO NOT CHANGE:
- * - Content Creator flow (creatorMode === 'content-creator'): Uses ContentCreatorSidebar ONLY (7 steps).
- * - UGC Creator flow (creatorMode === 'ugc-creator'): Uses UGCHub which has its own UGC sidebar.
- * - NEVER use components/Sidebar.tsx (4-step UGC/Campaign) or Layout/Sidebar.tsx here.
+ * - Velour ships a single creator experience: creatorMode === 'content-creator' uses ContentCreatorSidebar (7 steps).
  * - Content Creator = ContentCreatorSidebar from ./components/ContentCreator/ContentCreatorSidebar
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useCampaignStore } from './store/campaignStore';
-// Content Creator flow ONLY - 7 steps: Creator Identity, Audience Avatar, Niche, Content Type, Faceless/Face, Script Generator, 30 Day Calendar
 import ContentCreatorSidebar from './components/ContentCreator/ContentCreatorSidebar';
 import ProgressBar from './components/Layout/ProgressBar';
 import ContentCreatorFlow from './components/ContentCreator/ContentCreatorFlow';
 import WelcomeScreen from './components/WelcomeScreen';
 import ModeSelector from './components/ModeSelector';
-import UGCHub from './components/UGCHub';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 
-const VALID_CREATOR_MODES = ['content-creator', 'ugc-creator'] as const;
-
 function App() {
   const { creatorMode, setField } = useCampaignStore();
-  const isInvalidMode = !creatorMode || !VALID_CREATOR_MODES.includes(creatorMode as typeof VALID_CREATOR_MODES[number]);
+  const showContentCreatorFlow = creatorMode === 'content-creator';
   const [currentStep, setCurrentStep] = useState(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [showWelcome, setShowWelcome] = useState(false);
   const [subProgress, setSubProgress] = useState(0);
+  /** Step 2 Audience Avatar sub-question index (0-7), synced from ContentCreatorFlow while on Step 2. */
+  const [audienceAvatarQuestionIndex, setAudienceAvatarQuestionIndex] = useState<number | null>(null);
   const prevCreatorModeRef = useRef<string>(creatorMode || '');
 
   useEffect(() => {
@@ -35,12 +31,12 @@ function App() {
     }
   }, []);
 
-  // When user clicks "Start Creating", always start at Step 1.
   useEffect(() => {
     if (creatorMode === 'content-creator' && prevCreatorModeRef.current !== 'content-creator') {
       setCurrentStep(1);
       setCompletedSteps([]);
       setSubProgress(0);
+      setAudienceAvatarQuestionIndex(null);
     }
     prevCreatorModeRef.current = creatorMode || '';
   }, [creatorMode]);
@@ -70,102 +66,110 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentStep]);
 
-  if (isInvalidMode) {
-    return <ModeSelector />;
-  }
-
-  if (creatorMode === 'ugc-creator') {
+  if (!showContentCreatorFlow) {
     return (
       <ErrorBoundary>
-        <UGCHub />
-        <Toast />
+        <>
+          <ModeSelector />
+          <Toast />
+        </>
       </ErrorBoundary>
     );
   }
 
-  // Content Creator flow ONLY - creatorMode === 'content-creator'
-  // Renders ContentCreatorSidebar (7 steps). UGC Sidebar and Layout/Sidebar are NEVER used here.
-  if (creatorMode !== 'content-creator') {
-    return <ModeSelector />;
-  }
-
   return (
     <ErrorBoundary>
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'stretch',
-        minHeight: '100vh',
-        width: '100%',
-        background: '#12102a',
-      }}
-    >
-      {showWelcome && <WelcomeScreen onDismiss={() => setShowWelcome(false)} />}
-      {/* Content Creator flow sidebar - 7 steps. DO NOT replace with Sidebar or Layout/Sidebar. */}
-      <ContentCreatorSidebar
-        currentStep={currentStep}
-        onStepClick={handleStepClick}
-        completedSteps={completedSteps}
-        onResetContentCreator={() => {
-          setCurrentStep(1);
-          setCompletedSteps([]);
-          setSubProgress(0);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-      />
       <div
         style={{
-          flex: 1,
           display: 'flex',
-          flexDirection: 'column',
-          overflowY: 'auto',
-          position: 'relative',
+          flexDirection: 'row',
+          alignItems: 'stretch',
           minHeight: '100vh',
+          width: '100%',
+          background: 'linear-gradient(180deg, #222A58 0%, #1A1F4A 48%, #151A40 100%)',
         }}
       >
-        <ProgressBar currentStep={currentStep} totalSteps={7} subProgress={subProgress} />
-
+        {showWelcome && <WelcomeScreen onDismiss={() => setShowWelcome(false)} />}
+        <ContentCreatorSidebar
+          currentStep={currentStep}
+          onStepClick={handleStepClick}
+          completedSteps={completedSteps}
+          subProgress={subProgress}
+          audienceAvatarQuestionIndex={audienceAvatarQuestionIndex}
+          onResetContentCreator={() => {
+            setCurrentStep(1);
+            setCompletedSteps([]);
+            setSubProgress(0);
+            setAudienceAvatarQuestionIndex(null);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             flex: 1,
-            minHeight: '100vh',
-            padding: '40px',
-            background: 'transparent',
+            display: 'flex',
+            flexDirection: 'column',
             overflowY: 'auto',
+            position: 'relative',
+            minHeight: '100vh',
           }}
         >
           <div
+            className="pointer-events-none absolute left-0 right-0 top-0 z-0"
             style={{
-              width: '100%',
-              maxWidth: '680px',
-              background: '#1c1a35',
-              border: '1.5px solid rgba(201,168,76,0.2)',
-              borderRadius: '20px',
-              padding: '44px 48px',
+              height: 'min(380px, 48vh)',
+              background:
+                'radial-gradient(ellipse 85% 70% at 50% 0%, rgba(212, 169, 60, 0.10) 0%, transparent 72%)',
+            }}
+            aria-hidden
+          />
+
+          <ProgressBar currentStep={currentStep} totalSteps={7} subProgress={subProgress} />
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 1,
+              minHeight: '100vh',
+              padding: '40px',
+              background: 'transparent',
+              overflowY: 'auto',
               position: 'relative',
-              overflow: 'visible',
-              boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
-              display: 'block',
-              visibility: 'visible',
-              opacity: 1,
+              zIndex: 1,
             }}
           >
-            <div style={{ display: 'block' }}>
-              <ContentCreatorFlow
-                currentStep={currentStep}
-                onNext={handleNext}
-                onBack={handleBack}
-                onSubProgress={setSubProgress}
-              />
+            <div
+              style={{
+                width: '100%',
+                maxWidth: '680px',
+                background: '#252B5F',
+                border: '1px solid rgba(212, 169, 60, 0.25)',
+                borderRadius: '20px',
+                padding: '44px 48px',
+                position: 'relative',
+                overflow: 'visible',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04)',
+                display: 'block',
+                visibility: 'visible',
+                opacity: 1,
+              }}
+            >
+              <div style={{ display: 'block' }}>
+                <ContentCreatorFlow
+                  currentStep={currentStep}
+                  onNext={handleNext}
+                  onBack={handleBack}
+                  onSubProgress={setSubProgress}
+                  onAudienceAvatarQuestionIndex={setAudienceAvatarQuestionIndex}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <Toast />
     </ErrorBoundary>
   );
 }

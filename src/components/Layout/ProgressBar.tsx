@@ -11,17 +11,21 @@ export default function ProgressBar({ currentStep, totalSteps, subProgress = 0 }
   const progressPercent = ((currentStep - 1 + subProgress) / totalSteps) * 100;
 
   return (
-    <div className="fixed top-0 left-[240px] right-0 h-[3px] bg-bg/50 backdrop-blur z-30">
+    <div className="fixed left-[240px] right-0 top-0 z-30 h-[3px]" style={{ background: 'rgba(212,169,60,0.12)' }}>
       <motion.div
-        className="h-full"
+        className="h-full rounded-r-sm"
         style={{
-          background: 'linear-gradient(90deg, #7c3aed 0%, #2e8b57 50%, #c9a84c 100%)',
+          background: '#D4A93C',
+          boxShadow: '0 0 12px rgba(212, 169, 60, 0.35)',
         }}
         initial={false}
         animate={{ width: `${progressPercent}%` }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
       />
-      <div className="absolute right-6 top-1/2 -translate-y-1/2 text-xs text-text-muted font-medium">
+      <div
+        className="absolute right-6 top-1/2 -translate-y-1/2 text-xs font-medium"
+        style={{ color: 'rgba(212, 169, 60, 0.75)' }}
+      >
         Step {currentStep} of {totalSteps}
       </div>
     </div>
