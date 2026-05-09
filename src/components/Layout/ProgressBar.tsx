@@ -11,23 +11,32 @@ export default function ProgressBar({ currentStep, totalSteps, subProgress = 0 }
   const progressPercent = ((currentStep - 1 + subProgress) / totalSteps) * 100;
 
   return (
-    <div className="fixed left-[240px] right-0 top-0 z-30 h-[3px]" style={{ background: 'rgba(212,169,60,0.12)' }}>
-      <motion.div
-        className="h-full rounded-r-sm"
-        style={{
-          background: '#D4A93C',
-          boxShadow: '0 0 12px rgba(212, 169, 60, 0.35)',
-        }}
-        initial={false}
-        animate={{ width: `${progressPercent}%` }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-      />
+    <>
+      {/* Gold progress bar at very top */}
+      <div className="fixed left-[240px] right-0 top-0 z-30 h-[3px]" style={{ background: 'rgba(212,169,60,0.12)' }}>
+        <motion.div
+          className="h-full rounded-r-sm"
+          style={{
+            background: '#D4A93C',
+            boxShadow: '0 0 12px rgba(212, 169, 60, 0.35)',
+          }}
+          initial={false}
+          animate={{ width: `${progressPercent}%` }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+        />
+      </div>
+
+      {/* Step indicator just below the progress bar, top-right */}
       <div
-        className="absolute right-6 top-1/2 -translate-y-1/2 text-xs font-medium"
-        style={{ color: 'rgba(212, 169, 60, 0.75)' }}
+        className="fixed right-6 top-3 z-30 text-xs font-medium"
+        style={{
+          color: 'rgba(212, 169, 60, 0.75)',
+          fontFamily: 'Inter, sans-serif',
+          letterSpacing: '0.04em',
+        }}
       >
         Step {currentStep} of {totalSteps}
       </div>
-    </div>
+    </>
   );
 }

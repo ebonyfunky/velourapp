@@ -119,6 +119,19 @@ export interface CampaignStore {
   generationHistory: GenerationHistoryItem[];
   setupComplete: boolean;
 
+  // Velour customer-clarity profile (Tony's framework)
+  customerWho: string;
+  customerBeforeState: string;
+  customerAfterState: string;
+  customerSurfaceProblem: string;
+  customerRealProblem: string;
+  customerLanguageUses: string[];
+  customerLanguageAvoids: string[];
+  customerAwarenessStage: 'unaware' | 'problem' | 'solution' | 'most' | '';
+  customerSummary: string;
+  profileCompletedAt: string | null;
+  profileLastStep: number;
+
   // Affiliate Product Fields
   affiliateBrandName: string;
   affiliatePlatform: string;
@@ -435,6 +448,19 @@ export interface CampaignStore {
   resetStep1: () => void;
   resetStep2: () => void;
   resetStep3: () => void;
+  // Velour customer-clarity actions
+  setCustomerWho: (value: string) => void;
+  setCustomerBeforeState: (value: string) => void;
+  setCustomerAfterState: (value: string) => void;
+  setCustomerSurfaceProblem: (value: string) => void;
+  setCustomerRealProblem: (value: string) => void;
+  setCustomerLanguageUses: (value: string[]) => void;
+  setCustomerLanguageAvoids: (value: string[]) => void;
+  setCustomerAwarenessStage: (value: 'unaware' | 'problem' | 'solution' | 'most' | '') => void;
+  setCustomerSummary: (value: string) => void;
+  setProfileLastStep: (step: number) => void;
+  markProfileComplete: () => void;
+  resetProfile: () => void;
   setSession: (session: Session | null) => void;
   setAuthLoading: (loading: boolean) => void;
   setAuthError: (error: string | null) => void;
@@ -671,6 +697,17 @@ const initialState = {
   voice: '',
   generationHistory: [],
   setupComplete: false,
+  customerWho: '',
+  customerBeforeState: '',
+  customerAfterState: '',
+  customerSurfaceProblem: '',
+  customerRealProblem: '',
+  customerLanguageUses: [],
+  customerLanguageAvoids: [],
+  customerAwarenessStage: '' as 'unaware' | 'problem' | 'solution' | 'most' | '',
+  customerSummary: '',
+  profileCompletedAt: null as string | null,
+  profileLastStep: 0,
 };
 
 export const useCampaignStore = (() => {
@@ -746,6 +783,35 @@ export const useCampaignStore = (() => {
               ...state,
               voice: '',
             })),
+          setCustomerWho: (value) => set({ customerWho: value }),
+          setCustomerBeforeState: (value) => set({ customerBeforeState: value }),
+          setCustomerAfterState: (value) => set({ customerAfterState: value }),
+          setCustomerSurfaceProblem: (value) => set({ customerSurfaceProblem: value }),
+          setCustomerRealProblem: (value) => set({ customerRealProblem: value }),
+          setCustomerLanguageUses: (value) => set({ customerLanguageUses: value }),
+          setCustomerLanguageAvoids: (value) => set({ customerLanguageAvoids: value }),
+          setCustomerAwarenessStage: (value) => set({ customerAwarenessStage: value }),
+          setCustomerSummary: (value) => set({ customerSummary: value }),
+          setProfileLastStep: (step) => set({ profileLastStep: step }),
+          markProfileComplete: () =>
+            set({
+              profileCompletedAt: new Date().toISOString(),
+              profileLastStep: 5,
+            }),
+          resetProfile: () =>
+            set({
+              customerWho: '',
+              customerBeforeState: '',
+              customerAfterState: '',
+              customerSurfaceProblem: '',
+              customerRealProblem: '',
+              customerLanguageUses: [],
+              customerLanguageAvoids: [],
+              customerAwarenessStage: '',
+              customerSummary: '',
+              profileCompletedAt: null,
+              profileLastStep: 0,
+            }),
           setSession: (session) => set({ session }),
           setAuthLoading: (authLoading) => set({ authLoading }),
           setAuthError: (authError) => set({ authError }),
