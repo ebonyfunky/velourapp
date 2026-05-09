@@ -1,8 +1,6 @@
 /**
- * DEPRECATED - DO NOT USE FOR CONTENT CREATOR FLOW.
- * Legacy wizard sidebar (4 steps). Not wired into the current Velour shell.
- * For Content Creator flow, use ContentCreatorSidebar from components/ContentCreator/ContentCreatorSidebar.
- * This file is kept for legacy reference only. App.tsx MUST NOT import this.
+ * Deprecated legacy wizard sidebar (not wired into the Velour shell).
+ * Setup uses SetupSidebar under components/Setup/SetupSidebar. App must not import this.
  */
 import { Diamond } from 'lucide-react';
 

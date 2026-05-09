@@ -2,6 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Currency, ContentStyle } from '../types';
 
+export type GenerationHistoryItem = {
+  id: string;
+  type: string;
+  platform: string;
+  content: string;
+  createdAt: string;
+};
+
 export interface CampaignStore {
   // Step 1
   creatorName: string;
@@ -92,79 +100,17 @@ export interface CampaignStore {
   // Creator Mode
   creatorMode: string;
 
-  // Creator Identity Fields
-  creatorIdentityPersona: string;
-  creatorIdentityStyle: string;
-  creatorIdentityNiche: string;
-  creatorIdentityStory: string;
-  creatorIdentityStoryUsedTo: string;
-  creatorIdentityStoryUntilI: string;
-  creatorIdentityStoryNowIShow: string;
-  creatorIdentityCard: {
-    statement: string;
-    voice: string;
-    audience: string;
-    themes: string[];
-  } | null;
-
-  // Audience Avatar Fields
-  audienceAvatar: {
-    oneRealPerson: string;
-    helpPeopleWho: string;
-    theyFeel: string;
-    theyWant: string;
-    theyTried: string;
-    biggestFear: string;
-    secretHope: string;
-    innerVoice: string;
-    audienceStatement: string;
-    generated: {
-      name: string;
-      age: number;
-      dailyLife: string;
-      emotionalTriggers: string[];
-      searchWords: string[];
-      contentHooks: string[];
-      scrollTestQuestion: string;
-    } | null;
-  } | null;
-
-  // Content Creator Onboarding (Steps 1-3)
-  contentCreatorProfession: string;
-  contentCreatorProfessionOther: string;
-  contentCreatorFaceType: '' | 'faceless' | 'face-forward';
-  contentCreatorAudienceEmotions: string[];
-  contentCreatorAudienceWants: string[];
-  contentCreatorAudienceTriedOptions: string[];
-  contentCreatorAudienceFear: string;
-  contentCreatorAudienceAges: string[];
-  contentCreatorAudienceLife: string[];
-  contentCreatorAudiencePainPoints: string[];
-  contentCreatorAudienceStatement: string;
-  contentCreatorProjectTypes: string[];
-  contentCreatorProjectOther: string;
-  contentCreatorContentTypes: string[];
-  contentCreatorContentTypesOther: string;
-  contentCreatorPostingFrequency: string;
-  contentCreatorScriptBatchSize: string;
-  contentCreatorGeneratedScripts: Array<{
-    id: string;
-    dayLabel?: string;
-    weekLabel?: string;
-    monthLabel?: string;
-    type: string;
-    hook: string;
-    problem?: string;
-    solution?: string;
-    cta: string;
-    fullScript?: string;
-  }>;
-  contentCreatorNicheHooks: string[];
-  contentCreatorCalendarSlots: Array<{
-    dayNumber: number;
-    contentType: string;
-    topic: string;
-  }>;
+  // Velour setup (Profession, Audience, Voice)
+  profession: string;
+  professionOther: string;
+  audienceDescription: string;
+  audiencePain: string;
+  audiencePainOther: string;
+  audienceWant: string;
+  audienceWantOther: string;
+  voice: string;
+  generationHistory: GenerationHistoryItem[];
+  setupComplete: boolean;
 
   // Affiliate Product Fields
   affiliateBrandName: string;
@@ -468,9 +414,20 @@ export interface CampaignStore {
   updateStep5: (data: Partial<Pick<CampaignStore, 'postsPerWeek' | 'campaignDuration' | 'startDate' | 'timezone' | 'calendarPosts'>>) => void;
   reset: () => void;
   resetMode: () => void;
-  resetContentCreatorFlow: () => void;
-  /** Clears persisted fields for one Content Creator step (steps 1-7); does not change creatorMode. */
-  clearContentCreatorStep: (stepNumber: number) => void;
+  setProfession: (value: string) => void;
+  setProfessionOther: (value: string) => void;
+  setAudienceDescription: (value: string) => void;
+  setAudiencePain: (value: string) => void;
+  setAudiencePainOther: (value: string) => void;
+  setAudienceWant: (value: string) => void;
+  setAudienceWantOther: (value: string) => void;
+  setVoice: (value: string) => void;
+  markSetupComplete: () => void;
+  addToGenerationHistory: (item: GenerationHistoryItem) => void;
+  resetSetup: () => void;
+  resetStep1: () => void;
+  resetStep2: () => void;
+  resetStep3: () => void;
 }
 
 const initialState = {
@@ -690,35 +647,16 @@ const initialState = {
     teleprompter: false,
     capcut: false,
   },
-  creatorIdentityPersona: '',
-  creatorIdentityStyle: '',
-  creatorIdentityNiche: '',
-  creatorIdentityStory: '',
-  creatorIdentityStoryUsedTo: '',
-  creatorIdentityStoryUntilI: '',
-  creatorIdentityStoryNowIShow: '',
-  creatorIdentityCard: null,
-  audienceAvatar: null,
-  contentCreatorProfession: '',
-  contentCreatorProfessionOther: '',
-  contentCreatorFaceType: '',
-  contentCreatorAudienceEmotions: [],
-  contentCreatorAudienceWants: [],
-  contentCreatorAudienceTriedOptions: [],
-  contentCreatorAudienceFear: '',
-  contentCreatorAudienceAges: [],
-  contentCreatorAudienceLife: [],
-  contentCreatorAudiencePainPoints: [],
-  contentCreatorAudienceStatement: '',
-  contentCreatorProjectTypes: [],
-  contentCreatorProjectOther: '',
-  contentCreatorContentTypes: [],
-  contentCreatorContentTypesOther: '',
-  contentCreatorPostingFrequency: '',
-  contentCreatorScriptBatchSize: '',
-  contentCreatorGeneratedScripts: [],
-  contentCreatorNicheHooks: [],
-  contentCreatorCalendarSlots: [],
+  profession: '',
+  professionOther: '',
+  audienceDescription: '',
+  audiencePain: '',
+  audiencePainOther: '',
+  audienceWant: '',
+  audienceWantOther: '',
+  voice: '',
+  generationHistory: [],
+  setupComplete: false,
 };
 
 export const useCampaignStore = (() => {
@@ -742,102 +680,52 @@ export const useCampaignStore = (() => {
           reset: () => set(initialState),
           resetMode: () => set({ creatorMode: '' }),
 
-          resetContentCreatorFlow: () =>
-            set((s) => ({
-              ...s,
-              creatorMode: 'content-creator',
-              creatorIdentityPersona: '',
-              creatorIdentityStyle: '',
-              creatorIdentityNiche: '',
-              creatorIdentityStory: '',
-              creatorIdentityStoryUsedTo: '',
-              creatorIdentityStoryUntilI: '',
-              creatorIdentityStoryNowIShow: '',
-              creatorIdentityCard: null,
-              audienceAvatar: null,
-              contentCreatorProfession: '',
-              contentCreatorProfessionOther: '',
-              contentCreatorFaceType: '',
-              contentCreatorAudienceEmotions: [],
-              contentCreatorAudienceWants: [],
-              contentCreatorAudienceTriedOptions: [],
-              contentCreatorAudienceFear: '',
-              contentCreatorAudienceAges: [],
-              contentCreatorAudienceLife: [],
-              contentCreatorAudiencePainPoints: [],
-              contentCreatorAudienceStatement: '',
-              contentCreatorProjectTypes: [],
-              contentCreatorProjectOther: '',
-              contentCreatorContentTypes: [],
-              contentCreatorContentTypesOther: '',
-              contentCreatorPostingFrequency: '',
-              contentCreatorScriptBatchSize: '',
-              contentCreatorGeneratedScripts: [],
-              contentCreatorNicheHooks: [],
-              contentCreatorCalendarSlots: [],
+          setProfession: (value) => set({ profession: value }),
+          setProfessionOther: (value) => set({ professionOther: value }),
+          setAudienceDescription: (value) => set({ audienceDescription: value }),
+          setAudiencePain: (value) => set({ audiencePain: value }),
+          setAudiencePainOther: (value) => set({ audiencePainOther: value }),
+          setAudienceWant: (value) => set({ audienceWant: value }),
+          setAudienceWantOther: (value) => set({ audienceWantOther: value }),
+          setVoice: (value) => set({ voice: value }),
+          markSetupComplete: () => set({ setupComplete: true }),
+          addToGenerationHistory: (item) =>
+            set((state) => ({
+              generationHistory: [item, ...state.generationHistory].slice(0, 20),
             })),
-
-          clearContentCreatorStep: (stepNumber) =>
-            set((state) => {
-              switch (stepNumber) {
-                case 1:
-                  return {
-                    ...state,
-                    creatorIdentityPersona: '',
-                    creatorIdentityStyle: '',
-                    creatorIdentityNiche: '',
-                    creatorIdentityStory: '',
-                    creatorIdentityStoryUsedTo: '',
-                    creatorIdentityStoryUntilI: '',
-                    creatorIdentityStoryNowIShow: '',
-                    creatorIdentityCard: null,
-                  };
-                case 2:
-                  return {
-                    ...state,
-                    contentCreatorAudienceEmotions: [],
-                    contentCreatorAudienceWants: [],
-                    contentCreatorAudienceTriedOptions: [],
-                    contentCreatorAudienceFear: '',
-                    contentCreatorAudienceAges: [],
-                    contentCreatorAudienceLife: [],
-                    contentCreatorAudiencePainPoints: [],
-                    contentCreatorAudienceStatement: '',
-                  };
-                case 3:
-                  return {
-                    ...state,
-                    contentCreatorProfession: '',
-                    contentCreatorProfessionOther: '',
-                  };
-                case 4:
-                  return {
-                    ...state,
-                    contentCreatorContentTypes: [],
-                    contentCreatorContentTypesOther: '',
-                  };
-                case 5:
-                  return {
-                    ...state,
-                    contentCreatorFaceType: '',
-                  };
-                case 6:
-                  return {
-                    ...state,
-                    contentCreatorPostingFrequency: '',
-                    contentCreatorScriptBatchSize: '',
-                    contentCreatorGeneratedScripts: [],
-                    contentCreatorNicheHooks: [],
-                  };
-                case 7:
-                  return {
-                    ...state,
-                    contentCreatorCalendarSlots: [],
-                  };
-                default:
-                  return state;
-              }
-            }),
+          resetSetup: () =>
+            set((state) => ({
+              ...state,
+              profession: '',
+              professionOther: '',
+              audienceDescription: '',
+              audiencePain: '',
+              audiencePainOther: '',
+              audienceWant: '',
+              audienceWantOther: '',
+              voice: '',
+              setupComplete: false,
+            })),
+          resetStep1: () =>
+            set((state) => ({
+              ...state,
+              profession: '',
+              professionOther: '',
+            })),
+          resetStep2: () =>
+            set((state) => ({
+              ...state,
+              audienceDescription: '',
+              audiencePain: '',
+              audiencePainOther: '',
+              audienceWant: '',
+              audienceWantOther: '',
+            })),
+          resetStep3: () =>
+            set((state) => ({
+              ...state,
+              voice: '',
+            })),
         }),
         {
           name: 'velour-storage',
@@ -846,21 +734,19 @@ export const useCampaignStore = (() => {
           onRehydrateStorage: () => (state) => {
             if (state) {
               const s = state as Record<string, unknown>;
-              if (!Array.isArray(s.contentCreatorAudienceEmotions)) {
-                s.contentCreatorAudienceEmotions = typeof s.contentCreatorAudienceEmotion === 'string' && s.contentCreatorAudienceEmotion
-                  ? [s.contentCreatorAudienceEmotion]
-                  : typeof s.contentCreatorAudienceEmotions === 'string' && s.contentCreatorAudienceEmotions
-                    ? [s.contentCreatorAudienceEmotions]
-                    : [];
+              if (typeof s.profession !== 'string') s.profession = '';
+              if (typeof s.professionOther !== 'string') s.professionOther = '';
+              if (typeof s.audienceDescription !== 'string') s.audienceDescription = '';
+              if (typeof s.audiencePain !== 'string') s.audiencePain = '';
+              if (typeof s.audiencePainOther !== 'string') s.audiencePainOther = '';
+              if (typeof s.audienceWant !== 'string') s.audienceWant = '';
+              if (typeof s.audienceWantOther !== 'string') s.audienceWantOther = '';
+              if (typeof s.voice !== 'string') s.voice = '';
+              if (!Array.isArray(s.generationHistory)) {
+                s.generationHistory = [];
               }
-              if (!Array.isArray(s.contentCreatorAudienceWants) && (s.contentCreatorAudienceWant != null || s.contentCreatorAudienceWants == null)) {
-                s.contentCreatorAudienceWants = typeof s.contentCreatorAudienceWant === 'string' && s.contentCreatorAudienceWant ? [s.contentCreatorAudienceWant] : [];
-              }
-              if (!Array.isArray(s.contentCreatorAudienceTriedOptions) && (s.contentCreatorAudienceTried != null || s.contentCreatorAudienceTriedOptions == null)) {
-                s.contentCreatorAudienceTriedOptions = typeof s.contentCreatorAudienceTried === 'string' && s.contentCreatorAudienceTried ? [s.contentCreatorAudienceTried] : [];
-              }
-              if (!Array.isArray(s.contentCreatorAudienceAges) && (s.contentCreatorAudienceAge != null || s.contentCreatorAudienceAges == null)) {
-                s.contentCreatorAudienceAges = typeof s.contentCreatorAudienceAge === 'string' && s.contentCreatorAudienceAge ? [s.contentCreatorAudienceAge] : [];
+              if (typeof s.setupComplete !== 'boolean') {
+                state.setupComplete = false;
               }
               if (typeof state.platformTargets === 'string') {
                 state.platformTargets = state.platformTargets ? [state.platformTargets] : [];
@@ -914,36 +800,6 @@ export const useCampaignStore = (() => {
               }
               if (!state.rateCardConnectHeading) {
                 state.rateCardConnectHeading = 'Connect With Me';
-              }
-              if (!Array.isArray(s.contentCreatorContentTypes)) {
-                s.contentCreatorContentTypes = [];
-              }
-              if (typeof s.contentCreatorContentTypesOther !== 'string') {
-                s.contentCreatorContentTypesOther = '';
-              }
-              if (typeof s.contentCreatorPostingFrequency !== 'string') {
-                s.contentCreatorPostingFrequency = '';
-              }
-              if (typeof s.contentCreatorScriptBatchSize !== 'string') {
-                s.contentCreatorScriptBatchSize = '';
-              }
-              if (!Array.isArray(s.contentCreatorGeneratedScripts)) {
-                s.contentCreatorGeneratedScripts = [];
-              }
-              if (!Array.isArray(s.contentCreatorNicheHooks)) {
-                s.contentCreatorNicheHooks = [];
-              }
-              if (!Array.isArray(s.contentCreatorCalendarSlots)) {
-                s.contentCreatorCalendarSlots = [];
-              }
-              if (typeof s.creatorIdentityStoryUsedTo !== 'string') {
-                s.creatorIdentityStoryUsedTo = '';
-              }
-              if (typeof s.creatorIdentityStoryUntilI !== 'string') {
-                s.creatorIdentityStoryUntilI = '';
-              }
-              if (typeof s.creatorIdentityStoryNowIShow !== 'string') {
-                s.creatorIdentityStoryNowIShow = '';
               }
             }
           },
