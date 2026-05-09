@@ -23,6 +23,7 @@ interface SetupSidebarProps {
 
 export default function SetupSidebar({ phase, setupStep, furthestStep, onStepClick }: SetupSidebarProps) {
   const resetMode = useCampaignStore((s) => s.resetMode);
+  const signOut = useCampaignStore((s) => s.signOut);
 
   const sidebarProgressPct =
     phase === 'placeholder' ? 100 : Math.min(100, Math.max(0, ((setupStep - 1) / 3) * 100));
@@ -228,6 +229,22 @@ export default function SetupSidebar({ phase, setupStep, furthestStep, onStepCli
           >
             Where Creators Become Empires.
           </p>
+          <button
+            type="button"
+            onClick={() => void signOut()}
+            className="w-full border-0 bg-transparent pb-1 text-center transition-opacity hover:opacity-100"
+            style={{
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '11px',
+              fontWeight: 500,
+              letterSpacing: '0.04em',
+              color: 'rgba(180, 178, 204, 0.55)',
+              cursor: 'pointer',
+              opacity: 0.92,
+            }}
+          >
+            Log out
+          </button>
         </div>
       </div>
     </div>

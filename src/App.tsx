@@ -1,13 +1,15 @@
 /**
  * Velour app shell: homepage with BEGIN (ModeSelector), then 3-step Setup + Phase B placeholder.
+ * Auth gate: no session -> AuthScreen; session -> Velour app below.
  */
 import { useCampaignStore } from './store/campaignStore';
 import SetupFlow from './components/Setup/SetupFlow';
 import ModeSelector from './components/ModeSelector';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
+import AuthGate from './components/AuthGate';
 
-function App() {
+function VelourApp() {
   const creatorMode = useCampaignStore((s) => s.creatorMode);
   const showSetup = creatorMode === 'content-creator';
 
@@ -38,6 +40,14 @@ function App() {
       </div>
       <Toast />
     </ErrorBoundary>
+  );
+}
+
+function App() {
+  return (
+    <AuthGate>
+      <VelourApp />
+    </AuthGate>
   );
 }
 

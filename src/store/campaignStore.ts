@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { Session } from '@supabase/supabase-js';
+import { supabase } from '../lib/supabase';
 import type { Currency, ContentStyle } from '../types';
 
 export type GenerationHistoryItem = {
@@ -99,6 +101,11 @@ export interface CampaignStore {
 
   // Creator Mode
   creatorMode: string;
+
+  // Supabase auth (never persisted — Supabase stores the session separately)
+  session: Session | null;
+  authLoading: boolean;
+  authError: string | null;
 
   // Velour setup (Profession, Audience, Voice)
   profession: string;
@@ -428,6 +435,10 @@ export interface CampaignStore {
   resetStep1: () => void;
   resetStep2: () => void;
   resetStep3: () => void;
+  setSession: (session: Session | null) => void;
+  setAuthLoading: (loading: boolean) => void;
+  setAuthError: (error: string | null) => void;
+  signOut: () => Promise<void>;
 }
 
 const initialState = {
@@ -488,6 +499,9 @@ const initialState = {
   ugcAddOns: [],
   ugcChecklist: [],
   creatorMode: '',
+  session: null as Session | null,
+  authLoading: true,
+  authError: null as string | null,
   affiliateBrandName: '',
   affiliatePlatform: '',
   affiliateLink: '',
@@ -677,7 +691,13 @@ export const useCampaignStore = (() => {
           setLiveScript: (script) => set({ liveScript: script }),
           setIsGeneratingLive: (val) => set({ isGeneratingLive: val }),
 
-          reset: () => set(initialState),
+          reset: () =>
+            set((state) => ({
+              ...initialState,
+              session: state.session,
+              authLoading: false,
+              authError: null,
+            })),
           resetMode: () => set({ creatorMode: '' }),
 
           setProfession: (value) => set({ profession: value }),
@@ -726,9 +746,21 @@ export const useCampaignStore = (() => {
               ...state,
               voice: '',
             })),
+          setSession: (session) => set({ session }),
+          setAuthLoading: (authLoading) => set({ authLoading }),
+          setAuthError: (authError) => set({ authError }),
+          signOut: async () => {
+            set({ authError: null });
+            await supabase.auth.signOut();
+            set({ session: null });
+          },
         }),
         {
           name: 'velour-storage',
+          partialize: (state) => {
+            const { session: _s, authLoading: _a, authError: _e, ...rest } = state;
+            return rest;
+          },
           skipHydration: false,
           version: 1,
           onRehydrateStorage: () => (state) => {
