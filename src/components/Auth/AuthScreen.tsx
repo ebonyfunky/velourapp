@@ -137,13 +137,14 @@ export default function AuthScreen() {
         <LogoBlock />
 
         <p
-          className="mt-4 text-center"
+          className="mb-10 text-center"
           style={{
             fontFamily: 'Inter, sans-serif',
             fontSize: '13px',
             fontStyle: 'italic',
             fontWeight: 400,
             color: 'rgba(240,235,255,0.62)',
+            letterSpacing: '0.06em',
           }}
         >
           by Charlen Maison
@@ -339,7 +340,7 @@ function LogoBlock() {
     <img
       src="/velour-logo.png"
       alt="Velour by Charlen Maison"
-      className="relative mx-auto block h-auto w-full max-w-[200px]"
+      className="relative mx-auto mb-8 block h-auto w-full max-w-[200px]"
       style={{ filter: 'drop-shadow(0 0 28px rgba(212, 169, 60, 0.32))' }}
     />
   );

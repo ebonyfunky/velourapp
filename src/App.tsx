@@ -1,14 +1,13 @@
 /**
- * Velour app shell: homepage with BEGIN (ModeSelector), then 3-step Setup + Phase B placeholder.
+ * Velour app shell: ProfileGate entry (profile vs Generator), legacy 3-step Setup when BEGIN is used.
  * Auth gate: no session -> AuthScreen; session -> Velour app below.
  */
 import { useCampaignStore } from './store/campaignStore';
 import SetupFlow from './components/Setup/SetupFlow';
-import ModeSelector from './components/ModeSelector';
+import ProfileGate from './components/ProfileGate';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 import AuthGate from './components/AuthGate';
-import HomeHeader from './components/HomeHeader';
 
 function VelourApp() {
   const creatorMode = useCampaignStore((s) => s.creatorMode);
@@ -18,8 +17,7 @@ function VelourApp() {
     return (
       <ErrorBoundary>
         <>
-          <HomeHeader />
-          <ModeSelector />
+          <ProfileGate />
           <Toast />
         </>
       </ErrorBoundary>
