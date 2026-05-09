@@ -8,6 +8,7 @@ import ModeSelector from './components/ModeSelector';
 import Toast from './components/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 import AuthGate from './components/AuthGate';
+import HomeHeader from './components/HomeHeader';
 
 function VelourApp() {
   const creatorMode = useCampaignStore((s) => s.creatorMode);
@@ -17,6 +18,7 @@ function VelourApp() {
     return (
       <ErrorBoundary>
         <>
+          <HomeHeader />
           <ModeSelector />
           <Toast />
         </>
