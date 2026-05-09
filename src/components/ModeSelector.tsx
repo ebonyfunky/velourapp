@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Target, Sparkles, Calendar } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 import { useCampaignStore } from '../store/campaignStore';
 
 /** Velour signature midnight (deeper, dustier than Echo royal) */
@@ -35,6 +37,51 @@ const TILES = [
     description: '30 days of content, ready when you are',
   },
 ] as const;
+
+/** Temporary Phase B debug: verify Supabase client reaches the hosted project */
+function SupabaseConnectionBadge() {
+  const [state, setState] = useState<'checking' | 'ok' | 'err'>('checking');
+  const [errDetail, setErrDetail] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void (async () => {
+      const { error } = await supabase.from('profiles').select('id').limit(0);
+      if (cancelled) return;
+      if (error) {
+        setState('err');
+        setErrDetail(error.message);
+      } else {
+        setState('ok');
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const dotColor =
+    state === 'ok' ? '#34d399' : state === 'err' ? '#f87171' : 'rgba(255,255,255,0.28)';
+
+  const label =
+    state === 'ok' ? 'Supabase: connected' : state === 'err' ? 'Supabase: error' : 'Supabase: ...';
+
+  return (
+    <div
+      className="fixed bottom-3 right-3 z-[200] flex max-w-[240px] items-center gap-1.5 px-2 py-1 opacity-65"
+      style={{ fontFamily: 'Inter, sans-serif', pointerEvents: state === 'err' ? 'auto' : 'none' }}
+      title={state === 'err' && errDetail ? errDetail : undefined}
+      role={state === 'err' ? 'status' : undefined}
+    >
+      <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: dotColor }} aria-hidden />
+      <span style={{ fontSize: '10px', color: 'rgba(226,226,237,0.55)', letterSpacing: '0.02em', lineHeight: 1.2 }}>
+        {label}
+      </span>
+    </div>
+  );
+}
 
 export default function ModeSelector() {
   const { setField } = useCampaignStore();
@@ -280,6 +327,8 @@ export default function ModeSelector() {
           ))}
         </div>
       </div>
+
+      <SupabaseConnectionBadge />
     </div>
   );
 }
