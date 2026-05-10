@@ -3,8 +3,9 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Check } from 'lucide-react';
-import { fetchCurrentUserProfile, saveStep1Profession, saveStep2Demographics, updateProfileStep } from '../lib/profile';
+import { fetchCurrentUserProfile, saveStep1Profession, saveStep2Demographics, saveStep3GoalsFears, updateProfileStep } from '../lib/profile';
 import { useCampaignStore } from '../store/campaignStore';
+import ChipMultiSelectSection from './ChipMultiSelectSection';
 import HomeHeader from './HomeHeader';
 
 const GOLD = '#D4A93C';
@@ -105,6 +106,46 @@ const STEP_BODY: Record<number, { title: string; body: string }> = {
   },
 };
 
+/** Step 3 predefined chips (replace with final copy from product spec as needed). */
+const STEP3_GOALS_PREDEFINED = [
+  'Financial stability',
+  'More freedom and time',
+  'Better health and energy',
+  'Stronger relationships',
+  'Career or business growth',
+  'Confidence and clarity',
+  'Recognition and respect',
+  'Work-life balance',
+  'A clear plan forward',
+  'Peace of mind',
+] as const;
+
+const STEP3_FEARS_PREDEFINED = [
+  'Not being enough',
+  'Wasting time or money',
+  'Judgment from others',
+  'Falling behind peers',
+  'Making the wrong decision',
+  'Burnout or overwhelm',
+  'Losing money or status',
+  'Missing the right moment',
+  'Public embarrassment',
+  'Letting family down',
+] as const;
+
+const STEP3_DIALOGUE_PREDEFINED = [
+  'I am not ready yet',
+  'I do not have time',
+  'I need to wait until it is perfect',
+  'Everyone else is ahead of me',
+  'What if this does not work',
+  'I am not qualified to start',
+  'I will look foolish trying',
+  'I should figure it out alone first',
+  'It is too late for me',
+  'I will fail and regret it',
+] as const;
+
 function isStandardProfession(value: string): boolean {
   return (STANDARD_PROFESSIONS as readonly string[]).includes(value);
 }
@@ -143,6 +184,17 @@ function matchDropdownHydration(stored: string | null, options: readonly string[
   const t = stored?.trim() ?? '';
   if (!t || !(options as readonly string[]).includes(t)) return '';
   return t;
+}
+
+/** Hydrate chip section: full selection list from DB; extras = selected items not in predefined pool. */
+function hydrateChipSection(
+  stored: string[] | null | undefined,
+  predefined: readonly string[]
+): { selected: string[]; extras: string[] } {
+  const selected = (stored ?? []).map((s) => s.trim()).filter(Boolean);
+  const pre = new Set(predefined as readonly string[]);
+  const extras = selected.filter((s) => !pre.has(s));
+  return { selected, extras };
 }
 
 interface FormDropdownProps {
@@ -274,6 +326,9 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const setAudienceEducation = useCampaignStore((s) => s.setAudienceEducation);
   const setAudienceCareerField = useCampaignStore((s) => s.setAudienceCareerField);
   const setAudienceLocation = useCampaignStore((s) => s.setAudienceLocation);
+  const setAudienceGoals = useCampaignStore((s) => s.setAudienceGoals);
+  const setAudienceFears = useCampaignStore((s) => s.setAudienceFears);
+  const setAudienceInternalDialogue = useCampaignStore((s) => s.setAudienceInternalDialogue);
 
   const [hydrated, setHydrated] = useState(false);
   const [hydrateError, setHydrateError] = useState<string | null>(null);
@@ -297,6 +352,15 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const [otherLocationField, setOtherLocationField] = useState('');
   const [step2SaveError, setStep2SaveError] = useState<string | null>(null);
   const [step2Saving, setStep2Saving] = useState(false);
+
+  const [goalsSelected, setGoalsSelected] = useState<string[]>([]);
+  const [goalsExtraChips, setGoalsExtraChips] = useState<string[]>([]);
+  const [fearsSelected, setFearsSelected] = useState<string[]>([]);
+  const [fearsExtraChips, setFearsExtraChips] = useState<string[]>([]);
+  const [dialogueSelected, setDialogueSelected] = useState<string[]>([]);
+  const [dialogueExtraChips, setDialogueExtraChips] = useState<string[]>([]);
+  const [step3SaveError, setStep3SaveError] = useState<string | null>(null);
+  const [step3Saving, setStep3Saving] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -323,6 +387,15 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           const locH = hydrateDemographicsSelectWithOther(p.audience_location, DEMO_LOCATION_STANDARD, DEMO_STEP2_OTHER_LABEL);
           setDemoLocationSelect(locH.select);
           setOtherLocationField(locH.other);
+          const g = hydrateChipSection(p.audience_goals, STEP3_GOALS_PREDEFINED);
+          setGoalsSelected(g.selected);
+          setGoalsExtraChips(g.extras);
+          const f = hydrateChipSection(p.audience_fears, STEP3_FEARS_PREDEFINED);
+          setFearsSelected(f.selected);
+          setFearsExtraChips(f.extras);
+          const d = hydrateChipSection(p.audience_internal_dialogue, STEP3_DIALOGUE_PREDEFINED);
+          setDialogueSelected(d.selected);
+          setDialogueExtraChips(d.extras);
         }
       } catch (e) {
         if (!cancelled) setHydrateError(e instanceof Error ? e.message : 'Could not load profile.');
@@ -378,6 +451,11 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     careerFieldToSave,
     locationToSave,
   ]);
+
+  const step3FormValid = useMemo(() => {
+    const band = (arr: string[]) => arr.length >= 3 && arr.length <= 5;
+    return band(goalsSelected) && band(fearsSelected) && band(dialogueSelected);
+  }, [goalsSelected, fearsSelected, dialogueSelected]);
 
   const persistStep = useCallback(async (step: number) => {
     try {
@@ -487,10 +565,41 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     setAudienceLocation,
   ]);
 
+  const handleStep3Continue = useCallback(async () => {
+    if (!step3FormValid || step3Saving) return;
+    const goals = goalsSelected;
+    const fears = fearsSelected;
+    const internalDialogue = dialogueSelected;
+    setStep3SaveError(null);
+    setStep3Saving(true);
+    try {
+      setAudienceGoals(goals);
+      setAudienceFears(fears);
+      setAudienceInternalDialogue(internalDialogue);
+      await saveStep3GoalsFears({ goals, fears, internalDialogue });
+      await updateProfileStep(4);
+      setCurrentStep(4);
+    } catch {
+      setStep3SaveError("Couldn't save. Please try again.");
+    } finally {
+      setStep3Saving(false);
+    }
+  }, [
+    step3FormValid,
+    step3Saving,
+    goalsSelected,
+    fearsSelected,
+    dialogueSelected,
+    setAudienceGoals,
+    setAudienceFears,
+    setAudienceInternalDialogue,
+  ]);
+
   const continueDisabled =
     currentStep >= 5 ||
     (currentStep === 1 && (!step1FormValid || step1Saving)) ||
-    (currentStep === 2 && (!step2FormValid || step2Saving));
+    (currentStep === 2 && (!step2FormValid || step2Saving)) ||
+    (currentStep === 3 && (!step3FormValid || step3Saving));
 
   const handleContinueClick = useCallback(() => {
     if (currentStep === 1) {
@@ -501,8 +610,12 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       void handleStep2Continue();
       return;
     }
+    if (currentStep === 3) {
+      void handleStep3Continue();
+      return;
+    }
     goNext();
-  }, [currentStep, handleStep1Continue, handleStep2Continue, goNext]);
+  }, [currentStep, handleStep1Continue, handleStep2Continue, handleStep3Continue, goNext]);
 
   if (!hydrated) {
     return (
@@ -613,7 +726,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
               {copy.title}
             </h1>
 
-            {currentStep >= 3 ? (
+            {currentStep >= 4 ? (
               <span
                 className="mb-4 inline-block self-start rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
                 style={{
@@ -768,6 +881,36 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                     onOtherChange={setOtherLocationField}
                   />
                 </div>
+              ) : currentStep === 3 ? (
+                <div className="flex max-w-2xl flex-col gap-10">
+                  <ChipMultiSelectSection
+                    heading="What are they working toward?"
+                    cue="The outcomes they want."
+                    predefined={STEP3_GOALS_PREDEFINED}
+                    selected={goalsSelected}
+                    onSelectedChange={setGoalsSelected}
+                    extraChips={goalsExtraChips}
+                    onExtraChipsChange={setGoalsExtraChips}
+                  />
+                  <ChipMultiSelectSection
+                    heading="What are they afraid of?"
+                    cue="The worries underneath the surface."
+                    predefined={STEP3_FEARS_PREDEFINED}
+                    selected={fearsSelected}
+                    onSelectedChange={setFearsSelected}
+                    extraChips={fearsExtraChips}
+                    onExtraChipsChange={setFearsExtraChips}
+                  />
+                  <ChipMultiSelectSection
+                    heading="What do they tell themselves?"
+                    cue="The voice in their head."
+                    predefined={STEP3_DIALOGUE_PREDEFINED}
+                    selected={dialogueSelected}
+                    onSelectedChange={setDialogueSelected}
+                    extraChips={dialogueExtraChips}
+                    onExtraChipsChange={setDialogueExtraChips}
+                  />
+                </div>
               ) : (
                 <p className="text-sm text-white/50">Form arrives in A4. For now, use Continue to explore the shell.</p>
               )}
@@ -811,9 +954,11 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
             {'Continue ->'}
           </button>
         </div>
-        {(currentStep === 1 && step1SaveError) || (currentStep === 2 && step2SaveError) ? (
+        {(currentStep === 1 && step1SaveError) ||
+        (currentStep === 2 && step2SaveError) ||
+        (currentStep === 3 && step3SaveError) ? (
           <p className="mt-3 text-center text-[13px] text-red-300/90" style={{ fontFamily: 'Inter, sans-serif' }}>
-            {currentStep === 1 ? step1SaveError : step2SaveError}
+            {currentStep === 1 ? step1SaveError : currentStep === 2 ? step2SaveError : step3SaveError}
           </p>
         ) : null}
       </footer>

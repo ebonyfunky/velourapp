@@ -118,3 +118,30 @@ export async function saveStep2Demographics(values: {
   if (error) throw error;
   return data as VelourProfileRow;
 }
+
+/** Step 3 Audience Avatar: goals, fears, internal dialogue. Returns the updated profile row. */
+export async function saveStep3GoalsFears(values: {
+  goals: string[];
+  fears: string[];
+  internalDialogue: string[];
+}): Promise<VelourProfileRow> {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user?.id;
+  if (!userId) throw new Error('Not signed in');
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .update({
+      audience_goals: values.goals,
+      audience_fears: values.fears,
+      audience_internal_dialogue: values.internalDialogue,
+    })
+    .eq('id', userId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as VelourProfileRow;
+}
