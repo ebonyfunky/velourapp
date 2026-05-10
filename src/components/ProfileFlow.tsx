@@ -72,8 +72,12 @@ const DEMO_LOCATION_STANDARD = [
   'Middle East',
 ] as const;
 
-const SELECT_FIELD_CLASS =
-  'w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 text-base text-white outline-none transition focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]';
+const FORM_CARD_SHADOW = 'shadow-[0_12px_48px_rgba(10,10,26,0.45),0_4px_20px_rgba(212,169,60,0.06)]';
+
+const INPUT_FOCUS_CLASSES =
+  'focus:border-[#D4A93C]/60 focus:shadow-[inset_0_0_20px_rgba(212,169,60,0.06)] focus:ring-1 focus:ring-[#D4A93C]/40';
+
+const SELECT_FIELD_CLASS = `w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.05] px-4 py-3 text-base text-white outline-none transition placeholder:text-white/35 ${INPUT_FOCUS_CLASSES}`;
 
 const STEPS = [
   { id: 1, short: 'Your Profession' },
@@ -231,8 +235,7 @@ function FormDropdown({ id, label, placeholder, value, options, onChange }: Form
   );
 }
 
-const OTHER_TEXT_INPUT_CLASS =
-  'w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 text-base text-white outline-none transition placeholder:text-white/35 focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]';
+const OTHER_TEXT_INPUT_CLASS = `w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.05] px-4 py-3 text-base text-white outline-none transition placeholder:text-white/35 ${INPUT_FOCUS_CLASSES}`;
 
 interface FormDropdownWithOtherProps {
   selectId: string;
@@ -744,8 +747,11 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
             </p>
 
             <div
-              className="mt-10 min-h-[120px] flex-1 rounded-xl border border-[rgba(212,169,60,0.15)] bg-[rgba(20,25,61,0.45)] p-6"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className={`mt-10 min-h-[120px] flex-1 rounded-2xl border border-[rgba(212,169,60,0.18)] p-6 ${FORM_CARD_SHADOW}`}
+              style={{
+                fontFamily: 'Inter, sans-serif',
+                background: `linear-gradient(180deg, ${MIDNIGHT_TOP} 0%, ${MIDNIGHT} 52%, ${MIDNIGHT_BOTTOM} 100%)`,
+              }}
             >
               {currentStep === 1 ? (
                 <div className="flex max-w-xl flex-col gap-8">
@@ -760,7 +766,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                         setProfessionSelect(e.target.value);
                         if (e.target.value !== OTHER_OPTION) setOtherProfession('');
                       }}
-                      className="w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 text-base text-white outline-none transition focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]"
+                      className={SELECT_FIELD_CLASS}
                     >
                       <option value="" disabled>
                         Select your profession
@@ -782,7 +788,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                           value={otherProfession}
                           onChange={(e) => setOtherProfession(e.target.value)}
                           autoComplete="off"
-                          className="w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 text-base text-white outline-none transition placeholder:text-white/35 focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]"
+                          className={OTHER_TEXT_INPUT_CLASS}
                           placeholder="Describe your profession"
                         />
                       </div>
@@ -801,7 +807,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                         maxLength={OFFER_MAX}
                         value={offerDescription}
                         onChange={(e) => setOfferDescription(e.target.value.slice(0, OFFER_MAX))}
-                        className="w-full resize-y rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 pb-9 text-base leading-relaxed text-white outline-none transition placeholder:text-white/35 focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]"
+                        className={`${SELECT_FIELD_CLASS} resize-y pb-9 leading-relaxed`}
                         placeholder="Tell us what you offer"
                       />
                       <div className="pointer-events-none absolute bottom-3 right-3 text-[11px] text-white/35">

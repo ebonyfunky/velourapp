@@ -4,8 +4,14 @@ import { useCampaignStore } from '../../store/campaignStore';
 
 const GOLD = '#D4A93C';
 const MIDNIGHT_TEXT = '#1A1F4A';
-const INPUT_BG = '#17152e';
-const CARD_BG = '#252B5F';
+const MIDNIGHT_TOP = '#222A58';
+const MIDNIGHT = '#1A1F4A';
+const MIDNIGHT_BOTTOM = '#151A40';
+
+const AUTH_BG = `linear-gradient(180deg, ${MIDNIGHT_TOP} 0%, ${MIDNIGHT} 48%, ${MIDNIGHT_BOTTOM} 100%)`;
+
+const CARD_SHADOW =
+  'shadow-[0_12px_48px_rgba(10,10,26,0.45),0_4px_20px_rgba(212,169,60,0.06)]';
 
 type AuthMode = 'signup' | 'login' | 'forgot';
 
@@ -24,7 +30,7 @@ export default function AuthScreen() {
   const setAuthError = useCampaignStore((s) => s.setAuthError);
   const authError = useCampaignStore((s) => s.authError);
 
-  const [mode, setMode] = useState<AuthMode>('signup');
+  const [mode, setMode] = useState<AuthMode>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -116,11 +122,11 @@ export default function AuthScreen() {
   };
 
   const inputBase =
-    'w-full rounded-xl border px-4 py-3.5 text-[15px] outline-none ring-2 ring-transparent transition-shadow focus:border-[#D4A93C]/80 focus:ring-[#D4A93C]';
+    'w-full rounded-xl border px-4 py-3.5 text-[15px] outline-none transition-all ring-1 ring-transparent focus:border-[#D4A93C]/60 focus:shadow-[inset_0_0_20px_rgba(212,169,60,0.06)] focus:ring-[#D4A93C]/40';
   const inputStyle: CSSProperties = {
     fontFamily: 'Inter, sans-serif',
-    background: INPUT_BG,
-    borderColor: 'rgba(212, 169, 60, 0.35)',
+    background: 'rgba(255,255,255,0.05)',
+    borderColor: 'rgba(212, 169, 60, 0.22)',
     color: '#f0ebff',
   };
 
@@ -128,209 +134,200 @@ export default function AuthScreen() {
 
   return (
     <div
-      className="relative flex min-h-screen flex-col overflow-x-hidden px-5 pb-10 pt-10 md:px-10"
-      style={{
-        background: 'linear-gradient(180deg, #222A58 0%, #1A1F4A 48%, #151A40 100%)',
-      }}
+      className="relative flex min-h-screen flex-col overflow-x-hidden"
+      style={{ background: AUTH_BG }}
     >
-      <div className="mx-auto flex w-full max-w-[440px] flex-1 flex-col items-center pt-8">
-        <LogoBlock />
+      <div className="flex flex-1 flex-col items-center justify-center px-5 py-10 md:px-10">
+        <div className="mx-auto flex w-full max-w-[440px] flex-col items-center">
+          <LogoBlock />
 
-        <p
-          className="mb-10 text-center"
-          style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: '13px',
-            fontStyle: 'italic',
-            fontWeight: 400,
-            color: 'rgba(240,235,255,0.62)',
-            letterSpacing: '0.06em',
-          }}
-        >
-          by Charlen Maison
-        </p>
-
-        <div
-          className="relative mt-14 w-full rounded-[20px] border px-7 py-9 md:px-10 md:py-10"
-          style={{
-            background: CARD_BG,
-            borderColor: 'rgba(212, 169, 60, 0.22)',
-            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.03)',
-          }}
-        >
-          {forgotSent && mode === 'forgot' ? (
-            <div className="text-center">
-              <p
-                className="mb-6 text-[15px] leading-relaxed text-white/82"
-                style={{ fontFamily: 'Inter, sans-serif' }}
-              >
-                Check your email for a reset link.
-              </p>
-              <button
-                type="button"
-                onClick={() => switchMode('login')}
-                className="mx-auto rounded-lg border bg-transparent px-4 py-2 text-xs font-semibold uppercase tracking-[0.06em]"
-                style={{ borderColor: 'rgba(212,169,60,0.5)', color: GOLD, fontFamily: 'Inter, sans-serif' }}
-              >
-                Back to log in
-              </button>
-            </div>
-          ) : mode === 'signup' ? (
-            <form onSubmit={handleSignUp} noValidate>
-              <Heading title="Welcome to Velour" subtitle="Create your account to start building scroll-stopping content." />
-              {authError ? <p className={`mb-4 ${softRed}`} style={{ fontFamily: 'Inter, sans-serif' }}>{authError}</p> : null}
-              <Field label="Email" error={inlineErrors.email}>
-                <input
-                  type="email"
-                  autoComplete="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(ev) => {
-                    setEmail(ev.target.value);
-                    setInlineErrors((o) => ({ ...o, email: undefined }));
-                    clearAuthError();
-                  }}
-                  className={inputBase}
-                  style={inputStyle}
-                />
-              </Field>
-              <Field label="Password" error={inlineErrors.password}>
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  placeholder="Create a password"
-                  value={password}
-                  onChange={(ev) => {
-                    setPassword(ev.target.value);
-                    setInlineErrors((o) => ({ ...o, password: undefined }));
-                    clearAuthError();
-                  }}
-                  className={inputBase}
-                  style={inputStyle}
-                />
-              </Field>
-              <Field label="Confirm password" error={inlineErrors.confirmPassword}>
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  placeholder="Confirm your password"
-                  value={confirmPassword}
-                  onChange={(ev) => {
-                    setConfirmPassword(ev.target.value);
-                    setInlineErrors((o) => ({ ...o, confirmPassword: undefined }));
-                    clearAuthError();
-                  }}
-                  className={inputBase}
-                  style={inputStyle}
-                />
-              </Field>
-              <SubmitButton pending={pending} label="Create Account" pendingLabel="Creating account..." />
-              <ToggleRow>
-                Already have an account?{' '}
-                <button
-                  type="button"
-                  onClick={() => switchMode('login')}
-                  className="border-0 bg-transparent p-0 font-semibold underline decoration-[rgba(212,169,60,0.45)] underline-offset-2"
-                  style={{ color: GOLD, fontFamily: 'Inter, sans-serif' }}
-                >
-                  Log in
-                </button>
-              </ToggleRow>
-            </form>
-          ) : mode === 'login' ? (
-            <form onSubmit={handleLogin} noValidate>
-              <Heading title="Welcome back" subtitle="Sign in to continue creating with Velour." />
-              {authError ? <p className={`mb-4 ${softRed}`} style={{ fontFamily: 'Inter, sans-serif' }}>{authError}</p> : null}
-              <Field label="Email" error={inlineErrors.email}>
-                <input
-                  type="email"
-                  autoComplete="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(ev) => {
-                    setEmail(ev.target.value);
-                    setInlineErrors((o) => ({ ...o, email: undefined }));
-                    clearAuthError();
-                  }}
-                  className={inputBase}
-                  style={inputStyle}
-                />
-              </Field>
-              <Field label="Password" error={inlineErrors.password}>
-                <input
-                  type="password"
-                  autoComplete="current-password"
-                  placeholder="Your password"
-                  value={password}
-                  onChange={(ev) => {
-                    setPassword(ev.target.value);
-                    setInlineErrors((o) => ({ ...o, password: undefined }));
-                    clearAuthError();
-                  }}
-                  className={inputBase}
-                  style={inputStyle}
-                />
-              </Field>
-              <SubmitButton pending={pending} label="Log In" pendingLabel="Signing in..." />
-              <ToggleRow>
-                <button
-                  type="button"
-                  onClick={() => {
-                    switchMode('forgot');
-                    setForgotSent(false);
-                  }}
-                  className="border-0 bg-transparent p-0 text-[13px] font-medium underline decoration-white/25 underline-offset-2 text-white/50"
+          <div
+            className={`relative mt-6 w-full rounded-2xl border border-[rgba(212,169,60,0.18)] px-7 py-9 md:px-10 md:py-10 ${CARD_SHADOW}`}
+            style={{
+              background: `linear-gradient(180deg, ${MIDNIGHT_TOP} 0%, ${MIDNIGHT} 52%, ${MIDNIGHT_BOTTOM} 100%)`,
+            }}
+          >
+            {forgotSent && mode === 'forgot' ? (
+              <div className="text-center">
+                <p
+                  className="mb-6 text-[15px] leading-relaxed text-white/82"
                   style={{ fontFamily: 'Inter, sans-serif' }}
                 >
-                  Forgot password?
-                </button>
-              </ToggleRow>
-              <ToggleRow>
-                New to Velour?{' '}
-                <button
-                  type="button"
-                  onClick={() => switchMode('signup')}
-                  className="border-0 bg-transparent p-0 font-semibold underline decoration-[rgba(212,169,60,0.45)] underline-offset-2"
-                  style={{ color: GOLD, fontFamily: 'Inter, sans-serif' }}
-                >
-                  Sign up
-                </button>
-              </ToggleRow>
-            </form>
-          ) : (
-            <form onSubmit={handleForgotSubmit} noValidate>
-              <Heading title="Reset your password" subtitle="Enter your email and we'll send you a link to reset it." />
-              {authError ? <p className={`mb-4 ${softRed}`} style={{ fontFamily: 'Inter, sans-serif' }}>{authError}</p> : null}
-              <Field label="Email" error={inlineErrors.email}>
-                <input
-                  type="email"
-                  autoComplete="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(ev) => {
-                    setEmail(ev.target.value);
-                    setInlineErrors((o) => ({ ...o, email: undefined }));
-                    clearAuthError();
-                  }}
-                  className={inputBase}
-                  style={inputStyle}
-                />
-              </Field>
-              <SubmitButton pending={pending} label="Send Reset Link" pendingLabel="Sending..." />
-              <ToggleRow>
+                  Check your email for a reset link.
+                </p>
                 <button
                   type="button"
                   onClick={() => switchMode('login')}
-                  className="border-0 bg-transparent p-0 text-[13px] font-semibold underline decoration-[rgba(212,169,60,0.45)] underline-offset-2"
-                  style={{ color: GOLD, fontFamily: 'Inter, sans-serif' }}
+                  className="mx-auto rounded-lg border bg-transparent px-4 py-2 text-xs font-semibold uppercase tracking-[0.06em]"
+                  style={{ borderColor: 'rgba(212,169,60,0.5)', color: GOLD, fontFamily: 'Inter, sans-serif' }}
                 >
                   Back to log in
                 </button>
-              </ToggleRow>
-            </form>
-          )}
+              </div>
+            ) : mode === 'signup' ? (
+              <form onSubmit={handleSignUp} noValidate>
+                <Heading title="Welcome to Velour" subtitle="Create your account to start building scroll-stopping content." />
+                {authError ? <p className={`mb-4 ${softRed}`} style={{ fontFamily: 'Inter, sans-serif' }}>{authError}</p> : null}
+                <Field label="Email" error={inlineErrors.email}>
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(ev) => {
+                      setEmail(ev.target.value);
+                      setInlineErrors((o) => ({ ...o, email: undefined }));
+                      clearAuthError();
+                    }}
+                    className={inputBase}
+                    style={inputStyle}
+                  />
+                </Field>
+                <Field label="Password" error={inlineErrors.password}>
+                  <input
+                    type="password"
+                    autoComplete="new-password"
+                    placeholder="Create a password"
+                    value={password}
+                    onChange={(ev) => {
+                      setPassword(ev.target.value);
+                      setInlineErrors((o) => ({ ...o, password: undefined }));
+                      clearAuthError();
+                    }}
+                    className={inputBase}
+                    style={inputStyle}
+                  />
+                </Field>
+                <Field label="Confirm password" error={inlineErrors.confirmPassword}>
+                  <input
+                    type="password"
+                    autoComplete="new-password"
+                    placeholder="Confirm your password"
+                    value={confirmPassword}
+                    onChange={(ev) => {
+                      setConfirmPassword(ev.target.value);
+                      setInlineErrors((o) => ({ ...o, confirmPassword: undefined }));
+                      clearAuthError();
+                    }}
+                    className={inputBase}
+                    style={inputStyle}
+                  />
+                </Field>
+                <SubmitButton pending={pending} label="CREATE ACCOUNT" pendingLabel="Creating account..." />
+                <ToggleRow>
+                  Already have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => switchMode('login')}
+                    className="border-0 bg-transparent p-0 font-semibold underline decoration-[rgba(212,169,60,0.45)] underline-offset-2"
+                    style={{ color: GOLD, fontFamily: 'Inter, sans-serif' }}
+                  >
+                    LOG IN
+                  </button>
+                </ToggleRow>
+              </form>
+            ) : mode === 'login' ? (
+              <form onSubmit={handleLogin} noValidate>
+                <Heading title="Welcome back" subtitle="Log in to your account." />
+                {authError ? <p className={`mb-4 ${softRed}`} style={{ fontFamily: 'Inter, sans-serif' }}>{authError}</p> : null}
+                <Field label="Email" error={inlineErrors.email}>
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(ev) => {
+                      setEmail(ev.target.value);
+                      setInlineErrors((o) => ({ ...o, email: undefined }));
+                      clearAuthError();
+                    }}
+                    className={inputBase}
+                    style={inputStyle}
+                  />
+                </Field>
+                <Field label="Password" error={inlineErrors.password}>
+                  <input
+                    type="password"
+                    autoComplete="current-password"
+                    placeholder="Your password"
+                    value={password}
+                    onChange={(ev) => {
+                      setPassword(ev.target.value);
+                      setInlineErrors((o) => ({ ...o, password: undefined }));
+                      clearAuthError();
+                    }}
+                    className={inputBase}
+                    style={inputStyle}
+                  />
+                </Field>
+                <SubmitButton pending={pending} label="LOG IN" pendingLabel="Signing in..." />
+                <ToggleRow>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      switchMode('forgot');
+                      setForgotSent(false);
+                    }}
+                    className="border-0 bg-transparent p-0 text-[13px] font-medium underline decoration-white/25 underline-offset-2 text-white/50"
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
+                    Forgot password?
+                  </button>
+                </ToggleRow>
+                <ToggleRow>
+                  Don't have an account?{' '}
+                  <button
+                    type="button"
+                    onClick={() => switchMode('signup')}
+                    className="border-0 bg-transparent p-0 font-semibold underline decoration-[rgba(212,169,60,0.45)] underline-offset-2"
+                    style={{ color: GOLD, fontFamily: 'Inter, sans-serif' }}
+                  >
+                    CREATE ACCOUNT
+                  </button>
+                </ToggleRow>
+              </form>
+            ) : (
+              <form onSubmit={handleForgotSubmit} noValidate>
+                <Heading title="Reset your password" subtitle="Enter your email and we'll send you a link to reset it." />
+                {authError ? <p className={`mb-4 ${softRed}`} style={{ fontFamily: 'Inter, sans-serif' }}>{authError}</p> : null}
+                <Field label="Email" error={inlineErrors.email}>
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(ev) => {
+                      setEmail(ev.target.value);
+                      setInlineErrors((o) => ({ ...o, email: undefined }));
+                      clearAuthError();
+                    }}
+                    className={inputBase}
+                    style={inputStyle}
+                  />
+                </Field>
+                <SubmitButton pending={pending} label="Send Reset Link" pendingLabel="Sending..." />
+                <ToggleRow>
+                  <button
+                    type="button"
+                    onClick={() => switchMode('login')}
+                    className="border-0 bg-transparent p-0 text-[13px] font-semibold underline decoration-[rgba(212,169,60,0.45)] underline-offset-2"
+                    style={{ color: GOLD, fontFamily: 'Inter, sans-serif' }}
+                  >
+                    Back to log in
+                  </button>
+                </ToggleRow>
+              </form>
+            )}
+          </div>
         </div>
       </div>
+
+      <footer
+        className="relative z-10 w-full shrink-0 py-4 text-center text-xs text-[#D4A93C]/40"
+        style={{ fontFamily: 'Inter, sans-serif' }}
+      >
+        A Charlen Maison product
+      </footer>
     </div>
   );
 }
@@ -340,8 +337,8 @@ function LogoBlock() {
     <img
       src="/velour-logo.png"
       alt="Velour by Charlen Maison"
-      className="relative mx-auto mb-8 block h-auto w-full max-w-[200px]"
-      style={{ filter: 'drop-shadow(0 0 28px rgba(212, 169, 60, 0.32))' }}
+      className="relative mx-auto mb-8 block h-[240px] w-auto max-w-full object-contain"
+      style={{ filter: 'drop-shadow(0 0 32px rgba(212, 169, 60, 0.36))' }}
     />
   );
 }
