@@ -12,6 +12,29 @@ export type GenerationHistoryItem = {
   createdAt: string;
 };
 
+/** Client defaults for Audience Avatar profile fields (`VelourProfileRow` camelCase). Used for initial state, reset, and persist migration. */
+const audienceAvatarProfileDefaults = {
+  creatorProfession: '',
+  creatorOfferDescription: '',
+  audienceAgeRange: '',
+  audienceGender: '',
+  audienceMaritalStatus: '',
+  audienceChildren: '',
+  audienceEducation: '',
+  audienceCareerField: '',
+  audienceIncomeRange: '',
+  audienceLocation: '',
+  audienceGoals: [] as string[],
+  audienceFears: [] as string[],
+  audienceInternalDialogue: [] as string[],
+  audienceInterests: [] as string[],
+  audienceContentConsumed: [] as string[],
+  audienceDecisionStyle: '',
+  audienceWants: [] as string[],
+  audienceDoesntWant: [] as string[],
+  audienceIdentityStatement: '',
+};
+
 export interface CampaignStore {
   // Step 1
   creatorName: string;
@@ -119,16 +142,26 @@ export interface CampaignStore {
   generationHistory: GenerationHistoryItem[];
   setupComplete: boolean;
 
-  // Velour customer-clarity profile (Tony's framework)
-  customerWho: string;
-  customerBeforeState: string;
-  customerAfterState: string;
-  customerSurfaceProblem: string;
-  customerRealProblem: string;
-  customerLanguageUses: string[];
-  customerLanguageAvoids: string[];
-  customerAwarenessStage: 'unaware' | 'problem' | 'solution' | 'most' | '';
-  customerSummary: string;
+  // Velour Audience Avatar profile (2026 Perfect Audience Avatar)
+  creatorProfession: string;
+  creatorOfferDescription: string;
+  audienceAgeRange: string;
+  audienceGender: string;
+  audienceMaritalStatus: string;
+  audienceChildren: string;
+  audienceEducation: string;
+  audienceCareerField: string;
+  audienceIncomeRange: string;
+  audienceLocation: string;
+  audienceGoals: string[];
+  audienceFears: string[];
+  audienceInternalDialogue: string[];
+  audienceInterests: string[];
+  audienceContentConsumed: string[];
+  audienceDecisionStyle: string;
+  audienceWants: string[];
+  audienceDoesntWant: string[];
+  audienceIdentityStatement: string;
   profileCompletedAt: string | null;
   profileLastStep: number;
 
@@ -448,16 +481,26 @@ export interface CampaignStore {
   resetStep1: () => void;
   resetStep2: () => void;
   resetStep3: () => void;
-  // Velour customer-clarity actions
-  setCustomerWho: (value: string) => void;
-  setCustomerBeforeState: (value: string) => void;
-  setCustomerAfterState: (value: string) => void;
-  setCustomerSurfaceProblem: (value: string) => void;
-  setCustomerRealProblem: (value: string) => void;
-  setCustomerLanguageUses: (value: string[]) => void;
-  setCustomerLanguageAvoids: (value: string[]) => void;
-  setCustomerAwarenessStage: (value: 'unaware' | 'problem' | 'solution' | 'most' | '') => void;
-  setCustomerSummary: (value: string) => void;
+  // Velour Audience Avatar actions
+  setCreatorProfession: (value: string) => void;
+  setCreatorOfferDescription: (value: string) => void;
+  setAudienceAgeRange: (value: string) => void;
+  setAudienceGender: (value: string) => void;
+  setAudienceMaritalStatus: (value: string) => void;
+  setAudienceChildren: (value: string) => void;
+  setAudienceEducation: (value: string) => void;
+  setAudienceCareerField: (value: string) => void;
+  setAudienceIncomeRange: (value: string) => void;
+  setAudienceLocation: (value: string) => void;
+  setAudienceGoals: (value: string[]) => void;
+  setAudienceFears: (value: string[]) => void;
+  setAudienceInternalDialogue: (value: string[]) => void;
+  setAudienceInterests: (value: string[]) => void;
+  setAudienceContentConsumed: (value: string[]) => void;
+  setAudienceDecisionStyle: (value: string) => void;
+  setAudienceWants: (value: string[]) => void;
+  setAudienceDoesntWant: (value: string[]) => void;
+  setAudienceIdentityStatement: (value: string) => void;
   setProfileLastStep: (step: number) => void;
   markProfileComplete: () => void;
   resetProfile: () => void;
@@ -697,15 +740,7 @@ const initialState = {
   voice: '',
   generationHistory: [],
   setupComplete: false,
-  customerWho: '',
-  customerBeforeState: '',
-  customerAfterState: '',
-  customerSurfaceProblem: '',
-  customerRealProblem: '',
-  customerLanguageUses: [],
-  customerLanguageAvoids: [],
-  customerAwarenessStage: '' as 'unaware' | 'problem' | 'solution' | 'most' | '',
-  customerSummary: '',
+  ...audienceAvatarProfileDefaults,
   profileCompletedAt: null as string | null,
   profileLastStep: 0,
 };
@@ -783,15 +818,25 @@ export const useCampaignStore = (() => {
               ...state,
               voice: '',
             })),
-          setCustomerWho: (value) => set({ customerWho: value }),
-          setCustomerBeforeState: (value) => set({ customerBeforeState: value }),
-          setCustomerAfterState: (value) => set({ customerAfterState: value }),
-          setCustomerSurfaceProblem: (value) => set({ customerSurfaceProblem: value }),
-          setCustomerRealProblem: (value) => set({ customerRealProblem: value }),
-          setCustomerLanguageUses: (value) => set({ customerLanguageUses: value }),
-          setCustomerLanguageAvoids: (value) => set({ customerLanguageAvoids: value }),
-          setCustomerAwarenessStage: (value) => set({ customerAwarenessStage: value }),
-          setCustomerSummary: (value) => set({ customerSummary: value }),
+          setCreatorProfession: (value) => set({ creatorProfession: value }),
+          setCreatorOfferDescription: (value) => set({ creatorOfferDescription: value }),
+          setAudienceAgeRange: (value) => set({ audienceAgeRange: value }),
+          setAudienceGender: (value) => set({ audienceGender: value }),
+          setAudienceMaritalStatus: (value) => set({ audienceMaritalStatus: value }),
+          setAudienceChildren: (value) => set({ audienceChildren: value }),
+          setAudienceEducation: (value) => set({ audienceEducation: value }),
+          setAudienceCareerField: (value) => set({ audienceCareerField: value }),
+          setAudienceIncomeRange: (value) => set({ audienceIncomeRange: value }),
+          setAudienceLocation: (value) => set({ audienceLocation: value }),
+          setAudienceGoals: (value) => set({ audienceGoals: value }),
+          setAudienceFears: (value) => set({ audienceFears: value }),
+          setAudienceInternalDialogue: (value) => set({ audienceInternalDialogue: value }),
+          setAudienceInterests: (value) => set({ audienceInterests: value }),
+          setAudienceContentConsumed: (value) => set({ audienceContentConsumed: value }),
+          setAudienceDecisionStyle: (value) => set({ audienceDecisionStyle: value }),
+          setAudienceWants: (value) => set({ audienceWants: value }),
+          setAudienceDoesntWant: (value) => set({ audienceDoesntWant: value }),
+          setAudienceIdentityStatement: (value) => set({ audienceIdentityStatement: value }),
           setProfileLastStep: (step) => set({ profileLastStep: step }),
           markProfileComplete: () =>
             set({
@@ -800,15 +845,7 @@ export const useCampaignStore = (() => {
             }),
           resetProfile: () =>
             set({
-              customerWho: '',
-              customerBeforeState: '',
-              customerAfterState: '',
-              customerSurfaceProblem: '',
-              customerRealProblem: '',
-              customerLanguageUses: [],
-              customerLanguageAvoids: [],
-              customerAwarenessStage: '',
-              customerSummary: '',
+              ...audienceAvatarProfileDefaults,
               profileCompletedAt: null,
               profileLastStep: 0,
             }),
@@ -828,7 +865,25 @@ export const useCampaignStore = (() => {
             return rest;
           },
           skipHydration: false,
-          version: 1,
+          version: 2,
+          migrate: (persistedState, oldVersion) => {
+            if (oldVersion >= 2 || persistedState === null || typeof persistedState !== 'object') {
+              return persistedState as typeof initialState;
+            }
+            const {
+              customerWho: _cw,
+              customerBeforeState: _cb,
+              customerAfterState: _ca,
+              customerSurfaceProblem: _csp,
+              customerRealProblem: _crp,
+              customerLanguageUses: _clu,
+              customerLanguageAvoids: _cla,
+              customerAwarenessStage: _cass,
+              customerSummary: _csum,
+              ...rest
+            } = persistedState as Record<string, unknown>;
+            return { ...rest, ...audienceAvatarProfileDefaults };
+          },
           onRehydrateStorage: () => (state) => {
             if (state) {
               const s = state as Record<string, unknown>;

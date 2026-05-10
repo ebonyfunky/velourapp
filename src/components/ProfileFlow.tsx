@@ -1,5 +1,5 @@
 /**
- * Customer-clarity profile: 5-step shell (Phase A: placeholders + navigation).
+ * Audience Avatar profile shell: five-step placeholders and navigation (A3).
  */
 import { useCallback, useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
@@ -12,33 +12,33 @@ const MIDNIGHT_TOP = '#222A58';
 const MIDNIGHT_BOTTOM = '#151A40';
 
 const STEPS = [
-  { id: 1, short: 'Who' },
-  { id: 2, short: 'Before & After' },
-  { id: 3, short: 'Real Problem' },
-  { id: 4, short: 'Their Language' },
-  { id: 5, short: 'Awareness' },
+  { id: 1, short: 'Your Profession' },
+  { id: 2, short: 'Their Demographics' },
+  { id: 3, short: 'Their Goals & Fears' },
+  { id: 4, short: 'Their Interests' },
+  { id: 5, short: 'Their Wants' },
 ] as const;
 
 const STEP_BODY: Record<number, { title: string; body: string }> = {
   1: {
-    title: 'Who',
-    body: "We'll work together to pinpoint exactly who your customer is — past the demographics, into the real human.",
+    title: 'Your Profession',
+    body: "Let's start with you. What you do shapes who you can serve and how you talk to them.",
   },
   2: {
-    title: 'Before & After',
-    body: "We'll explore the gap between where your customer is now and where they want to be.",
+    title: 'Their Demographics',
+    body: "Now we map your audience. Age, life stage, career, income - the foundation everything else sits on.",
   },
   3: {
-    title: 'Real Problem',
-    body: "We'll dig past the surface complaint to find what's actually driving them.",
+    title: 'Their Goals & Fears',
+    body: "What are they moving toward? What keeps them up at night? This is where content stops being generic.",
   },
   4: {
-    title: 'Their Language',
-    body: "We'll capture the exact words your customer uses — and the words they don't.",
+    title: 'Their Interests',
+    body: "What do they engage with online? What content do they consume? Where do they spend their attention?",
   },
   5: {
-    title: 'Awareness',
-    body: "We'll pinpoint where your customer is on the journey from unaware to ready to buy.",
+    title: 'Their Wants',
+    body: 'What do they crave - and just as important, what repels them? This protects your voice.',
   },
 };
 
@@ -226,9 +226,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
               <p className="text-sm text-white/50">
-                {currentStep === 1
-                  ? 'Conversation UI arrives in Phase B. For now, use Continue to explore the shell.'
-                  : 'Placeholder. Full experience in Phase A4.'}
+                Form arrives in A4. For now, use Continue to explore the shell.
               </p>
             </div>
           </main>

@@ -1,20 +1,30 @@
 import { supabase } from './supabase';
 
-/** Row shape for `public.profiles` (customer-clarity + auth join). */
+/** Row shape for `public.profiles` (2026 Audience Avatar framework). */
 export type VelourProfileRow = {
   id: string;
   email: string;
-  customer_who: string | null;
-  customer_before_state: string | null;
-  customer_after_state: string | null;
-  customer_surface_problem: string | null;
-  customer_real_problem: string | null;
-  customer_language_uses: string[] | null;
-  customer_language_avoids: string[] | null;
-  customer_awareness_stage: string | null;
-  customer_summary: string | null;
+  creator_profession: string | null;
+  creator_offer_description: string | null;
+  audience_age_range: string | null;
+  audience_gender: string | null;
+  audience_marital_status: string | null;
+  audience_children: string | null;
+  audience_education: string | null;
+  audience_career_field: string | null;
+  audience_income_range: string | null;
+  audience_location: string | null;
+  audience_goals: string[] | null;
+  audience_fears: string[] | null;
+  audience_internal_dialogue: string[] | null;
+  audience_interests: string[] | null;
+  audience_content_consumed: string[] | null;
+  audience_decision_style: string | null;
+  audience_wants: string[] | null;
+  audience_doesnt_want: string[] | null;
+  audience_identity_statement: string | null;
   profile_completed_at: string | null;
-  profile_last_step: number;
+  profile_last_step: number | null;
   created_at: string;
   updated_at: string;
 };
