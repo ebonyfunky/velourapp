@@ -875,14 +875,12 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
               {STEPS.map((s) => {
                 const done = currentStep > s.id;
                 const active = currentStep === s.id;
-                const upcoming = currentStep < s.id;
                 return (
                   <div
                     key={s.id}
                     className="flex items-center gap-3 rounded-lg px-3 py-2.5"
                     style={{
                       background: active ? 'rgba(212,169,60,0.08)' : 'transparent',
-                      opacity: upcoming ? 0.38 : 1,
                     }}
                   >
                     <div
@@ -900,8 +898,8 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                       style={{
                         fontFamily: 'Inter, sans-serif',
                         fontSize: '14px',
-                        fontWeight: active ? 600 : 400,
-                        color: active ? GOLD : 'rgba(240,235,255,0.82)',
+                        fontWeight: active ? 700 : 600,
+                        color: active ? GOLD : 'rgba(255,255,255,0.96)',
                       }}
                     >
                       {s.short}
@@ -1135,12 +1133,14 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           <button
             type="button"
             onClick={goBack}
-            className="border-0 bg-transparent text-[12px] font-medium uppercase tracking-[0.1em]"
+            className="rounded-lg border-0 px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em]"
             style={{
               fontFamily: 'Inter, sans-serif',
-              color: 'rgba(212, 169, 60, 0.85)',
+              background: GOLD,
+              color: MIDNIGHT,
               cursor: 'pointer',
-              opacity: 0.92,
+              opacity: 1,
+              boxShadow: '0 8px 28px rgba(212,169,60,0.35)',
             }}
           >
             {'<- Back'}
