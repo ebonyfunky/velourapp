@@ -16,12 +16,12 @@ export default function SetupComplete({ onEditSetup, onBackToVoice }: Props) {
         Velour now knows your profession, your audience, and your voice.
       </p>
       <p className="mb-10 text-sm leading-relaxed text-white/85" style={{ fontFamily: 'Inter, sans-serif' }}>
-        In the next phase, you&apos;ll land on the Generator, where you&apos;ll pick a content format (Reel, Carousel, Live Script,
+        In the next phase, you&apos;ll land on the Content Generator, where you&apos;ll pick a content format (Reel, Carousel, Live Script,
         etc.) and Velour will produce hooks, captions, scripts, and CTAs tailored to YOUR audience, in YOUR voice.
       </p>
 
       <p className="mb-6 text-xs italic text-white/50" style={{ fontFamily: 'Inter, sans-serif' }}>
-        Generator screen coming in Phase B
+        Content Generator screen coming in Phase B
       </p>
 
       <div

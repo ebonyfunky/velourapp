@@ -1,5 +1,5 @@
 /**
- * Phase A2 placeholder for the Generator (content formats, hooks, scripts).
+ * Phase A2 placeholder for the Content Generator (content formats, hooks, scripts).
  */
 import HomeHeader from './HomeHeader';
 
@@ -27,7 +27,7 @@ export default function GeneratorScreen() {
         className="mb-4 max-w-xl text-center text-[clamp(24px,3.8vw,32px)] font-normal tracking-[-0.02em]"
         style={{ fontFamily: "'Cormorant Garamond', serif", color: GOLD }}
       >
-        Generator
+        Content Generator
       </h1>
       <p className="max-w-lg text-center text-sm leading-relaxed text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>
         Reels, carousels, hooks, captions, and scripts tailored to your profile. Connecting here soon.

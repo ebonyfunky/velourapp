@@ -1,5 +1,5 @@
 /**
- * Velour app shell: ProfileGate entry (profile vs Generator).
+ * Velour app shell: ProfileGate entry (profile vs Content Generator).
  * Auth gate: no session -> AuthScreen; session -> Velour app below.
  */
 import ProfileGate from './components/ProfileGate';

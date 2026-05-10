@@ -190,7 +190,7 @@ export default function SetupSidebar({ phase, setupStep, furthestStep, onStepCli
                   className="leading-snug text-[13px]"
                   style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500, color: WARM_GOLD, opacity: 0.42 }}
                 >
-                  Generator (coming soon)
+                  Content Generator (coming soon)
                 </p>
                 <span
                   className="mt-1 inline-block rounded px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em]"

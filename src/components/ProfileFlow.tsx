@@ -110,6 +110,91 @@ const STEP_BODY: Record<number, { title: string; body: string }> = {
   },
 };
 
+const RESET_CONFIRM_AUTO_COLLAPSE_MS = 5000;
+
+const GOLD_DIM_RESET = 'rgba(212, 169, 60, 0.48)';
+const GOLD_BRIGHT_RESET = 'rgba(212, 169, 60, 0.95)';
+
+interface ProfileStepResetProps {
+  confirmationOpen: boolean;
+  interactionsLocked: boolean;
+  onRequestResetClick: () => void;
+  onCancelConfirmation: () => void;
+  onConfirmReset: () => void | Promise<void>;
+}
+
+function ProfileStepReset({
+  confirmationOpen,
+  interactionsLocked,
+  onRequestResetClick,
+  onCancelConfirmation,
+  onConfirmReset,
+}: ProfileStepResetProps) {
+  return (
+    <div className="shrink-0 pt-0.5" style={{ fontFamily: 'Inter, sans-serif' }}>
+      {confirmationOpen ? (
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => void onConfirmReset()}
+            disabled={interactionsLocked}
+            className="rounded-lg border-0 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em]"
+            style={{
+              background: GOLD,
+              color: MIDNIGHT,
+              cursor: interactionsLocked ? 'default' : 'pointer',
+              opacity: interactionsLocked ? 0.45 : 1,
+            }}
+          >
+            CONFIRM RESET
+          </button>
+          <button
+            type="button"
+            onClick={onCancelConfirmation}
+            disabled={interactionsLocked}
+            className="border-0 bg-transparent px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors"
+            style={{
+              color: GOLD_DIM_RESET,
+              cursor: interactionsLocked ? 'default' : 'pointer',
+              opacity: interactionsLocked ? 0.35 : 1,
+            }}
+            onMouseEnter={(e) => {
+              if (interactionsLocked) return;
+              e.currentTarget.style.color = GOLD_BRIGHT_RESET;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = GOLD_DIM_RESET;
+            }}
+          >
+            CANCEL
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={onRequestResetClick}
+          disabled={interactionsLocked}
+          className="border-0 bg-transparent px-2 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors"
+          style={{
+            color: GOLD_DIM_RESET,
+            cursor: interactionsLocked ? 'default' : 'pointer',
+            opacity: interactionsLocked ? 0.35 : 1,
+          }}
+          onMouseEnter={(e) => {
+            if (interactionsLocked) return;
+            e.currentTarget.style.color = GOLD_BRIGHT_RESET;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = GOLD_DIM_RESET;
+          }}
+        >
+          RESET
+        </button>
+      )}
+    </div>
+  );
+}
+
 /** Step 3 predefined chips (replace with final copy from product spec as needed). */
 const STEP3_GOALS_PREDEFINED = [
   'Financial stability',
@@ -365,6 +450,8 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const [step3SaveError, setStep3SaveError] = useState<string | null>(null);
   const [step3Saving, setStep3Saving] = useState(false);
 
+  const [resetConfirmationOpen, setResetConfirmationOpen] = useState(false);
+
   useEffect(() => {
     let cancelled = false;
     void (async () => {
@@ -410,6 +497,18 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    setResetConfirmationOpen(false);
+  }, [currentStep]);
+
+  useEffect(() => {
+    if (!resetConfirmationOpen) return;
+    const tid = window.setTimeout(() => {
+      setResetConfirmationOpen(false);
+    }, RESET_CONFIRM_AUTO_COLLAPSE_MS);
+    return () => window.clearTimeout(tid);
+  }, [resetConfirmationOpen]);
 
   const professionToSave = useMemo(() => {
     if (professionSelect === OTHER_OPTION) return otherProfession.trim();
@@ -620,6 +719,98 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     goNext();
   }, [currentStep, handleStep1Continue, handleStep2Continue, handleStep3Continue, goNext]);
 
+  const stepSaveInFlight = step1Saving || step2Saving || step3Saving;
+
+  const handleConfirmStepReset = useCallback(async () => {
+    setResetConfirmationOpen(false);
+
+    const step = currentStep;
+    if (step === 4 || step === 5) return;
+
+    const emptyDemographics = {
+      ageRange: '',
+      gender: '',
+      maritalStatus: '',
+      children: '',
+      education: '',
+      careerField: '',
+      location: '',
+    };
+
+    if (step === 1) {
+      setStep1SaveError(null);
+      setProfessionSelect('');
+      setOtherProfession('');
+      setOfferDescription('');
+      setCreatorProfession('');
+      setCreatorOfferDescription('');
+      try {
+        await saveStep1Profession('', '');
+      } catch {
+        setStep1SaveError("Couldn't reset. Try again.");
+      }
+      return;
+    }
+
+    if (step === 2) {
+      setStep2SaveError(null);
+      setDemoAgeRange('');
+      setDemoGender('');
+      setDemoMarital('');
+      setDemoChildren('');
+      setDemoEducation('');
+      setDemoCareerSelect('');
+      setOtherCareerField('');
+      setDemoLocationSelect('');
+      setOtherLocationField('');
+      setAudienceAgeRange('');
+      setAudienceGender('');
+      setAudienceMaritalStatus('');
+      setAudienceChildren('');
+      setAudienceEducation('');
+      setAudienceCareerField('');
+      setAudienceLocation('');
+      try {
+        await saveStep2Demographics(emptyDemographics);
+      } catch {
+        setStep2SaveError("Couldn't reset. Try again.");
+      }
+      return;
+    }
+
+    if (step === 3) {
+      setStep3SaveError(null);
+      setGoalsSelected([]);
+      setGoalsExtraChips([]);
+      setFearsSelected([]);
+      setFearsExtraChips([]);
+      setDialogueSelected([]);
+      setDialogueExtraChips([]);
+      setAudienceGoals([]);
+      setAudienceFears([]);
+      setAudienceInternalDialogue([]);
+      try {
+        await saveStep3GoalsFears({ goals: [], fears: [], internalDialogue: [] });
+      } catch {
+        setStep3SaveError("Couldn't reset. Try again.");
+      }
+    }
+  }, [
+    currentStep,
+    setCreatorProfession,
+    setCreatorOfferDescription,
+    setAudienceAgeRange,
+    setAudienceGender,
+    setAudienceMaritalStatus,
+    setAudienceChildren,
+    setAudienceEducation,
+    setAudienceCareerField,
+    setAudienceLocation,
+    setAudienceGoals,
+    setAudienceFears,
+    setAudienceInternalDialogue,
+  ]);
+
   if (!hydrated) {
     return (
       <div
@@ -722,25 +913,36 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           </aside>
 
           <main className="flex min-h-0 flex-1 flex-col px-5 pb-32 pt-8 md:px-10 md:pb-36 md:pt-10">
-            <h1
-              className="mb-3 text-[clamp(26px,4vw,34px)] font-normal tracking-[-0.02em]"
-              style={{ fontFamily: "'Cormorant Garamond', serif", color: GOLD }}
-            >
-              {copy.title}
-            </h1>
+            <div className="mb-3 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+              <div className="flex min-w-0 flex-1 flex-col gap-3">
+                <h1
+                  className="text-[clamp(26px,4vw,34px)] font-normal tracking-[-0.02em]"
+                  style={{ fontFamily: "'Cormorant Garamond', serif", color: GOLD }}
+                >
+                  {copy.title}
+                </h1>
 
-            {currentStep >= 4 ? (
-              <span
-                className="mb-4 inline-block self-start rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
-                style={{
-                  fontFamily: 'Inter, sans-serif',
-                  borderColor: 'rgba(212,169,60,0.35)',
-                  color: 'rgba(212,169,60,0.85)',
-                }}
-              >
-                Coming in A4
-              </span>
-            ) : null}
+                {currentStep >= 4 ? (
+                  <span
+                    className="inline-block self-start rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
+                    style={{
+                      fontFamily: 'Inter, sans-serif',
+                      borderColor: 'rgba(212,169,60,0.35)',
+                      color: 'rgba(212,169,60,0.85)',
+                    }}
+                  >
+                    Coming in A4
+                  </span>
+                ) : null}
+              </div>
+              <ProfileStepReset
+                confirmationOpen={resetConfirmationOpen}
+                interactionsLocked={stepSaveInFlight}
+                onRequestResetClick={() => setResetConfirmationOpen(true)}
+                onCancelConfirmation={() => setResetConfirmationOpen(false)}
+                onConfirmReset={handleConfirmStepReset}
+              />
+            </div>
 
             <p className="max-w-2xl text-[15px] leading-relaxed text-white/75" style={{ fontFamily: 'Inter, sans-serif' }}>
               {copy.body}

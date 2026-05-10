@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import type { VelourProfileRow } from '../lib/profile';
 import { fetchCurrentUserProfile } from '../lib/profile';
 import ProfileFlow from './ProfileFlow';
@@ -9,6 +9,9 @@ const MIDNIGHT_TOP = '#222A58';
 const MIDNIGHT = '#1A1F4A';
 const MIDNIGHT_BOTTOM = '#151A40';
 const GOLD = '#D4A93C';
+const GATE_GOLD_BTN_SHADOW_IDLE = '0 8px 32px rgba(212,169,60,0.4)';
+const GATE_GOLD_BTN_SHADOW_HOVER = '0 12px 40px rgba(212,169,60,0.55)';
+const GATE_GOLD_BTN_TEXT = '#1A1F4A';
 
 type LoadState =
   | { status: 'loading' }
@@ -17,6 +20,35 @@ type LoadState =
 
 function isProfileComplete(profile: VelourProfileRow | null): boolean {
   return Boolean(profile?.profile_completed_at);
+}
+
+interface GateGoldChoiceButtonProps {
+  children: ReactNode;
+  onClick: () => void;
+}
+
+function GateGoldChoiceButton({ children, onClick }: GateGoldChoiceButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex min-h-[52px] w-full flex-1 basis-0 shrink-0 items-center justify-center rounded-full border-0 px-4 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] transition-[box-shadow,transform] hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E8C96A]/90 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1F4A]"
+      style={{
+        fontFamily: 'Inter, sans-serif',
+        background: GOLD,
+        color: GATE_GOLD_BTN_TEXT,
+        boxShadow: GATE_GOLD_BTN_SHADOW_IDLE,
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = GATE_GOLD_BTN_SHADOW_HOVER;
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = GATE_GOLD_BTN_SHADOW_IDLE;
+      }}
+    >
+      {children}
+    </button>
+  );
 }
 
 export default function ProfileGate() {
@@ -151,47 +183,12 @@ export default function ProfileGate() {
         className="mb-12 max-w-md text-center text-sm leading-relaxed text-white/72"
         style={{ fontFamily: 'Inter, sans-serif' }}
       >
-        Finish your customer clarity profile or head to the Generator. You can refine your profile any time once the full flows ship.
+        Set up your Perfect Audience Profile or head to the Content Generator.
       </p>
 
-      <div className="flex w-full max-w-[420px] flex-col gap-4 sm:flex-row sm:justify-center">
-        <button
-          type="button"
-          onClick={() => setUserChoice('flow')}
-          className="rounded-full border-0 px-10 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] transition-[box-shadow,transform] hover:-translate-y-0.5"
-          style={{
-            fontFamily: 'Inter, sans-serif',
-            color: '#1A1F4A',
-            background: GOLD,
-            boxShadow: '0 8px 32px rgba(212,169,60,0.4)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 12px 40px rgba(212,169,60,0.55)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '0 8px 32px rgba(212,169,60,0.4)';
-          }}
-        >
-          Customer clarity profile
-        </button>
-        <button
-          type="button"
-          onClick={() => setUserChoice('generator')}
-          className="rounded-full border-2 bg-transparent px-10 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] transition-colors"
-          style={{
-            fontFamily: 'Inter, sans-serif',
-            color: GOLD,
-            borderColor: 'rgba(212,169,60,0.55)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(212,169,60,0.85)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = 'rgba(212,169,60,0.55)';
-          }}
-        >
-          Generator
-        </button>
+      <div className="flex w-full max-w-[min(560px,100%)] flex-col gap-4 sm:flex-row">
+        <GateGoldChoiceButton onClick={() => setUserChoice('flow')}>AUDIENCE PROFILE</GateGoldChoiceButton>
+        <GateGoldChoiceButton onClick={() => setUserChoice('generator')}>GENERATE CONTENT</GateGoldChoiceButton>
       </div>
     </div>
   );
