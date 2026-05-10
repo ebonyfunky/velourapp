@@ -35,3 +35,16 @@ export async function fetchCurrentUserProfile(): Promise<VelourProfileRow | null
   if (error) throw error;
   return data as VelourProfileRow | null;
 }
+
+/** Persists `profile_last_step` for the signed-in user. */
+export async function updateProfileStep(step: number): Promise<void> {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user?.id;
+  if (!userId) throw new Error('Not signed in');
+
+  const { error } = await supabase.from('profiles').update({ profile_last_step: step }).eq('id', userId);
+
+  if (error) throw error;
+}

@@ -118,7 +118,7 @@ export default function ProfileGate() {
   }
 
   if (userChoice === 'flow') {
-    return <ProfileFlow />;
+    return <ProfileFlow onExitToGate={() => setUserChoice(null)} />;
   }
 
   if (userChoice === 'generator') {
