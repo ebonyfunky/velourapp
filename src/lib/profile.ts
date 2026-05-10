@@ -83,3 +83,38 @@ export async function saveStep1Profession(
   if (error) throw error;
   return data as VelourProfileRow;
 }
+
+/** Step 2 Audience Avatar: demographics. Returns the updated profile row. */
+export async function saveStep2Demographics(values: {
+  ageRange: string;
+  gender: string;
+  maritalStatus: string;
+  children: string;
+  education: string;
+  careerField: string;
+  location: string;
+}): Promise<VelourProfileRow> {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user?.id;
+  if (!userId) throw new Error('Not signed in');
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .update({
+      audience_age_range: values.ageRange,
+      audience_gender: values.gender,
+      audience_marital_status: values.maritalStatus,
+      audience_children: values.children,
+      audience_education: values.education,
+      audience_career_field: values.careerField,
+      audience_location: values.location,
+    })
+    .eq('id', userId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as VelourProfileRow;
+}

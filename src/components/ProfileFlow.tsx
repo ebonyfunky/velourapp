@@ -1,9 +1,9 @@
 /**
- * Audience Avatar profile shell: Step 1 profession form, Steps 2-5 placeholders.
+ * Audience Avatar profile shell: Step 1 profession, Step 2 demographics; later steps placeholders.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Check } from 'lucide-react';
-import { fetchCurrentUserProfile, saveStep1Profession, updateProfileStep } from '../lib/profile';
+import { fetchCurrentUserProfile, saveStep1Profession, saveStep2Demographics, updateProfileStep } from '../lib/profile';
 import { useCampaignStore } from '../store/campaignStore';
 import HomeHeader from './HomeHeader';
 
@@ -31,6 +31,48 @@ const PROFESSION_OPTIONS = [
 
 const STANDARD_PROFESSIONS = PROFESSION_OPTIONS.slice(0, -1);
 const OTHER_OPTION = 'Other' as const;
+
+const DEMO_AGE_OPTIONS = ['18-24', '25-34', '35-44', '45-54', '55+'] as const;
+
+const DEMO_GENDER_OPTIONS = ['Female', 'Male'] as const;
+
+const DEMO_MARITAL_OPTIONS = ['Single', 'In a relationship', 'Married', 'Divorced'] as const;
+
+const DEMO_CHILDREN_OPTIONS = ['No kids', 'Has young kids (under 12)', 'Has teens (13-17)', 'Has adult kids'] as const;
+
+const DEMO_EDUCATION_OPTIONS = ['High school', 'College', 'Graduate degree', 'Other'] as const;
+
+const DEMO_CAREER_STANDARD = [
+  'Healthcare',
+  'Education',
+  'Tech',
+  'Finance',
+  'Corporate',
+  'Creative',
+  'Trades',
+  'Service',
+  'Self-employed',
+  'Stay-at-home',
+  'Retired',
+] as const;
+
+/** Shared "Other" branch label for Step 2 demographics (career + location). */
+const DEMO_STEP2_OTHER_LABEL = 'Other' as const;
+
+const DEMO_LOCATION_STANDARD = [
+  'US',
+  'Canada',
+  'UK',
+  'Europe',
+  'Australia or NZ',
+  'Asia',
+  'Latin America',
+  'Africa',
+  'Middle East',
+] as const;
+
+const SELECT_FIELD_CLASS =
+  'w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 text-base text-white outline-none transition focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]';
 
 const STEPS = [
   { id: 1, short: 'Your Profession' },
@@ -74,6 +116,150 @@ function hydrateProfessionFields(stored: string | null): { select: string; other
   return { select: OTHER_OPTION, other: trimmed };
 }
 
+function hydrateDemographicsSelectWithOther(
+  stored: string | null,
+  standardOptions: readonly string[],
+  otherLabel: typeof DEMO_STEP2_OTHER_LABEL
+): { select: string; other: string } {
+  const trimmed = stored?.trim() ?? '';
+  if (!trimmed) return { select: '', other: '' };
+  if ((standardOptions as readonly string[]).includes(trimmed)) return { select: trimmed, other: '' };
+  if (trimmed === otherLabel) return { select: otherLabel, other: '' };
+  return { select: otherLabel, other: trimmed };
+}
+
+function saveValueFromSelectWithOther(
+  selectValue: string,
+  otherText: string,
+  otherLabel: typeof DEMO_STEP2_OTHER_LABEL
+): string {
+  if (selectValue === otherLabel) return otherText.trim();
+  if (selectValue) return selectValue;
+  return '';
+}
+
+/** If stored value equals one option exactly (after trim), return it; else empty. */
+function matchDropdownHydration(stored: string | null, options: readonly string[]): string {
+  const t = stored?.trim() ?? '';
+  if (!t || !(options as readonly string[]).includes(t)) return '';
+  return t;
+}
+
+interface FormDropdownProps {
+  id: string;
+  label: string;
+  placeholder: string;
+  value: string;
+  options: readonly string[];
+  onChange: (next: string) => void;
+}
+
+function FormDropdown({ id, label, placeholder, value, options, onChange }: FormDropdownProps) {
+  return (
+    <div>
+      <label className="mb-2 block text-[13px] font-medium tracking-wide" htmlFor={id} style={{ color: GOLD, fontFamily: 'Inter, sans-serif' }}>
+        {label}
+      </label>
+      <select
+        id={id}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={SELECT_FIELD_CLASS}
+      >
+        <option value="" disabled>
+          {placeholder}
+        </option>
+        {options.map((opt) => (
+          <option key={opt} value={opt} className="bg-[#1A1F4A] text-white">
+            {opt}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+const OTHER_TEXT_INPUT_CLASS =
+  'w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 text-base text-white outline-none transition placeholder:text-white/35 focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]';
+
+interface FormDropdownWithOtherProps {
+  selectId: string;
+  otherInputId: string;
+  label: string;
+  placeholder: string;
+  otherFieldLabel: string;
+  otherInputPlaceholder: string;
+  standardOptions: readonly string[];
+  otherOptionLabel: typeof DEMO_STEP2_OTHER_LABEL;
+  selectValue: string;
+  otherValue: string;
+  onSelectChange: (v: string) => void;
+  onOtherChange: (v: string) => void;
+}
+
+function FormDropdownWithOther({
+  selectId,
+  otherInputId,
+  label,
+  placeholder,
+  otherFieldLabel,
+  otherInputPlaceholder,
+  standardOptions,
+  otherOptionLabel,
+  selectValue,
+  otherValue,
+  onSelectChange,
+  onOtherChange,
+}: FormDropdownWithOtherProps) {
+  const combinedOptions = [...standardOptions, otherOptionLabel];
+  return (
+    <div>
+      <label
+        className="mb-2 block text-[13px] font-medium tracking-wide"
+        htmlFor={selectId}
+        style={{ color: GOLD, fontFamily: 'Inter, sans-serif' }}
+      >
+        {label}
+      </label>
+      <select
+        id={selectId}
+        value={selectValue}
+        onChange={(e) => {
+          const v = e.target.value;
+          onSelectChange(v);
+          if (v !== otherOptionLabel) onOtherChange('');
+        }}
+        className={SELECT_FIELD_CLASS}
+      >
+        <option value="" disabled>
+          {placeholder}
+        </option>
+        {combinedOptions.map((opt) => (
+          <option key={opt} value={opt} className="bg-[#1A1F4A] text-white">
+            {opt}
+          </option>
+        ))}
+      </select>
+      {selectValue === otherOptionLabel ? (
+        <div className="mt-4">
+          <label className="mb-2 block text-[13px] font-medium tracking-wide text-white/60" htmlFor={otherInputId}>
+            {otherFieldLabel}
+          </label>
+          <input
+            id={otherInputId}
+            type="text"
+            value={otherValue}
+            onChange={(e) => onOtherChange(e.target.value)}
+            autoComplete="off"
+            className={OTHER_TEXT_INPUT_CLASS}
+            placeholder={otherInputPlaceholder}
+          />
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export interface ProfileFlowProps {
   onExitToGate?: () => void;
 }
@@ -81,6 +267,13 @@ export interface ProfileFlowProps {
 export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const setCreatorProfession = useCampaignStore((s) => s.setCreatorProfession);
   const setCreatorOfferDescription = useCampaignStore((s) => s.setCreatorOfferDescription);
+  const setAudienceAgeRange = useCampaignStore((s) => s.setAudienceAgeRange);
+  const setAudienceGender = useCampaignStore((s) => s.setAudienceGender);
+  const setAudienceMaritalStatus = useCampaignStore((s) => s.setAudienceMaritalStatus);
+  const setAudienceChildren = useCampaignStore((s) => s.setAudienceChildren);
+  const setAudienceEducation = useCampaignStore((s) => s.setAudienceEducation);
+  const setAudienceCareerField = useCampaignStore((s) => s.setAudienceCareerField);
+  const setAudienceLocation = useCampaignStore((s) => s.setAudienceLocation);
 
   const [hydrated, setHydrated] = useState(false);
   const [hydrateError, setHydrateError] = useState<string | null>(null);
@@ -92,6 +285,18 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
 
   const [step1SaveError, setStep1SaveError] = useState<string | null>(null);
   const [step1Saving, setStep1Saving] = useState(false);
+
+  const [demoAgeRange, setDemoAgeRange] = useState('');
+  const [demoGender, setDemoGender] = useState('');
+  const [demoMarital, setDemoMarital] = useState('');
+  const [demoChildren, setDemoChildren] = useState('');
+  const [demoEducation, setDemoEducation] = useState('');
+  const [demoCareerSelect, setDemoCareerSelect] = useState('');
+  const [otherCareerField, setOtherCareerField] = useState('');
+  const [demoLocationSelect, setDemoLocationSelect] = useState('');
+  const [otherLocationField, setOtherLocationField] = useState('');
+  const [step2SaveError, setStep2SaveError] = useState<string | null>(null);
+  const [step2Saving, setStep2Saving] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -107,6 +312,17 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           setProfessionSelect(select);
           setOtherProfession(other);
           setOfferDescription(p.creator_offer_description ?? '');
+          setDemoAgeRange(matchDropdownHydration(p.audience_age_range, DEMO_AGE_OPTIONS));
+          setDemoGender(matchDropdownHydration(p.audience_gender, DEMO_GENDER_OPTIONS));
+          setDemoMarital(matchDropdownHydration(p.audience_marital_status, DEMO_MARITAL_OPTIONS));
+          setDemoChildren(matchDropdownHydration(p.audience_children, DEMO_CHILDREN_OPTIONS));
+          setDemoEducation(matchDropdownHydration(p.audience_education, DEMO_EDUCATION_OPTIONS));
+          const careerH = hydrateDemographicsSelectWithOther(p.audience_career_field, DEMO_CAREER_STANDARD, DEMO_STEP2_OTHER_LABEL);
+          setDemoCareerSelect(careerH.select);
+          setOtherCareerField(careerH.other);
+          const locH = hydrateDemographicsSelectWithOther(p.audience_location, DEMO_LOCATION_STANDARD, DEMO_STEP2_OTHER_LABEL);
+          setDemoLocationSelect(locH.select);
+          setOtherLocationField(locH.other);
         }
       } catch (e) {
         if (!cancelled) setHydrateError(e instanceof Error ? e.message : 'Could not load profile.');
@@ -131,6 +347,37 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     if (offerDescription.trim().length < 1) return false;
     return true;
   }, [professionSelect, otherProfession, offerDescription]);
+
+  const careerFieldToSave = useMemo(
+    () => saveValueFromSelectWithOther(demoCareerSelect, otherCareerField, DEMO_STEP2_OTHER_LABEL),
+    [demoCareerSelect, otherCareerField]
+  );
+
+  const locationToSave = useMemo(
+    () => saveValueFromSelectWithOther(demoLocationSelect, otherLocationField, DEMO_STEP2_OTHER_LABEL),
+    [demoLocationSelect, otherLocationField]
+  );
+
+  const step2FormValid = useMemo(() => {
+    if (!demoAgeRange || !demoGender || !demoMarital || !demoChildren || !demoEducation) return false;
+    if (!demoCareerSelect || !demoLocationSelect) return false;
+    if (demoCareerSelect === DEMO_STEP2_OTHER_LABEL && otherCareerField.trim().length < 1) return false;
+    if (demoLocationSelect === DEMO_STEP2_OTHER_LABEL && otherLocationField.trim().length < 1) return false;
+    if (!careerFieldToSave || !locationToSave) return false;
+    return true;
+  }, [
+    demoAgeRange,
+    demoGender,
+    demoMarital,
+    demoChildren,
+    demoEducation,
+    demoCareerSelect,
+    otherCareerField,
+    demoLocationSelect,
+    otherLocationField,
+    careerFieldToSave,
+    locationToSave,
+  ]);
 
   const persistStep = useCallback(async (step: number) => {
     try {
@@ -185,16 +432,77 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     setCreatorOfferDescription,
   ]);
 
+  const handleStep2Continue = useCallback(async () => {
+    if (!step2FormValid || step2Saving) return;
+    const careerField = careerFieldToSave;
+    const location = locationToSave;
+    if (!careerField || !location) return;
+    setStep2SaveError(null);
+    setStep2Saving(true);
+    const values = {
+      ageRange: demoAgeRange,
+      gender: demoGender,
+      maritalStatus: demoMarital,
+      children: demoChildren,
+      education: demoEducation,
+      careerField,
+      location,
+    };
+    try {
+      setAudienceAgeRange(values.ageRange);
+      setAudienceGender(values.gender);
+      setAudienceMaritalStatus(values.maritalStatus);
+      setAudienceChildren(values.children);
+      setAudienceEducation(values.education);
+      setAudienceCareerField(values.careerField);
+      setAudienceLocation(values.location);
+      await saveStep2Demographics(values);
+      await updateProfileStep(3);
+      setCurrentStep(3);
+    } catch {
+      setStep2SaveError("Couldn't save. Please try again.");
+    } finally {
+      setStep2Saving(false);
+    }
+  }, [
+    step2FormValid,
+    step2Saving,
+    careerFieldToSave,
+    locationToSave,
+    demoAgeRange,
+    demoGender,
+    demoMarital,
+    demoChildren,
+    demoEducation,
+    demoCareerSelect,
+    otherCareerField,
+    demoLocationSelect,
+    otherLocationField,
+    setAudienceAgeRange,
+    setAudienceGender,
+    setAudienceMaritalStatus,
+    setAudienceChildren,
+    setAudienceEducation,
+    setAudienceCareerField,
+    setAudienceLocation,
+  ]);
+
   const continueDisabled =
-    currentStep >= 5 || (currentStep === 1 && (!step1FormValid || step1Saving));
+    currentStep >= 5 ||
+    (currentStep === 1 && (!step1FormValid || step1Saving)) ||
+    (currentStep === 2 && (!step2FormValid || step2Saving));
 
   const handleContinueClick = useCallback(() => {
     if (currentStep === 1) {
       void handleStep1Continue();
       return;
     }
+    if (currentStep === 2) {
+      void handleStep2Continue();
+      return;
+    }
     goNext();
-  }, [currentStep, handleStep1Continue, goNext]);
+  }, [currentStep, handleStep1Continue, handleStep2Continue, goNext]);
 
   if (!hydrated) {
     return (
@@ -305,7 +613,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
               {copy.title}
             </h1>
 
-            {currentStep >= 2 ? (
+            {currentStep >= 3 ? (
               <span
                 className="mb-4 inline-block self-start rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
                 style={{
@@ -389,6 +697,77 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                     </div>
                   </div>
                 </div>
+              ) : currentStep === 2 ? (
+                <div className="flex max-w-xl flex-col gap-8">
+                  <FormDropdown
+                    id="demo-age"
+                    label="What age range is your audience?"
+                    placeholder="Select age range"
+                    value={demoAgeRange}
+                    onChange={setDemoAgeRange}
+                    options={DEMO_AGE_OPTIONS}
+                  />
+                  <FormDropdown
+                    id="demo-gender"
+                    label="What gender is your audience?"
+                    placeholder="Select gender"
+                    value={demoGender}
+                    onChange={setDemoGender}
+                    options={DEMO_GENDER_OPTIONS}
+                  />
+                  <FormDropdown
+                    id="demo-marital"
+                    label="What's their relationship status?"
+                    placeholder="Select relationship status"
+                    value={demoMarital}
+                    onChange={setDemoMarital}
+                    options={DEMO_MARITAL_OPTIONS}
+                  />
+                  <FormDropdown
+                    id="demo-children"
+                    label="Do they have kids?"
+                    placeholder="Select"
+                    value={demoChildren}
+                    onChange={setDemoChildren}
+                    options={DEMO_CHILDREN_OPTIONS}
+                  />
+                  <FormDropdown
+                    id="demo-education"
+                    label="What's their education level?"
+                    placeholder="Select education level"
+                    value={demoEducation}
+                    onChange={setDemoEducation}
+                    options={DEMO_EDUCATION_OPTIONS}
+                  />
+                  <FormDropdownWithOther
+                    selectId="demo-career-select"
+                    otherInputId="demo-career-other"
+                    label="What field do they work in?"
+                    placeholder="Select career field"
+                    otherFieldLabel="Describe their field"
+                    otherInputPlaceholder="Describe their field"
+                    standardOptions={DEMO_CAREER_STANDARD}
+                    otherOptionLabel={DEMO_STEP2_OTHER_LABEL}
+                    selectValue={demoCareerSelect}
+                    otherValue={otherCareerField}
+                    onSelectChange={setDemoCareerSelect}
+                    onOtherChange={setOtherCareerField}
+                  />
+                  <FormDropdownWithOther
+                    selectId="demo-location-select"
+                    otherInputId="demo-location-other"
+                    label="Where are they based?"
+                    placeholder="Select location"
+                    otherFieldLabel="Describe their location"
+                    otherInputPlaceholder="Describe their location"
+                    standardOptions={DEMO_LOCATION_STANDARD}
+                    otherOptionLabel={DEMO_STEP2_OTHER_LABEL}
+                    selectValue={demoLocationSelect}
+                    otherValue={otherLocationField}
+                    onSelectChange={setDemoLocationSelect}
+                    onOtherChange={setOtherLocationField}
+                  />
+                </div>
               ) : (
                 <p className="text-sm text-white/50">Form arrives in A4. For now, use Continue to explore the shell.</p>
               )}
@@ -432,9 +811,9 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
             {'Continue ->'}
           </button>
         </div>
-        {currentStep === 1 && step1SaveError ? (
+        {(currentStep === 1 && step1SaveError) || (currentStep === 2 && step2SaveError) ? (
           <p className="mt-3 text-center text-[13px] text-red-300/90" style={{ fontFamily: 'Inter, sans-serif' }}>
-            {step1SaveError}
+            {currentStep === 1 ? step1SaveError : step2SaveError}
           </p>
         ) : null}
       </footer>
