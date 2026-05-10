@@ -1,15 +1,36 @@
 /**
- * Audience Avatar profile shell: five-step placeholders and navigation (A3).
+ * Audience Avatar profile shell: Step 1 profession form, Steps 2-5 placeholders.
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Check } from 'lucide-react';
-import { fetchCurrentUserProfile, updateProfileStep } from '../lib/profile';
+import { fetchCurrentUserProfile, saveStep1Profession, updateProfileStep } from '../lib/profile';
+import { useCampaignStore } from '../store/campaignStore';
 import HomeHeader from './HomeHeader';
 
 const GOLD = '#D4A93C';
 const MIDNIGHT = '#1A1F4A';
 const MIDNIGHT_TOP = '#222A58';
 const MIDNIGHT_BOTTOM = '#151A40';
+
+const OFFER_MAX = 500;
+
+/** Dropdown order: 10 defaults then Other. */
+const PROFESSION_OPTIONS = [
+  'Coach',
+  'Consultant',
+  'Course Creator',
+  'Educator',
+  'Service Provider',
+  'Content Creator',
+  'Author',
+  'Speaker',
+  'Affiliate Marketer',
+  'Product Seller',
+  'Other',
+] as const;
+
+const STANDARD_PROFESSIONS = PROFESSION_OPTIONS.slice(0, -1);
+const OTHER_OPTION = 'Other' as const;
 
 const STEPS = [
   { id: 1, short: 'Your Profession' },
@@ -42,14 +63,35 @@ const STEP_BODY: Record<number, { title: string; body: string }> = {
   },
 };
 
+function isStandardProfession(value: string): boolean {
+  return (STANDARD_PROFESSIONS as readonly string[]).includes(value);
+}
+
+function hydrateProfessionFields(stored: string | null): { select: string; other: string } {
+  const trimmed = stored?.trim() ?? '';
+  if (!trimmed) return { select: '', other: '' };
+  if (isStandardProfession(trimmed)) return { select: trimmed, other: '' };
+  return { select: OTHER_OPTION, other: trimmed };
+}
+
 export interface ProfileFlowProps {
   onExitToGate?: () => void;
 }
 
 export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
+  const setCreatorProfession = useCampaignStore((s) => s.setCreatorProfession);
+  const setCreatorOfferDescription = useCampaignStore((s) => s.setCreatorOfferDescription);
+
   const [hydrated, setHydrated] = useState(false);
   const [hydrateError, setHydrateError] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
+
+  const [professionSelect, setProfessionSelect] = useState('');
+  const [otherProfession, setOtherProfession] = useState('');
+  const [offerDescription, setOfferDescription] = useState('');
+
+  const [step1SaveError, setStep1SaveError] = useState<string | null>(null);
+  const [step1Saving, setStep1Saving] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -60,6 +102,12 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
         const raw = p?.profile_last_step;
         const n = typeof raw === 'number' && raw >= 1 && raw <= 5 ? raw : 1;
         setCurrentStep(n);
+        if (p) {
+          const { select, other } = hydrateProfessionFields(p.creator_profession);
+          setProfessionSelect(select);
+          setOtherProfession(other);
+          setOfferDescription(p.creator_offer_description ?? '');
+        }
       } catch (e) {
         if (!cancelled) setHydrateError(e instanceof Error ? e.message : 'Could not load profile.');
       } finally {
@@ -70,6 +118,19 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       cancelled = true;
     };
   }, []);
+
+  const professionToSave = useMemo(() => {
+    if (professionSelect === OTHER_OPTION) return otherProfession.trim();
+    if (professionSelect) return professionSelect;
+    return '';
+  }, [professionSelect, otherProfession]);
+
+  const step1FormValid = useMemo(() => {
+    if (!professionSelect) return false;
+    if (professionSelect === OTHER_OPTION && otherProfession.trim().length < 1) return false;
+    if (offerDescription.trim().length < 1) return false;
+    return true;
+  }, [professionSelect, otherProfession, offerDescription]);
 
   const persistStep = useCallback(async (step: number) => {
     try {
@@ -95,6 +156,45 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     setCurrentStep(prev);
     void persistStep(prev);
   }, [currentStep, onExitToGate, persistStep]);
+
+  const handleStep1Continue = useCallback(async () => {
+    if (!step1FormValid || step1Saving) return;
+    const prof = professionToSave;
+    const offer = offerDescription.slice(0, OFFER_MAX).trim();
+    if (!prof || offer.length < 1) return;
+
+    setStep1SaveError(null);
+    setStep1Saving(true);
+    try {
+      setCreatorProfession(prof);
+      setCreatorOfferDescription(offer);
+      await saveStep1Profession(prof, offer);
+      await updateProfileStep(2);
+      setCurrentStep(2);
+    } catch {
+      setStep1SaveError("Couldn't save. Please try again.");
+    } finally {
+      setStep1Saving(false);
+    }
+  }, [
+    step1FormValid,
+    step1Saving,
+    professionToSave,
+    offerDescription,
+    setCreatorProfession,
+    setCreatorOfferDescription,
+  ]);
+
+  const continueDisabled =
+    currentStep >= 5 || (currentStep === 1 && (!step1FormValid || step1Saving));
+
+  const handleContinueClick = useCallback(() => {
+    if (currentStep === 1) {
+      void handleStep1Continue();
+      return;
+    }
+    goNext();
+  }, [currentStep, handleStep1Continue, goNext]);
 
   if (!hydrated) {
     return (
@@ -127,6 +227,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   }
 
   const copy = STEP_BODY[currentStep];
+  const offerLen = offerDescription.length;
 
   return (
     <div
@@ -225,47 +326,117 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
               className="mt-10 min-h-[120px] flex-1 rounded-xl border border-[rgba(212,169,60,0.15)] bg-[rgba(20,25,61,0.45)] p-6"
               style={{ fontFamily: 'Inter, sans-serif' }}
             >
-              <p className="text-sm text-white/50">
-                Form arrives in A4. For now, use Continue to explore the shell.
-              </p>
+              {currentStep === 1 ? (
+                <div className="flex max-w-xl flex-col gap-8">
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium tracking-wide text-white/60" htmlFor="profession-select">
+                      What do you do?
+                    </label>
+                    <select
+                      id="profession-select"
+                      value={professionSelect}
+                      onChange={(e) => {
+                        setProfessionSelect(e.target.value);
+                        if (e.target.value !== OTHER_OPTION) setOtherProfession('');
+                      }}
+                      className="w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 text-base text-white outline-none transition focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]"
+                    >
+                      <option value="" disabled>
+                        Select your profession
+                      </option>
+                      {PROFESSION_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt} className="bg-[#1A1F4A] text-white">
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                    {professionSelect === OTHER_OPTION ? (
+                      <div className="mt-4">
+                        <label className="mb-2 block text-[13px] font-medium tracking-wide text-white/60" htmlFor="profession-other">
+                          Describe your profession
+                        </label>
+                        <input
+                          id="profession-other"
+                          type="text"
+                          value={otherProfession}
+                          onChange={(e) => setOtherProfession(e.target.value)}
+                          autoComplete="off"
+                          className="w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 text-base text-white outline-none transition placeholder:text-white/35 focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]"
+                          placeholder="Describe your profession"
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium tracking-wide text-white/60" htmlFor="offer-desc">
+                      What do you sell or offer?
+                    </label>
+                    <p className="mb-2 text-[13px] text-white/45">Describe what your audience gets from you. One or two sentences is enough.</p>
+                    <div className="relative">
+                      <textarea
+                        id="offer-desc"
+                        rows={3}
+                        maxLength={OFFER_MAX}
+                        value={offerDescription}
+                        onChange={(e) => setOfferDescription(e.target.value.slice(0, OFFER_MAX))}
+                        className="w-full resize-y rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.06] px-4 py-3 pb-9 text-base leading-relaxed text-white outline-none transition placeholder:text-white/35 focus:border-[rgba(212,169,60,0.65)] focus:ring-1 focus:ring-[rgba(212,169,60,0.35)]"
+                        placeholder="Tell us what you offer"
+                      />
+                      <div className="pointer-events-none absolute bottom-3 right-3 text-[11px] text-white/35">
+                        {offerLen} / {OFFER_MAX}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <p className="text-sm text-white/50">Form arrives in A4. For now, use Continue to explore the shell.</p>
+              )}
             </div>
           </main>
         </div>
       </div>
 
       <footer
-        className="fixed bottom-0 left-0 right-0 z-40 flex items-center justify-between border-t border-[rgba(212,169,60,0.12)] px-5 py-4 md:px-10"
+        className="fixed bottom-0 left-0 right-0 z-40 flex flex-col items-stretch border-t border-[rgba(212,169,60,0.12)] px-5 py-4 md:px-10"
         style={{ background: 'rgba(26,31,74,0.96)' }}
       >
-        <button
-          type="button"
-          onClick={goBack}
-          className="border-0 bg-transparent text-[12px] font-medium uppercase tracking-[0.1em]"
-          style={{
-            fontFamily: 'Inter, sans-serif',
-            color: 'rgba(212, 169, 60, 0.85)',
-            cursor: 'pointer',
-            opacity: 0.92,
-          }}
-        >
-          {'<- Back'}
-        </button>
-        <button
-          type="button"
-          onClick={goNext}
-          className="rounded-lg border-0 px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em]"
-          style={{
-            fontFamily: 'Inter, sans-serif',
-            background: GOLD,
-            color: MIDNIGHT,
-            cursor: currentStep >= 5 ? 'default' : 'pointer',
-            opacity: currentStep >= 5 ? 0.45 : 1,
-            boxShadow: currentStep >= 5 ? 'none' : '0 8px 28px rgba(212,169,60,0.35)',
-          }}
-          disabled={currentStep >= 5}
-        >
-          {'Continue ->'}
-        </button>
+        <div className="flex w-full items-center justify-between gap-4">
+          <button
+            type="button"
+            onClick={goBack}
+            className="border-0 bg-transparent text-[12px] font-medium uppercase tracking-[0.1em]"
+            style={{
+              fontFamily: 'Inter, sans-serif',
+              color: 'rgba(212, 169, 60, 0.85)',
+              cursor: 'pointer',
+              opacity: 0.92,
+            }}
+          >
+            {'<- Back'}
+          </button>
+          <button
+            type="button"
+            onClick={handleContinueClick}
+            className="rounded-lg border-0 px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em]"
+            style={{
+              fontFamily: 'Inter, sans-serif',
+              background: GOLD,
+              color: MIDNIGHT,
+              cursor: continueDisabled ? 'default' : 'pointer',
+              opacity: continueDisabled ? 0.45 : 1,
+              boxShadow: continueDisabled ? 'none' : '0 8px 28px rgba(212,169,60,0.35)',
+            }}
+            disabled={continueDisabled}
+          >
+            {'Continue ->'}
+          </button>
+        </div>
+        {currentStep === 1 && step1SaveError ? (
+          <p className="mt-3 text-center text-[13px] text-red-300/90" style={{ fontFamily: 'Inter, sans-serif' }}>
+            {step1SaveError}
+          </p>
+        ) : null}
       </footer>
     </div>
   );

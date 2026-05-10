@@ -58,3 +58,28 @@ export async function updateProfileStep(step: number): Promise<void> {
 
   if (error) throw error;
 }
+
+/** Step 1 Audience Avatar: creator profession + offer copy. Returns the updated profile row. */
+export async function saveStep1Profession(
+  profession: string,
+  offerDescription: string
+): Promise<VelourProfileRow> {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user?.id;
+  if (!userId) throw new Error('Not signed in');
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .update({
+      creator_profession: profession,
+      creator_offer_description: offerDescription,
+    })
+    .eq('id', userId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as VelourProfileRow;
+}
