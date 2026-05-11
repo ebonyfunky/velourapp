@@ -172,3 +172,32 @@ export async function saveStep4Interests(values: {
   if (error) throw error;
   return data as VelourProfileRow;
 }
+
+/** Step 5 Audience Avatar: outcomes they want vs. what they want to avoid. When advance is true (default), sets profile_last_step = 6. */
+export async function saveStep5Wants(
+  values: { wants: string[]; doesntWant: string[] },
+  options?: { advance?: boolean }
+): Promise<VelourProfileRow> {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user?.id;
+  if (!userId) throw new Error('Not signed in');
+
+  const advance = options?.advance !== false;
+  const payload: Record<string, unknown> = {
+    audience_wants: values.wants,
+    audience_doesnt_want: values.doesntWant,
+  };
+  if (advance) payload.profile_last_step = 6;
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .update(payload)
+    .eq('id', userId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as VelourProfileRow;
+}

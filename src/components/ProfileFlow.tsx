@@ -9,6 +9,7 @@ import {
   saveStep2Demographics,
   saveStep3GoalsFears,
   saveStep4Interests,
+  saveStep5Wants,
   updateProfileStep,
 } from '../lib/profile';
 import { supabase } from '../lib/supabase';
@@ -93,6 +94,7 @@ const STEPS = [
   { id: 3, short: 'Their Goals & Fears' },
   { id: 4, short: 'Their Interests' },
   { id: 5, short: 'Their Wants' },
+  { id: 6, short: 'AI synthesis' },
 ] as const;
 
 const STEP_BODY: Record<number, { title: string; body: string }> = {
@@ -114,7 +116,11 @@ const STEP_BODY: Record<number, { title: string; body: string }> = {
   },
   5: {
     title: 'Their Wants',
-    body: 'What do they crave - and just as important, what repels them? This protects your voice.',
+    body: "Get specific about what they crave and what they're done with. The clearer this is, the more your content cuts through.",
+  },
+  6: {
+    title: 'AI synthesis',
+    body: '',
   },
 };
 
@@ -277,6 +283,8 @@ const STEP4_INTERESTS_PREDEFINED = [
   'Books & Reading',
   'Self-Care',
   'Wellness',
+  'Affiliate Marketing',
+  'Digital Marketing',
 ] as const;
 
 const STEP4_CONTENT_PREDEFINED = [
@@ -302,6 +310,60 @@ const STEP4_DECISION_OPTIONS = [
   'Logic-driven',
   'Trust-based (recommendations from people they know)',
   'Price-driven',
+] as const;
+
+const STEP5_WANTS_PREDEFINED = [
+  'Financial Freedom',
+  'More Time',
+  'Less Stress',
+  'Confidence',
+  'Recognition',
+  'Independence',
+  'Flexibility',
+  'Authority in their field',
+  'Body Transformation',
+  'Better Health',
+  'Mental Clarity',
+  'A Loving Partner',
+  'Deeper Friendships',
+  'Family Stability',
+  'Purpose',
+  'Spiritual Growth',
+  'Adventure',
+  'Beautiful Home',
+  'Travel Lifestyle',
+  'Their Own Business',
+  'Quitting their 9-to-5',
+  'Multiple Income Streams',
+  'Being Their Own Boss',
+  'Legacy for their kids',
+] as const;
+
+const STEP5_DOESNT_PREDEFINED = [
+  'Hustle Culture',
+  'Gurus',
+  'Hype',
+  'Get-Rich-Quick Schemes',
+  'Pyramid Schemes',
+  'Toxic Positivity',
+  'Burnout',
+  'Overwhelm',
+  'Complicated Tech',
+  'Steep Learning Curves',
+  'Wasting Money',
+  'Wasting Time',
+  'Being Lied To',
+  'Cold DMs',
+  'Aggressive Sales Tactics',
+  'Pushy Marketing',
+  'Long Webinars',
+  'Endless Courses',
+  'Influencer Drama',
+  'Public Failure',
+  'Being Judged',
+  'Starting Over',
+  'Looking Salesy',
+  'Sounding Desperate',
 ] as const;
 
 function isStandardProfession(value: string): boolean {
@@ -489,6 +551,8 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const setAudienceInterests = useCampaignStore((s) => s.setAudienceInterests);
   const setAudienceContentConsumed = useCampaignStore((s) => s.setAudienceContentConsumed);
   const setAudienceDecisionStyle = useCampaignStore((s) => s.setAudienceDecisionStyle);
+  const setAudienceWants = useCampaignStore((s) => s.setAudienceWants);
+  const setAudienceDoesntWant = useCampaignStore((s) => s.setAudienceDoesntWant);
 
   const [hydrated, setHydrated] = useState(false);
   const [hydrateError, setHydrateError] = useState<string | null>(null);
@@ -530,6 +594,13 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const [step4SaveError, setStep4SaveError] = useState<string | null>(null);
   const [step4Saving, setStep4Saving] = useState(false);
 
+  const [wantsSelected, setWantsSelected] = useState<string[]>([]);
+  const [wantsExtraChips, setWantsExtraChips] = useState<string[]>([]);
+  const [doesntWantSelected, setDoesntWantSelected] = useState<string[]>([]);
+  const [doesntWantExtraChips, setDoesntWantExtraChips] = useState<string[]>([]);
+  const [step5SaveError, setStep5SaveError] = useState<string | null>(null);
+  const [step5Saving, setStep5Saving] = useState(false);
+
   const [resetConfirmationOpen, setResetConfirmationOpen] = useState(false);
 
   useEffect(() => {
@@ -539,7 +610,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
         const p = await fetchCurrentUserProfile();
         if (cancelled) return;
         const raw = p?.profile_last_step;
-        const n = typeof raw === 'number' && raw >= 1 && raw <= 5 ? raw : 1;
+        const n = typeof raw === 'number' && raw >= 1 && raw <= STEPS.length ? raw : 1;
         setCurrentStep(n);
         if (p) {
           const { select, other } = hydrateProfessionFields(p.creator_profession);
@@ -573,6 +644,14 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           setContentConsumedSelected(c4.selected);
           setContentConsumedExtraChips(c4.extras);
           setDecisionStyle(matchDropdownHydration(p.audience_decision_style, STEP4_DECISION_OPTIONS));
+          const w5 = hydrateChipSection(p.audience_wants, STEP5_WANTS_PREDEFINED);
+          setWantsSelected(w5.selected);
+          setWantsExtraChips(w5.extras);
+          const dw = hydrateChipSection(p.audience_doesnt_want, STEP5_DOESNT_PREDEFINED);
+          setDoesntWantSelected(dw.selected);
+          setDoesntWantExtraChips(dw.extras);
+          setAudienceWants(w5.selected);
+          setAudienceDoesntWant(dw.selected);
         }
       } catch (e) {
         if (!cancelled) setHydrateError(e instanceof Error ? e.message : 'Could not load profile.');
@@ -651,6 +730,11 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     return band(interestsSelected) && band(contentConsumedSelected) && decisionStyle.trim().length > 0;
   }, [interestsSelected, contentConsumedSelected, decisionStyle]);
 
+  const step5FormValid = useMemo(() => {
+    const band = (arr: string[]) => arr.length >= 3 && arr.length <= 5;
+    return band(wantsSelected) && band(doesntWantSelected);
+  }, [wantsSelected, doesntWantSelected]);
+
   const persistStep = useCallback(async (step: number) => {
     try {
       await updateProfileStep(step);
@@ -660,7 +744,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   }, []);
 
   const goNext = useCallback(() => {
-    if (currentStep >= 5) return;
+    if (currentStep >= STEPS.length) return;
     const next = currentStep + 1;
     setCurrentStep(next);
     void persistStep(next);
@@ -824,8 +908,34 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     setAudienceDecisionStyle,
   ]);
 
+  const handleStep5Continue = useCallback(async () => {
+    if (!step5FormValid || step5Saving) return;
+    const wants = wantsSelected;
+    const doesntWant = doesntWantSelected;
+    setStep5SaveError(null);
+    setStep5Saving(true);
+    try {
+      setAudienceWants(wants);
+      setAudienceDoesntWant(doesntWant);
+      await saveStep5Wants({ wants, doesntWant });
+      setCurrentStep(6);
+    } catch {
+      setStep5SaveError("Couldn't save. Please try again.");
+    } finally {
+      setStep5Saving(false);
+    }
+  }, [
+    step5FormValid,
+    step5Saving,
+    wantsSelected,
+    doesntWantSelected,
+    setAudienceWants,
+    setAudienceDoesntWant,
+  ]);
+
   const continueDisabled =
-    currentStep >= 5 ||
+    currentStep === STEPS.length ||
+    (currentStep === 5 && (!step5FormValid || step5Saving)) ||
     (currentStep === 1 && (!step1FormValid || step1Saving)) ||
     (currentStep === 2 && (!step2FormValid || step2Saving)) ||
     (currentStep === 3 && (!step3FormValid || step3Saving)) ||
@@ -848,16 +958,28 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       void handleStep4Continue();
       return;
     }
+    if (currentStep === 5) {
+      void handleStep5Continue();
+      return;
+    }
     goNext();
-  }, [currentStep, handleStep1Continue, handleStep2Continue, handleStep3Continue, handleStep4Continue, goNext]);
+  }, [
+    currentStep,
+    handleStep1Continue,
+    handleStep2Continue,
+    handleStep3Continue,
+    handleStep4Continue,
+    handleStep5Continue,
+    goNext,
+  ]);
 
-  const stepSaveInFlight = step1Saving || step2Saving || step3Saving || step4Saving;
+  const stepSaveInFlight = step1Saving || step2Saving || step3Saving || step4Saving || step5Saving;
 
   const handleConfirmStepReset = useCallback(async () => {
     setResetConfirmationOpen(false);
 
     const step = currentStep;
-    if (step === 5) return;
+    if (step === 6) return;
 
     const emptyDemographics = {
       ageRange: '',
@@ -948,6 +1070,23 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       } catch {
         setStep4SaveError("Couldn't reset. Try again.");
       }
+      return;
+    }
+
+    if (step === 5) {
+      setStep5SaveError(null);
+      setWantsSelected([]);
+      setWantsExtraChips([]);
+      setDoesntWantSelected([]);
+      setDoesntWantExtraChips([]);
+      setAudienceWants([]);
+      setAudienceDoesntWant([]);
+      try {
+        await saveStep5Wants({ wants: [], doesntWant: [] }, { advance: false });
+      } catch {
+        setStep5SaveError("Couldn't reset. Try again.");
+      }
+      return;
     }
   }, [
     currentStep,
@@ -966,6 +1105,8 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     setAudienceInterests,
     setAudienceContentConsumed,
     setAudienceDecisionStyle,
+    setAudienceWants,
+    setAudienceDoesntWant,
   ]);
 
   const handleClearAudienceDataDev = useCallback(async () => {
@@ -1056,7 +1197,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       <div className="flex flex-1 flex-col pt-[72px] md:pt-20">
         <div className="border-b border-[rgba(212,169,60,0.12)] px-4 py-3 text-center md:hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
           <span className="text-[13px] tracking-wide text-white/55">
-            Step {currentStep} of 5
+            Step {currentStep} of {STEPS.length}
           </span>
         </div>
 
@@ -1137,7 +1278,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                   {copy.title}
                 </h1>
 
-                {currentStep === 5 ? (
+                {currentStep === 6 ? (
                   <span
                     className="inline-block self-start rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
                     style={{
@@ -1146,7 +1287,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                       color: 'rgba(212,169,60,0.85)',
                     }}
                   >
-                    Coming in A4
+                    Coming in A5
                   </span>
                 ) : null}
               </div>
@@ -1159,9 +1300,11 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
               />
             </div>
 
-            <p className="max-w-2xl text-[15px] leading-relaxed text-white/75" style={{ fontFamily: 'Inter, sans-serif' }}>
-              {copy.body}
-            </p>
+            {currentStep < 6 ? (
+              <p className="max-w-2xl text-[15px] leading-relaxed text-white/75" style={{ fontFamily: 'Inter, sans-serif' }}>
+                {copy.body}
+              </p>
+            ) : null}
 
             <div
               className={`mt-10 min-h-[120px] flex-1 rounded-2xl border border-[rgba(212,169,60,0.18)] p-6 ${FORM_CARD_SHADOW}`}
@@ -1397,9 +1540,34 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                     </div>
                   </div>
                 </div>
-              ) : (
-                <p className="text-sm text-white/50">Form arrives in A4. For now, use Continue to explore the shell.</p>
-              )}
+              ) : currentStep === 5 ? (
+                <div className="flex max-w-2xl flex-col gap-10">
+                  <ChipMultiSelectSection
+                    heading="What outcomes are they chasing?"
+                    cue="The wins they want to feel within reach."
+                    predefined={STEP5_WANTS_PREDEFINED}
+                    selected={wantsSelected}
+                    onSelectedChange={setWantsSelected}
+                    extraChips={wantsExtraChips}
+                    onExtraChipsChange={setWantsExtraChips}
+                  />
+                  <ChipMultiSelectSection
+                    heading="What do they want to avoid?"
+                    cue="The things they're done with - what makes them roll their eyes or scroll past."
+                    predefined={STEP5_DOESNT_PREDEFINED}
+                    selected={doesntWantSelected}
+                    onSelectedChange={setDoesntWantSelected}
+                    extraChips={doesntWantExtraChips}
+                    onExtraChipsChange={setDoesntWantExtraChips}
+                  />
+                </div>
+              ) : currentStep === 6 ? (
+                <div className={`rounded-2xl border border-[rgba(212,169,60,0.18)] p-8 ${FORM_CARD_SHADOW}`}>
+                  <p className="text-[15px] leading-relaxed text-white/82" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    Step 6 coming next: AI synthesis. Your data is saved.
+                  </p>
+                </div>
+              ) : null}
             </div>
           </main>
         </div>
@@ -1445,9 +1613,18 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
         {(currentStep === 1 && step1SaveError) ||
         (currentStep === 2 && step2SaveError) ||
         (currentStep === 3 && step3SaveError) ||
-        (currentStep === 4 && step4SaveError) ? (
+        (currentStep === 4 && step4SaveError) ||
+        (currentStep === 5 && step5SaveError) ? (
           <p className="mt-3 text-center text-[13px] text-red-300/90" style={{ fontFamily: 'Inter, sans-serif' }}>
-            {currentStep === 1 ? step1SaveError : currentStep === 2 ? step2SaveError : currentStep === 3 ? step3SaveError : step4SaveError}
+            {currentStep === 1
+              ? step1SaveError
+              : currentStep === 2
+                ? step2SaveError
+                : currentStep === 3
+                  ? step3SaveError
+                  : currentStep === 4
+                    ? step4SaveError
+                    : step5SaveError}
           </p>
         ) : null}
       </footer>
