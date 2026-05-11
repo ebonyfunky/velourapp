@@ -22,7 +22,8 @@ export type VelourProfileRow = {
   audience_decision_style: string | null;
   audience_wants: string[] | null;
   audience_doesnt_want: string[] | null;
-  audience_identity_statement: string | null;
+  audience_identity_statement_short: string | null;
+  audience_identity_statement_long: string | null;
   profile_completed_at: string | null;
   profile_last_step: number | null;
   created_at: string;
