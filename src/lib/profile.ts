@@ -145,3 +145,30 @@ export async function saveStep3GoalsFears(values: {
   if (error) throw error;
   return data as VelourProfileRow;
 }
+
+/** Step 4 Audience Avatar: interests, content consumed, decision style. Returns the updated profile row. */
+export async function saveStep4Interests(values: {
+  interests: string[];
+  contentConsumed: string[];
+  decisionStyle: string;
+}): Promise<VelourProfileRow> {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const userId = session?.user?.id;
+  if (!userId) throw new Error('Not signed in');
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .update({
+      audience_interests: values.interests,
+      audience_content_consumed: values.contentConsumed,
+      audience_decision_style: values.decisionStyle,
+    })
+    .eq('id', userId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data as VelourProfileRow;
+}

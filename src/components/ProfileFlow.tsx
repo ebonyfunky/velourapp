@@ -3,7 +3,15 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Check } from 'lucide-react';
-import { fetchCurrentUserProfile, saveStep1Profession, saveStep2Demographics, saveStep3GoalsFears, updateProfileStep } from '../lib/profile';
+import {
+  fetchCurrentUserProfile,
+  saveStep1Profession,
+  saveStep2Demographics,
+  saveStep3GoalsFears,
+  saveStep4Interests,
+  updateProfileStep,
+} from '../lib/profile';
+import { supabase } from '../lib/supabase';
 import { useCampaignStore } from '../store/campaignStore';
 import ChipMultiSelectSection from './ChipMultiSelectSection';
 import HomeHeader from './HomeHeader';
@@ -235,6 +243,67 @@ const STEP3_DIALOGUE_PREDEFINED = [
   'I will fail and regret it',
 ] as const;
 
+const STEP4_INTERESTS_PREDEFINED = [
+  'Personal Growth',
+  'Mindset',
+  'Motivation',
+  'Faith',
+  'Spirituality',
+  'Health',
+  'Fitness',
+  'Nutrition',
+  'Money',
+  'Investing',
+  'Career',
+  'Business',
+  'Entrepreneurship',
+  'Family',
+  'Parenting',
+  'Relationships',
+  'Dating',
+  'Marriage',
+  'Style',
+  'Beauty',
+  'Fashion',
+  'Travel',
+  'Lifestyle',
+  'Home',
+  'Interior Design',
+  'Food',
+  'Cooking',
+  'Tech',
+  'AI',
+  'Productivity',
+  'Books & Reading',
+  'Self-Care',
+  'Wellness',
+] as const;
+
+const STEP4_CONTENT_PREDEFINED = [
+  'Short-form Video (Reels, TikTok)',
+  'Long-form YouTube',
+  'Podcasts',
+  'Newsletters',
+  'Books',
+  'Blogs / Articles',
+  'Twitter / X',
+  'Instagram Posts',
+  'LinkedIn Posts',
+  'Reddit Threads',
+  'Documentaries',
+  'Self-Help Content',
+  'Online Courses',
+] as const;
+
+const STEP4_DECISION_OPTIONS = [
+  'Fast and intuitive',
+  'Slow and research-heavy',
+  'Emotion-driven',
+  'Logic-driven',
+  'Trust-based (recommendations from people they know)',
+  'Price-driven',
+] as const;
+
 function isStandardProfession(value: string): boolean {
   return (STANDARD_PROFESSIONS as readonly string[]).includes(value);
 }
@@ -417,6 +486,9 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const setAudienceGoals = useCampaignStore((s) => s.setAudienceGoals);
   const setAudienceFears = useCampaignStore((s) => s.setAudienceFears);
   const setAudienceInternalDialogue = useCampaignStore((s) => s.setAudienceInternalDialogue);
+  const setAudienceInterests = useCampaignStore((s) => s.setAudienceInterests);
+  const setAudienceContentConsumed = useCampaignStore((s) => s.setAudienceContentConsumed);
+  const setAudienceDecisionStyle = useCampaignStore((s) => s.setAudienceDecisionStyle);
 
   const [hydrated, setHydrated] = useState(false);
   const [hydrateError, setHydrateError] = useState<string | null>(null);
@@ -449,6 +521,14 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const [dialogueExtraChips, setDialogueExtraChips] = useState<string[]>([]);
   const [step3SaveError, setStep3SaveError] = useState<string | null>(null);
   const [step3Saving, setStep3Saving] = useState(false);
+
+  const [interestsSelected, setInterestsSelected] = useState<string[]>([]);
+  const [interestsExtraChips, setInterestsExtraChips] = useState<string[]>([]);
+  const [contentConsumedSelected, setContentConsumedSelected] = useState<string[]>([]);
+  const [contentConsumedExtraChips, setContentConsumedExtraChips] = useState<string[]>([]);
+  const [decisionStyle, setDecisionStyle] = useState('');
+  const [step4SaveError, setStep4SaveError] = useState<string | null>(null);
+  const [step4Saving, setStep4Saving] = useState(false);
 
   const [resetConfirmationOpen, setResetConfirmationOpen] = useState(false);
 
@@ -486,6 +566,13 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           const d = hydrateChipSection(p.audience_internal_dialogue, STEP3_DIALOGUE_PREDEFINED);
           setDialogueSelected(d.selected);
           setDialogueExtraChips(d.extras);
+          const i4 = hydrateChipSection(p.audience_interests, STEP4_INTERESTS_PREDEFINED);
+          setInterestsSelected(i4.selected);
+          setInterestsExtraChips(i4.extras);
+          const c4 = hydrateChipSection(p.audience_content_consumed, STEP4_CONTENT_PREDEFINED);
+          setContentConsumedSelected(c4.selected);
+          setContentConsumedExtraChips(c4.extras);
+          setDecisionStyle(matchDropdownHydration(p.audience_decision_style, STEP4_DECISION_OPTIONS));
         }
       } catch (e) {
         if (!cancelled) setHydrateError(e instanceof Error ? e.message : 'Could not load profile.');
@@ -558,6 +645,11 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     const band = (arr: string[]) => arr.length >= 3 && arr.length <= 5;
     return band(goalsSelected) && band(fearsSelected) && band(dialogueSelected);
   }, [goalsSelected, fearsSelected, dialogueSelected]);
+
+  const step4FormValid = useMemo(() => {
+    const band = (arr: string[]) => arr.length >= 3 && arr.length <= 5;
+    return band(interestsSelected) && band(contentConsumedSelected) && decisionStyle.trim().length > 0;
+  }, [interestsSelected, contentConsumedSelected, decisionStyle]);
 
   const persistStep = useCallback(async (step: number) => {
     try {
@@ -697,11 +789,47 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     setAudienceInternalDialogue,
   ]);
 
+  const handleStep4Continue = useCallback(async () => {
+    if (!step4FormValid || step4Saving) return;
+    const interests = interestsSelected;
+    const contentConsumed = contentConsumedSelected;
+    const decisionStyleTrimmed = decisionStyle.trim();
+    if (!decisionStyleTrimmed) return;
+    setStep4SaveError(null);
+    setStep4Saving(true);
+    try {
+      setAudienceInterests(interests);
+      setAudienceContentConsumed(contentConsumed);
+      setAudienceDecisionStyle(decisionStyleTrimmed);
+      await saveStep4Interests({
+        interests,
+        contentConsumed,
+        decisionStyle: decisionStyleTrimmed,
+      });
+      await updateProfileStep(5);
+      setCurrentStep(5);
+    } catch {
+      setStep4SaveError("Couldn't save. Please try again.");
+    } finally {
+      setStep4Saving(false);
+    }
+  }, [
+    step4FormValid,
+    step4Saving,
+    interestsSelected,
+    contentConsumedSelected,
+    decisionStyle,
+    setAudienceInterests,
+    setAudienceContentConsumed,
+    setAudienceDecisionStyle,
+  ]);
+
   const continueDisabled =
     currentStep >= 5 ||
     (currentStep === 1 && (!step1FormValid || step1Saving)) ||
     (currentStep === 2 && (!step2FormValid || step2Saving)) ||
-    (currentStep === 3 && (!step3FormValid || step3Saving));
+    (currentStep === 3 && (!step3FormValid || step3Saving)) ||
+    (currentStep === 4 && (!step4FormValid || step4Saving));
 
   const handleContinueClick = useCallback(() => {
     if (currentStep === 1) {
@@ -716,16 +844,20 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       void handleStep3Continue();
       return;
     }
+    if (currentStep === 4) {
+      void handleStep4Continue();
+      return;
+    }
     goNext();
-  }, [currentStep, handleStep1Continue, handleStep2Continue, handleStep3Continue, goNext]);
+  }, [currentStep, handleStep1Continue, handleStep2Continue, handleStep3Continue, handleStep4Continue, goNext]);
 
-  const stepSaveInFlight = step1Saving || step2Saving || step3Saving;
+  const stepSaveInFlight = step1Saving || step2Saving || step3Saving || step4Saving;
 
   const handleConfirmStepReset = useCallback(async () => {
     setResetConfirmationOpen(false);
 
     const step = currentStep;
-    if (step === 4 || step === 5) return;
+    if (step === 5) return;
 
     const emptyDemographics = {
       ageRange: '',
@@ -794,6 +926,28 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       } catch {
         setStep3SaveError("Couldn't reset. Try again.");
       }
+      return;
+    }
+
+    if (step === 4) {
+      setStep4SaveError(null);
+      setInterestsSelected([]);
+      setInterestsExtraChips([]);
+      setContentConsumedSelected([]);
+      setContentConsumedExtraChips([]);
+      setDecisionStyle('');
+      setAudienceInterests([]);
+      setAudienceContentConsumed([]);
+      setAudienceDecisionStyle('');
+      try {
+        await saveStep4Interests({
+          interests: [],
+          contentConsumed: [],
+          decisionStyle: '',
+        });
+      } catch {
+        setStep4SaveError("Couldn't reset. Try again.");
+      }
     }
   }, [
     currentStep,
@@ -809,7 +963,53 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     setAudienceGoals,
     setAudienceFears,
     setAudienceInternalDialogue,
+    setAudienceInterests,
+    setAudienceContentConsumed,
+    setAudienceDecisionStyle,
   ]);
+
+  const handleClearAudienceDataDev = useCallback(async () => {
+    if (!confirm('This clears all audience profile data and reloads. Continue?')) return;
+    const {
+      data: { user },
+      error: userErr,
+    } = await supabase.auth.getUser();
+    if (userErr || !user?.id) {
+      window.alert(userErr?.message ?? 'Not signed in.');
+      return;
+    }
+    const { error } = await supabase
+      .from('profiles')
+      .update({
+        creator_profession: null,
+        creator_offer_description: null,
+        audience_age_range: null,
+        audience_gender: null,
+        audience_marital_status: null,
+        audience_children: null,
+        audience_education: null,
+        audience_career_field: null,
+        audience_location: null,
+        audience_goals: [],
+        audience_fears: [],
+        audience_internal_dialogue: [],
+        audience_interests: [],
+        audience_content_consumed: [],
+        audience_decision_style: null,
+        audience_wants: [],
+        audience_doesnt_want: [],
+        audience_identity_statement: null,
+        profile_last_step: 1,
+        profile_completed_at: null,
+      })
+      .eq('id', user.id);
+    if (error) {
+      window.alert(error.message);
+      return;
+    }
+    localStorage.clear();
+    window.location.reload();
+  }, []);
 
   if (!hydrated) {
     return (
@@ -862,52 +1062,69 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
 
         <div className="flex min-h-0 flex-1 flex-col md:flex-row">
           <aside
-            className="hidden w-[280px] shrink-0 flex-col border-[rgba(212,169,60,0.12)] py-8 pl-6 pr-4 md:flex md:border-r"
+            className="hidden w-[280px] shrink-0 justify-between gap-8 border-[rgba(212,169,60,0.12)] py-8 pl-6 pr-4 md:flex md:flex-col md:border-r"
             style={{ paddingTop: '28px' }}
           >
-            <p
-              className="mb-6 px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(212,169,60,0.45)]"
-              style={{ fontFamily: 'Inter, sans-serif' }}
-            >
-              Steps
-            </p>
-            <nav className="flex flex-col gap-1">
-              {STEPS.map((s) => {
-                const done = currentStep > s.id;
-                const active = currentStep === s.id;
-                return (
-                  <div
-                    key={s.id}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5"
-                    style={{
-                      background: active ? 'rgba(212,169,60,0.08)' : 'transparent',
-                    }}
-                  >
+            <div className="min-h-0">
+              <p
+                className="mb-6 px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(212,169,60,0.45)]"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                Steps
+              </p>
+              <nav className="flex flex-col gap-1">
+                {STEPS.map((s) => {
+                  const done = currentStep > s.id;
+                  const active = currentStep === s.id;
+                  return (
                     <div
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold"
+                      key={s.id}
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5"
                       style={{
-                        fontFamily: 'Inter, sans-serif',
-                        background: done ? GOLD : 'transparent',
-                        border: done ? 'none' : '1px solid rgba(212,169,60,0.35)',
-                        color: done ? MIDNIGHT : active ? GOLD : 'rgba(212,169,60,0.45)',
+                        background: active ? 'rgba(212,169,60,0.08)' : 'transparent',
                       }}
                     >
-                      {done ? <Check className="h-4 w-4" strokeWidth={2.5} aria-hidden /> : s.id}
+                      <div
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold"
+                        style={{
+                          fontFamily: 'Inter, sans-serif',
+                          background: done ? GOLD : 'transparent',
+                          border: done ? 'none' : '1px solid rgba(212,169,60,0.35)',
+                          color: done ? MIDNIGHT : active ? GOLD : 'rgba(212,169,60,0.45)',
+                        }}
+                      >
+                        {done ? <Check className="h-4 w-4" strokeWidth={2.5} aria-hidden /> : s.id}
+                      </div>
+                      <span
+                        style={{
+                          fontFamily: 'Inter, sans-serif',
+                          fontSize: '14px',
+                          fontWeight: active ? 700 : 600,
+                          color: active ? GOLD : 'rgba(255,255,255,0.96)',
+                        }}
+                      >
+                        {s.short}
+                      </span>
                     </div>
-                    <span
-                      style={{
-                        fontFamily: 'Inter, sans-serif',
-                        fontSize: '14px',
-                        fontWeight: active ? 700 : 600,
-                        color: active ? GOLD : 'rgba(255,255,255,0.96)',
-                      }}
-                    >
-                      {s.short}
-                    </span>
-                  </div>
-                );
-              })}
-            </nav>
+                  );
+                })}
+              </nav>
+            </div>
+            {import.meta.env.DEV && (
+              <div className="shrink-0 px-2">
+                <button
+                  type="button"
+                  onClick={() => void handleClearAudienceDataDev()}
+                  className="border-0 bg-transparent p-0 text-left text-[11px] underline decoration-white/25 underline-offset-2 hover:opacity-90"
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    color: 'rgba(255,255,255,0.38)',
+                  }}
+                >
+                  Clear Audience Data
+                </button>
+              </div>
+            )}
           </aside>
 
           <main className="flex min-h-0 flex-1 flex-col px-5 pb-32 pt-8 md:px-10 md:pb-36 md:pt-10">
@@ -920,7 +1137,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                   {copy.title}
                 </h1>
 
-                {currentStep >= 4 ? (
+                {currentStep === 5 ? (
                   <span
                     className="inline-block self-start rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
                     style={{
@@ -1117,6 +1334,69 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                     onExtraChipsChange={setDialogueExtraChips}
                   />
                 </div>
+              ) : currentStep === 4 ? (
+                <div className="flex max-w-2xl flex-col gap-10">
+                  <ChipMultiSelectSection
+                    heading="What do they care about?"
+                    cue="Topics they engage with online."
+                    predefined={STEP4_INTERESTS_PREDEFINED}
+                    selected={interestsSelected}
+                    onSelectedChange={setInterestsSelected}
+                    extraChips={interestsExtraChips}
+                    onExtraChipsChange={setInterestsExtraChips}
+                  />
+                  <ChipMultiSelectSection
+                    heading="What content do they watch and read?"
+                    cue="Where their attention goes."
+                    predefined={STEP4_CONTENT_PREDEFINED}
+                    selected={contentConsumedSelected}
+                    onSelectedChange={setContentConsumedSelected}
+                    extraChips={contentConsumedExtraChips}
+                    onExtraChipsChange={setContentConsumedExtraChips}
+                  />
+                  <div
+                    className={`rounded-2xl border border-[rgba(212,169,60,0.18)] p-5 ${FORM_CARD_SHADOW}`}
+                    style={{
+                      background: `linear-gradient(180deg, ${MIDNIGHT_TOP} 0%, ${MIDNIGHT} 52%, ${MIDNIGHT_BOTTOM} 100%)`,
+                    }}
+                  >
+                    <div className="flex flex-col gap-4">
+                      <div>
+                        <h3
+                          id="step4-decision-heading"
+                          className="text-[17px] font-semibold tracking-wide"
+                          style={{ color: GOLD, fontFamily: 'Inter, sans-serif' }}
+                        >
+                          How do they make decisions?
+                        </h3>
+                        <p
+                          id="step4-decision-cue"
+                          className="mt-1 text-[13px] text-white/45"
+                          style={{ fontFamily: 'Inter, sans-serif' }}
+                        >
+                          Their buying behavior.
+                        </p>
+                      </div>
+                      <select
+                        id="step4-decision"
+                        aria-labelledby="step4-decision-heading"
+                        aria-describedby="step4-decision-cue"
+                        value={decisionStyle}
+                        onChange={(e) => setDecisionStyle(e.target.value)}
+                        className={SELECT_FIELD_CLASS}
+                      >
+                        <option value="" disabled>
+                          Select decision style
+                        </option>
+                        {STEP4_DECISION_OPTIONS.map((opt) => (
+                          <option key={opt} value={opt} className="bg-[#1A1F4A] text-white">
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
               ) : (
                 <p className="text-sm text-white/50">Form arrives in A4. For now, use Continue to explore the shell.</p>
               )}
@@ -1164,9 +1444,10 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
         </div>
         {(currentStep === 1 && step1SaveError) ||
         (currentStep === 2 && step2SaveError) ||
-        (currentStep === 3 && step3SaveError) ? (
+        (currentStep === 3 && step3SaveError) ||
+        (currentStep === 4 && step4SaveError) ? (
           <p className="mt-3 text-center text-[13px] text-red-300/90" style={{ fontFamily: 'Inter, sans-serif' }}>
-            {currentStep === 1 ? step1SaveError : currentStep === 2 ? step2SaveError : step3SaveError}
+            {currentStep === 1 ? step1SaveError : currentStep === 2 ? step2SaveError : currentStep === 3 ? step3SaveError : step4SaveError}
           </p>
         ) : null}
       </footer>

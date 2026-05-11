@@ -1,7 +1,7 @@
 /**
  * Reusable chip multi-select with predefined pool plus custom chips (Velour Audience Avatar).
  */
-import { useCallback, useId, useMemo, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { Plus } from 'lucide-react';
 
 const GOLD = '#D4A93C';
@@ -27,6 +27,36 @@ const CHIP_HOVER_IDLE =
 const ADD_INPUT_CLASS =
   'min-w-0 flex-1 rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.05] px-3 py-2 text-[14px] text-white outline-none transition placeholder:text-white/35 focus:border-[#D4A93C]/60 focus:shadow-[inset_0_0_20px_rgba(212,169,60,0.06)] focus:ring-1 focus:ring-[#D4A93C]/40';
 
+/** Old combined labels (case-insensitive match) trimmed from hydrated extras */
+const CHIP_EXTRAS_LEGACY_DEPRECATED = [
+  'Career / Business',
+  'Tech / AI',
+  'Faith / Spirituality',
+  'Self-Help / Education Courses',
+  'Personal Growth / Mindset',
+  'Health / Fitness',
+  'Money / Investing',
+  'Family / Parenting',
+  'Relationships / Dating',
+  'Style / Beauty',
+  'Travel / Lifestyle',
+  'Home / Design',
+  'Food / Cooking',
+  'Books & Reading',
+] as const;
+
+function normalizeChipCompare(s: string): string {
+  return s.trim().toLowerCase();
+}
+
+function stringArraysEqualShallow(a: readonly string[], b: readonly string[]): boolean {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
 export type ChipMultiSelectSectionProps = {
   heading: string;
   cue: string;
@@ -48,6 +78,36 @@ export default function ChipMultiSelectSection({
 }: ChipMultiSelectSectionProps) {
   const baseId = useId();
   const [draft, setDraft] = useState('');
+
+  useEffect(() => {
+    const predefinedNormSet = new Set((predefined as readonly string[]).map((p) => normalizeChipCompare(p)));
+    const legacyNormSet = new Set(CHIP_EXTRAS_LEGACY_DEPRECATED.map((l) => normalizeChipCompare(l)));
+
+    const seenExtraNorm = new Set<string>();
+    const cleanedExtras: string[] = [];
+    for (const e of extraChips) {
+      const ne = normalizeChipCompare(e);
+      if (predefinedNormSet.has(ne)) continue;
+      if (legacyNormSet.has(ne)) continue;
+      if (seenExtraNorm.has(ne)) continue;
+      seenExtraNorm.add(ne);
+      cleanedExtras.push(e);
+    }
+
+    const cleanedSelected = selected.filter((v) => {
+      const nv = normalizeChipCompare(v);
+      if (legacyNormSet.has(nv)) return false;
+      if (predefinedNormSet.has(nv)) return true;
+      return cleanedExtras.some((x) => normalizeChipCompare(x) === nv);
+    });
+
+    if (!stringArraysEqualShallow(cleanedExtras, extraChips)) {
+      onExtraChipsChange(cleanedExtras);
+    }
+    if (!stringArraysEqualShallow(cleanedSelected, selected)) {
+      onSelectedChange(cleanedSelected);
+    }
+  }, []);
 
   const chipOrder = useMemo(() => {
     const extrasOrdered = extraChips.filter((e) => !(predefined as readonly string[]).includes(e));
