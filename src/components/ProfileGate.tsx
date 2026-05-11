@@ -164,7 +164,7 @@ export default function ProfileGate() {
         background: `linear-gradient(180deg, ${MIDNIGHT_TOP} 0%, ${MIDNIGHT} 48%, ${MIDNIGHT_BOTTOM} 100%)`,
       }}
     >
-      <HomeHeader />
+      <HomeHeader showBack />
       <img
         src="/velour-logo.png"
         alt="Velour by Charlen Maison"

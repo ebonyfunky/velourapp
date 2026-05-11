@@ -1,7 +1,7 @@
 /**
- * Audience Avatar profile shell: Step 1 profession, Step 2 demographics; later steps placeholders.
+ * Audience Avatar profile flow: Steps 1 creator, Step 2 transition, Steps 3-6 audience inputs, Step 7 review.
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Check } from 'lucide-react';
 import {
   fetchCurrentUserProfile,
@@ -10,8 +10,13 @@ import {
   saveStep3GoalsFears,
   saveStep4Interests,
   saveStep5Wants,
+  saveStep7Fingerprint,
   updateProfileStep,
 } from '../lib/profile';
+import {
+  buildIdentityStatementPayload,
+  generateIdentityStatement,
+} from '../lib/identityStatement';
 import { supabase } from '../lib/supabase';
 import { useCampaignStore } from '../store/campaignStore';
 import ChipMultiSelectSection from './ChipMultiSelectSection';
@@ -23,6 +28,7 @@ const MIDNIGHT_TOP = '#222A58';
 const MIDNIGHT_BOTTOM = '#151A40';
 
 const OFFER_MAX = 500;
+const AUDIENCE_FINGERPRINT_MAX = 280;
 
 /** Dropdown order: 10 defaults then Other. */
 const PROFESSION_OPTIONS = [
@@ -89,38 +95,44 @@ const INPUT_FOCUS_CLASSES =
 const SELECT_FIELD_CLASS = `w-full rounded-xl border border-[rgba(212,169,60,0.22)] bg-white/[0.05] px-4 py-3 text-base text-white outline-none transition placeholder:text-white/35 ${INPUT_FOCUS_CLASSES}`;
 
 const STEPS = [
-  { id: 1, short: 'Your Profession' },
-  { id: 2, short: 'Their Demographics' },
-  { id: 3, short: 'Their Goals & Fears' },
-  { id: 4, short: 'Their Interests' },
-  { id: 5, short: 'Their Wants' },
-  { id: 6, short: 'AI synthesis' },
+  { id: 1, short: 'Who You Are' },
+  { id: 2, short: 'About Your Audience' },
+  { id: 3, short: 'Their Demographics' },
+  { id: 4, short: 'Their Goals & Fears' },
+  { id: 5, short: 'Their Interests' },
+  { id: 6, short: 'Their Wants' },
+  { id: 7, short: 'Review' },
 ] as const;
 
 const STEP_BODY: Record<number, { title: string; body: string }> = {
   1: {
-    title: 'Your Profession',
-    body: "Let's start with you. What you do shapes who you can serve and how you talk to them.",
+    title: 'Who are you',
+    body:
+      "Tell us a bit about yourself. This is context only - every question after this is about the person you want to reach. The more clearly we understand your perfect audience, the better we can help you create content that stops the scroll and speaks directly to what's keeping them up at night.",
   },
   2: {
+    title: 'About your audience',
+    body: '',
+  },
+  3: {
     title: 'Their Demographics',
     body: "Now we map your audience. Age, life stage, career, income - the foundation everything else sits on.",
   },
-  3: {
+  4: {
     title: 'Their Goals & Fears',
     body: "What are they moving toward? What keeps them up at night? This is where content stops being generic.",
   },
-  4: {
+  5: {
     title: 'Their Interests',
     body: "What do they engage with online? What content do they consume? Where do they spend their attention?",
   },
-  5: {
+  6: {
     title: 'Their Wants',
     body: "Get specific about what they crave and what they're done with. The clearer this is, the more your content cuts through.",
   },
-  6: {
-    title: 'AI synthesis',
-    body: '',
+  7: {
+    title: 'Review',
+    body: "Review what you've built. When you're ready, we'll synthesize this into your Perfect Audience Profile.",
   },
 };
 
@@ -128,6 +140,67 @@ const RESET_CONFIRM_AUTO_COLLAPSE_MS = 5000;
 
 const GOLD_DIM_RESET = 'rgba(212, 169, 60, 0.48)';
 const GOLD_BRIGHT_RESET = 'rgba(212, 169, 60, 0.95)';
+
+const REVIEW_SECTION_BG_STYLE = {
+  background: `linear-gradient(180deg, ${MIDNIGHT_TOP} 0%, ${MIDNIGHT} 52%, ${MIDNIGHT_BOTTOM} 100%)`,
+} as const;
+
+function formatChipsProse(chips: string[]): string {
+  const parts = chips.map((c) => c.trim()).filter(Boolean);
+  if (parts.length === 0) return 'Not specified.';
+  if (parts.length === 1) return parts[0];
+  if (parts.length === 2) return `${parts[0]} and ${parts[1]}`;
+  return `${parts.slice(0, -1).join(', ')}, and ${parts[parts.length - 1]}`;
+}
+
+function countWords(text: string): number {
+  const t = text.trim();
+  if (!t) return 0;
+  return t.split(/\s+/).filter(Boolean).length;
+}
+
+interface ReviewSummaryCardProps {
+  heading: string;
+  onEdit: () => void;
+  interactionsLocked?: boolean;
+  children: ReactNode;
+}
+
+function ReviewSummaryCard({ heading, onEdit, interactionsLocked, children }: ReviewSummaryCardProps) {
+  return (
+    <div
+      className={`rounded-2xl border border-[rgba(212,169,60,0.18)] p-5 sm:p-6 ${FORM_CARD_SHADOW}`}
+      style={{ ...REVIEW_SECTION_BG_STYLE, fontFamily: 'Inter, sans-serif' }}
+    >
+      <div className="flex items-start justify-between gap-4">
+        <h3 className="text-[17px] font-semibold tracking-wide" style={{ color: GOLD }}>
+          {heading}
+        </h3>
+        <button
+          type="button"
+          onClick={onEdit}
+          disabled={interactionsLocked}
+          className="shrink-0 border-0 bg-transparent p-0 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors"
+          style={{
+            color: 'rgba(212, 169, 60, 0.55)',
+            cursor: interactionsLocked ? 'default' : 'pointer',
+            opacity: interactionsLocked ? 0.35 : 1,
+          }}
+          onMouseEnter={(e) => {
+            if (interactionsLocked) return;
+            e.currentTarget.style.color = GOLD;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = 'rgba(212, 169, 60, 0.55)';
+          }}
+        >
+          Edit
+        </button>
+      </div>
+      <div className="mt-4 text-[15px] leading-relaxed text-white/[0.82]">{children}</div>
+    </div>
+  );
+}
 
 interface ProfileStepResetProps {
   confirmationOpen: boolean;
@@ -211,27 +284,27 @@ function ProfileStepReset({
 
 /** Step 3 predefined chips (replace with final copy from product spec as needed). */
 const STEP3_GOALS_PREDEFINED = [
-  'Financial stability',
+  'Bills paid without panic',
   'More freedom and time',
-  'Better health and energy',
+  "A body that isn't always tired",
   'Stronger relationships',
   'Career or business growth',
   'Confidence and clarity',
   'Recognition and respect',
-  'Work-life balance',
+  "Time that isn't borrowed",
   'A clear plan forward',
   'Peace of mind',
 ] as const;
 
 const STEP3_FEARS_PREDEFINED = [
   'Not being enough',
-  'Wasting time or money',
+  'Looking stupid for trying',
   'Judgment from others',
   'Falling behind peers',
   'Making the wrong decision',
   'Burnout or overwhelm',
-  'Losing money or status',
-  'Missing the right moment',
+  'Losing what they already have',
+  'Running out of time',
   'Public embarrassment',
   'Letting family down',
 ] as const;
@@ -313,14 +386,14 @@ const STEP4_DECISION_OPTIONS = [
 ] as const;
 
 const STEP5_WANTS_PREDEFINED = [
-  'Financial Freedom',
+  'Money on their own terms',
   'More Time',
-  'Less Stress',
+  'A quieter mind',
   'Confidence',
   'Recognition',
   'Independence',
   'Flexibility',
-  'Authority in their field',
+  'To be the one people come to with questions',
   'Body Transformation',
   'Better Health',
   'Mental Clarity',
@@ -553,6 +626,29 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const setAudienceDecisionStyle = useCampaignStore((s) => s.setAudienceDecisionStyle);
   const setAudienceWants = useCampaignStore((s) => s.setAudienceWants);
   const setAudienceDoesntWant = useCampaignStore((s) => s.setAudienceDoesntWant);
+  const setAudienceFingerprintStore = useCampaignStore((s) => s.setAudienceFingerprint);
+
+  const audienceFingerprint = useCampaignStore((s) => s.audienceFingerprint);
+  const setAudienceIdentityStatementShort = useCampaignStore((s) => s.setAudienceIdentityStatementShort);
+  const setAudienceIdentityStatementLong = useCampaignStore((s) => s.setAudienceIdentityStatementLong);
+
+  const zsAudienceAgeRange = useCampaignStore((s) => s.audienceAgeRange);
+  const zsAudienceGender = useCampaignStore((s) => s.audienceGender);
+  const zsAudienceMaritalStatus = useCampaignStore((s) => s.audienceMaritalStatus);
+  const zsAudienceChildren = useCampaignStore((s) => s.audienceChildren);
+  const zsAudienceEducation = useCampaignStore((s) => s.audienceEducation);
+  const zsAudienceCareerField = useCampaignStore((s) => s.audienceCareerField);
+  const zsAudienceLocation = useCampaignStore((s) => s.audienceLocation);
+  const zsAudienceGoals = useCampaignStore((s) => s.audienceGoals);
+  const zsAudienceFears = useCampaignStore((s) => s.audienceFears);
+  const zsAudienceInternalDialogue = useCampaignStore((s) => s.audienceInternalDialogue);
+  const zsAudienceInterests = useCampaignStore((s) => s.audienceInterests);
+  const zsAudienceContentConsumed = useCampaignStore((s) => s.audienceContentConsumed);
+  const zsAudienceDecisionStyle = useCampaignStore((s) => s.audienceDecisionStyle);
+  const zsAudienceWants = useCampaignStore((s) => s.audienceWants);
+  const zsAudienceDoesntWant = useCampaignStore((s) => s.audienceDoesntWant);
+  const audienceIdentityShort = useCampaignStore((s) => s.audienceIdentityStatementShort);
+  const audienceIdentityLong = useCampaignStore((s) => s.audienceIdentityStatementLong);
 
   const [hydrated, setHydrated] = useState(false);
   const [hydrateError, setHydrateError] = useState<string | null>(null);
@@ -601,6 +697,10 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
   const [step5SaveError, setStep5SaveError] = useState<string | null>(null);
   const [step5Saving, setStep5Saving] = useState(false);
 
+  const [identityGenerating, setIdentityGenerating] = useState(false);
+  const [identityError, setIdentityError] = useState<string | null>(null);
+  const [identityErrorDetail, setIdentityErrorDetail] = useState<string | null>(null);
+
   const [resetConfirmationOpen, setResetConfirmationOpen] = useState(false);
 
   useEffect(() => {
@@ -616,6 +716,9 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           const { select, other } = hydrateProfessionFields(p.creator_profession);
           setProfessionSelect(select);
           setOtherProfession(other);
+          const creatorProfForStore = select === OTHER_OPTION ? other.trim() : select.trim();
+          setCreatorProfession(creatorProfForStore);
+          setCreatorOfferDescription(p.creator_offer_description ?? '');
           setOfferDescription(p.creator_offer_description ?? '');
           setDemoAgeRange(matchDropdownHydration(p.audience_age_range, DEMO_AGE_OPTIONS));
           setDemoGender(matchDropdownHydration(p.audience_gender, DEMO_GENDER_OPTIONS));
@@ -652,6 +755,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           setDoesntWantExtraChips(dw.extras);
           setAudienceWants(w5.selected);
           setAudienceDoesntWant(dw.selected);
+          setAudienceFingerprintStore(p.audience_fingerprint ?? '');
         }
       } catch (e) {
         if (!cancelled) setHydrateError(e instanceof Error ? e.message : 'Could not load profile.');
@@ -743,6 +847,96 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     }
   }, []);
 
+  const goToReviewStep = useCallback(
+    (step: number) => {
+      setCurrentStep(step);
+      void persistStep(step);
+    },
+    [persistStep]
+  );
+
+  const persistAudienceFingerprintBlur = useCallback(async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user?.id) return;
+    const fp = useCampaignStore.getState().audienceFingerprint;
+    try {
+      await saveStep7Fingerprint(user.id, { audienceFingerprint: fp });
+    } catch {
+      console.error('saveStep7Fingerprint failed');
+    }
+  }, []);
+
+  const runIdentityGeneration = useCallback(async () => {
+    setIdentityError(null);
+    setIdentityErrorDetail(null);
+    setIdentityGenerating(true);
+    try {
+      const s = useCampaignStore.getState();
+      const payload = buildIdentityStatementPayload({
+        creatorProfession: s.creatorProfession,
+        creatorOfferDescription: s.creatorOfferDescription,
+        audienceAgeRange: s.audienceAgeRange,
+        audienceGender: s.audienceGender,
+        audienceMaritalStatus: s.audienceMaritalStatus,
+        audienceChildren: s.audienceChildren,
+        audienceEducation: s.audienceEducation,
+        audienceCareerField: s.audienceCareerField,
+        audienceLocation: s.audienceLocation,
+        audienceGoals: s.audienceGoals,
+        audienceFears: s.audienceFears,
+        audienceInternalDialogue: s.audienceInternalDialogue,
+        audienceInterests: s.audienceInterests,
+        audienceContentConsumed: s.audienceContentConsumed,
+        audienceDecisionStyle: s.audienceDecisionStyle,
+        audienceWants: s.audienceWants,
+        audienceDoesntWant: s.audienceDoesntWant,
+        audienceFingerprint: s.audienceFingerprint,
+      });
+      const { short, long } = await generateIdentityStatement(payload);
+      setAudienceIdentityStatementShort(short);
+      setAudienceIdentityStatementLong(long);
+    } catch (e) {
+      console.error(e);
+      setIdentityError('Something went wrong generating your profile. Try again.');
+      setIdentityErrorDetail(e instanceof Error ? e.message : 'Unknown error');
+    } finally {
+      setIdentityGenerating(false);
+    }
+  }, [setAudienceIdentityStatementShort, setAudienceIdentityStatementLong]);
+
+  const handleRegenerateIdentity = useCallback(() => {
+    if (!confirm('Replace current text? Your edits will be lost.')) return;
+    void runIdentityGeneration();
+  }, [runIdentityGeneration]);
+
+  const showIdentityOutputs = audienceIdentityShort != null && audienceIdentityLong != null;
+
+  const reviewDemoRows = useMemo(
+    () =>
+      (
+        [
+          ['Age range', zsAudienceAgeRange],
+          ['Gender', zsAudienceGender],
+          ['Relationship status', zsAudienceMaritalStatus],
+          ['Children', zsAudienceChildren],
+          ['Education', zsAudienceEducation],
+          ['Career field', zsAudienceCareerField],
+          ['Location', zsAudienceLocation],
+        ] as const
+      ).filter((entry): entry is [string, string] => entry[1].trim().length > 0),
+    [
+      zsAudienceAgeRange,
+      zsAudienceGender,
+      zsAudienceMaritalStatus,
+      zsAudienceChildren,
+      zsAudienceEducation,
+      zsAudienceCareerField,
+      zsAudienceLocation,
+    ]
+  );
+
   const goNext = useCallback(() => {
     if (currentStep >= STEPS.length) return;
     const next = currentStep + 1;
@@ -813,8 +1007,8 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       setAudienceCareerField(values.careerField);
       setAudienceLocation(values.location);
       await saveStep2Demographics(values);
-      await updateProfileStep(3);
-      setCurrentStep(3);
+      await updateProfileStep(4);
+      setCurrentStep(4);
     } catch {
       setStep2SaveError("Couldn't save. Please try again.");
     } finally {
@@ -855,8 +1049,8 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       setAudienceFears(fears);
       setAudienceInternalDialogue(internalDialogue);
       await saveStep3GoalsFears({ goals, fears, internalDialogue });
-      await updateProfileStep(4);
-      setCurrentStep(4);
+      await updateProfileStep(5);
+      setCurrentStep(5);
     } catch {
       setStep3SaveError("Couldn't save. Please try again.");
     } finally {
@@ -890,8 +1084,8 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
         contentConsumed,
         decisionStyle: decisionStyleTrimmed,
       });
-      await updateProfileStep(5);
-      setCurrentStep(5);
+      await updateProfileStep(6);
+      setCurrentStep(6);
     } catch {
       setStep4SaveError("Couldn't save. Please try again.");
     } finally {
@@ -918,7 +1112,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       setAudienceWants(wants);
       setAudienceDoesntWant(doesntWant);
       await saveStep5Wants({ wants, doesntWant });
-      setCurrentStep(6);
+      setCurrentStep(7);
     } catch {
       setStep5SaveError("Couldn't save. Please try again.");
     } finally {
@@ -935,11 +1129,11 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
 
   const continueDisabled =
     currentStep === STEPS.length ||
-    (currentStep === 5 && (!step5FormValid || step5Saving)) ||
+    (currentStep === 6 && (!step5FormValid || step5Saving)) ||
     (currentStep === 1 && (!step1FormValid || step1Saving)) ||
-    (currentStep === 2 && (!step2FormValid || step2Saving)) ||
-    (currentStep === 3 && (!step3FormValid || step3Saving)) ||
-    (currentStep === 4 && (!step4FormValid || step4Saving));
+    (currentStep === 3 && (!step2FormValid || step2Saving)) ||
+    (currentStep === 4 && (!step3FormValid || step3Saving)) ||
+    (currentStep === 5 && (!step4FormValid || step4Saving));
 
   const handleContinueClick = useCallback(() => {
     if (currentStep === 1) {
@@ -947,18 +1141,22 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       return;
     }
     if (currentStep === 2) {
-      void handleStep2Continue();
+      goNext();
       return;
     }
     if (currentStep === 3) {
-      void handleStep3Continue();
+      void handleStep2Continue();
       return;
     }
     if (currentStep === 4) {
-      void handleStep4Continue();
+      void handleStep3Continue();
       return;
     }
     if (currentStep === 5) {
+      void handleStep4Continue();
+      return;
+    }
+    if (currentStep === 6) {
       void handleStep5Continue();
       return;
     }
@@ -973,13 +1171,19 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     goNext,
   ]);
 
-  const stepSaveInFlight = step1Saving || step2Saving || step3Saving || step4Saving || step5Saving;
+  const stepSaveInFlight =
+    step1Saving ||
+    step2Saving ||
+    step3Saving ||
+    step4Saving ||
+    step5Saving ||
+    identityGenerating;
 
   const handleConfirmStepReset = useCallback(async () => {
     setResetConfirmationOpen(false);
 
     const step = currentStep;
-    if (step === 6) return;
+    if (step === 7) return;
 
     const emptyDemographics = {
       ageRange: '',
@@ -1007,6 +1211,10 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     }
 
     if (step === 2) {
+      return;
+    }
+
+    if (step === 3) {
       setStep2SaveError(null);
       setDemoAgeRange('');
       setDemoGender('');
@@ -1032,7 +1240,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       return;
     }
 
-    if (step === 3) {
+    if (step === 4) {
       setStep3SaveError(null);
       setGoalsSelected([]);
       setGoalsExtraChips([]);
@@ -1051,7 +1259,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       return;
     }
 
-    if (step === 4) {
+    if (step === 5) {
       setStep4SaveError(null);
       setInterestsSelected([]);
       setInterestsExtraChips([]);
@@ -1073,7 +1281,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
       return;
     }
 
-    if (step === 5) {
+    if (step === 6) {
       setStep5SaveError(null);
       setWantsSelected([]);
       setWantsExtraChips([]);
@@ -1122,8 +1330,6 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
     const { error } = await supabase
       .from('profiles')
       .update({
-        creator_profession: null,
-        creator_offer_description: null,
         audience_age_range: null,
         audience_gender: null,
         audience_marital_status: null,
@@ -1139,7 +1345,9 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
         audience_decision_style: null,
         audience_wants: [],
         audience_doesnt_want: [],
-        audience_identity_statement: null,
+        audience_fingerprint: null,
+        audience_identity_statement_short: null,
+        audience_identity_statement_long: null,
         profile_last_step: 1,
         profile_completed_at: null,
       })
@@ -1192,67 +1400,64 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
         background: `linear-gradient(180deg, ${MIDNIGHT_TOP} 0%, ${MIDNIGHT} 48%, ${MIDNIGHT_BOTTOM} 100%)`,
       }}
     >
-      <HomeHeader />
+      <HomeHeader headerLogoSize="profile" />
 
-      <div className="flex flex-1 flex-col pt-[72px] md:pt-20">
+      <div className="flex flex-1 flex-col pt-[112px] md:pt-[7.25rem]">
         <div className="border-b border-[rgba(212,169,60,0.12)] px-4 py-3 text-center md:hidden" style={{ fontFamily: 'Inter, sans-serif' }}>
           <span className="text-[13px] tracking-wide text-white/55">
             Step {currentStep} of {STEPS.length}
           </span>
         </div>
 
-        <div className="flex min-h-0 flex-1 flex-col md:flex-row">
+        <div className="flex min-h-0 flex-1 flex-col md:flex-row md:items-stretch">
           <aside
-            className="hidden w-[280px] shrink-0 justify-between gap-8 border-[rgba(212,169,60,0.12)] py-8 pl-6 pr-4 md:flex md:flex-col md:border-r"
-            style={{ paddingTop: '28px' }}
+            className="hidden min-h-0 w-[280px] shrink-0 flex-col pr-6 md:flex md:h-full md:flex-col md:self-stretch md:border-r md:border-[rgba(212,169,60,0.12)]"
           >
-            <div className="min-h-0">
-              <p
-                className="mb-6 px-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[rgba(212,169,60,0.45)]"
-                style={{ fontFamily: 'Inter, sans-serif' }}
-              >
-                Steps
-              </p>
-              <nav className="flex flex-col gap-1">
-                {STEPS.map((s) => {
-                  const done = currentStep > s.id;
-                  const active = currentStep === s.id;
-                  return (
+            <p
+              className="pl-6 pt-10 pb-8 text-left text-2xl italic leading-snug text-[#D4A93C]"
+              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+            >
+              Begin here.
+            </p>
+            <nav className="flex shrink-0 flex-col gap-1 px-6">
+              {STEPS.map((s) => {
+                const done = currentStep > s.id;
+                const active = currentStep === s.id;
+                return (
+                  <div
+                    key={s.id}
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5"
+                    style={{
+                      background: active ? 'rgba(212,169,60,0.08)' : 'transparent',
+                    }}
+                  >
                     <div
-                      key={s.id}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2.5"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold"
                       style={{
-                        background: active ? 'rgba(212,169,60,0.08)' : 'transparent',
+                        fontFamily: 'Inter, sans-serif',
+                        background: done ? GOLD : 'transparent',
+                        border: done ? 'none' : '1px solid rgba(212,169,60,0.35)',
+                        color: done ? MIDNIGHT : active ? GOLD : 'rgba(212,169,60,0.45)',
                       }}
                     >
-                      <div
-                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold"
-                        style={{
-                          fontFamily: 'Inter, sans-serif',
-                          background: done ? GOLD : 'transparent',
-                          border: done ? 'none' : '1px solid rgba(212,169,60,0.35)',
-                          color: done ? MIDNIGHT : active ? GOLD : 'rgba(212,169,60,0.45)',
-                        }}
-                      >
-                        {done ? <Check className="h-4 w-4" strokeWidth={2.5} aria-hidden /> : s.id}
-                      </div>
-                      <span
-                        style={{
-                          fontFamily: 'Inter, sans-serif',
-                          fontSize: '14px',
-                          fontWeight: active ? 700 : 600,
-                          color: active ? GOLD : 'rgba(255,255,255,0.96)',
-                        }}
-                      >
-                        {s.short}
-                      </span>
+                      {done ? <Check className="h-4 w-4" strokeWidth={2.5} aria-hidden /> : s.id}
                     </div>
-                  );
-                })}
-              </nav>
-            </div>
-            {import.meta.env.DEV && (
-              <div className="shrink-0 px-2">
+                    <span
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '14px',
+                        fontWeight: active ? 700 : 600,
+                        color: active ? GOLD : 'rgba(255,255,255,0.96)',
+                      }}
+                    >
+                      {s.short}
+                    </span>
+                  </div>
+                );
+              })}
+            </nav>
+            {import.meta.env.DEV ? (
+              <div className="mt-8 shrink-0 px-6">
                 <button
                   type="button"
                   onClick={() => void handleClearAudienceDataDev()}
@@ -1265,10 +1470,95 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                   Clear Audience Data
                 </button>
               </div>
-            )}
+            ) : null}
           </aside>
 
-          <main className="flex min-h-0 flex-1 flex-col px-5 pb-32 pt-8 md:px-10 md:pb-36 md:pt-10">
+          <main
+            className={`flex min-h-0 flex-1 flex-col px-5 pt-8 md:px-10 md:pt-10 ${
+              currentStep === 7 ? 'pb-[28rem] md:pb-[30rem]' : 'pb-32 md:pb-36'
+            }`}
+          >
+            {currentStep === 2 ? (
+              <div className="relative flex min-h-[calc(100vh-12rem)] flex-1 flex-col md:min-h-[calc(100vh-13rem)]">
+                <div className="absolute right-0 top-0 z-10 sm:right-4">
+                  <ProfileStepReset
+                    confirmationOpen={resetConfirmationOpen}
+                    interactionsLocked={stepSaveInFlight}
+                    onRequestResetClick={() => setResetConfirmationOpen(true)}
+                    onCancelConfirmation={() => setResetConfirmationOpen(false)}
+                    onConfirmReset={handleConfirmStepReset}
+                  />
+                </div>
+                <div className="flex flex-1 flex-col items-center justify-center px-5 pb-8 pt-10 md:px-10 md:pb-12 md:pt-12">
+                  <div className="mx-auto w-full max-w-2xl">
+                    <h1
+                      className="text-center text-[clamp(26px,4vw,34px)] font-normal tracking-[-0.02em]"
+                      style={{ fontFamily: "'Cormorant Garamond', serif", color: GOLD }}
+                    >
+                      About your audience
+                    </h1>
+                    <p
+                      className="mb-8 mt-6 text-center font-serif text-2xl italic leading-relaxed text-[#D4A93C]"
+                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                    >
+                      Most creators try to talk to everyone - and reach no one.
+                    </p>
+                    <p
+                      className="text-center text-[15px] leading-relaxed text-white/70"
+                      style={{ fontFamily: 'Inter, sans-serif' }}
+                    >
+                      {
+                        'The work ahead is about building one specific person in your mind. Not someone real you already know, but a composite - the avatar of the audience you\'re built to reach.'
+                      }
+                    </p>
+                    <div className="my-8 space-y-2">
+                      <p
+                        className="text-center text-lg font-light leading-relaxed text-white/85"
+                        style={{ fontFamily: 'Inter, sans-serif' }}
+                      >
+                        The one who needs exactly what you offer.
+                      </p>
+                      <p
+                        className="text-center text-lg font-light leading-relaxed text-white/85"
+                        style={{ fontFamily: 'Inter, sans-serif' }}
+                      >
+                        Who scrolls past everything else.
+                      </p>
+                      <p
+                        className="text-center text-lg font-light leading-relaxed text-white/85"
+                        style={{ fontFamily: 'Inter, sans-serif' }}
+                      >
+                        Who stops on your content because it feels like it was written for them.
+                      </p>
+                    </div>
+                    <p
+                      className="text-center text-[15px] leading-relaxed text-white/70"
+                      style={{ fontFamily: 'Inter, sans-serif' }}
+                    >
+                      The next five steps will sharpen this person into focus.
+                    </p>
+                    <p
+                      className="mt-8 text-center text-sm italic text-[#D4A93C]/80"
+                      style={{ fontFamily: 'Inter, sans-serif' }}
+                    >
+                      Honest answers, sharper profile.
+                    </p>
+                    <div className="mt-12 flex justify-center">
+                      <button
+                        type="button"
+                        onClick={() => void handleContinueClick()}
+                        disabled={stepSaveInFlight}
+                        className={`border border-[#D4A93C] bg-transparent px-10 py-3 tracking-wider text-[#D4A93C] transition-colors duration-200 hover:bg-[#D4A93C]/10 ${stepSaveInFlight ? 'pointer-events-none opacity-45' : ''}`}
+                        style={{ fontFamily: 'Inter, sans-serif' }}
+                      >
+                        Continue →
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <>
             <div className="mb-3 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
               <div className="flex min-w-0 flex-1 flex-col gap-3">
                 <h1
@@ -1277,19 +1567,6 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                 >
                   {copy.title}
                 </h1>
-
-                {currentStep === 6 ? (
-                  <span
-                    className="inline-block self-start rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]"
-                    style={{
-                      fontFamily: 'Inter, sans-serif',
-                      borderColor: 'rgba(212,169,60,0.35)',
-                      color: 'rgba(212,169,60,0.85)',
-                    }}
-                  >
-                    Coming in A5
-                  </span>
-                ) : null}
               </div>
               <ProfileStepReset
                 confirmationOpen={resetConfirmationOpen}
@@ -1300,8 +1577,11 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
               />
             </div>
 
-            {currentStep < 6 ? (
-              <p className="max-w-2xl text-[15px] leading-relaxed text-white/75" style={{ fontFamily: 'Inter, sans-serif' }}>
+            {copy.body ? (
+              <p
+                className="max-w-2xl text-[15px] leading-relaxed text-white/75"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
                 {copy.body}
               </p>
             ) : null}
@@ -1376,7 +1656,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                     </div>
                   </div>
                 </div>
-              ) : currentStep === 2 ? (
+              ) : currentStep === 3 ? (
                 <div className="flex max-w-xl flex-col gap-8">
                   <FormDropdown
                     id="demo-age"
@@ -1447,7 +1727,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                     onOtherChange={setOtherLocationField}
                   />
                 </div>
-              ) : currentStep === 3 ? (
+              ) : currentStep === 4 ? (
                 <div className="flex max-w-2xl flex-col gap-10">
                   <ChipMultiSelectSection
                     heading="What are they working toward?"
@@ -1477,7 +1757,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                     onExtraChipsChange={setDialogueExtraChips}
                   />
                 </div>
-              ) : currentStep === 4 ? (
+              ) : currentStep === 5 ? (
                 <div className="flex max-w-2xl flex-col gap-10">
                   <ChipMultiSelectSection
                     heading="What do they care about?"
@@ -1540,7 +1820,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                     </div>
                   </div>
                 </div>
-              ) : currentStep === 5 ? (
+              ) : currentStep === 6 ? (
                 <div className="flex max-w-2xl flex-col gap-10">
                   <ChipMultiSelectSection
                     heading="What outcomes are they chasing?"
@@ -1561,14 +1841,247 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
                     onExtraChipsChange={setDoesntWantExtraChips}
                   />
                 </div>
-              ) : currentStep === 6 ? (
-                <div className={`rounded-2xl border border-[rgba(212,169,60,0.18)] p-8 ${FORM_CARD_SHADOW}`}>
-                  <p className="text-[15px] leading-relaxed text-white/82" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    Step 6 coming next: AI synthesis. Your data is saved.
-                  </p>
+              ) : currentStep === 7 ? (
+                <div className="flex w-full max-w-3xl flex-col gap-8">
+                  <ReviewSummaryCard
+                    heading="Their Demographics"
+                    onEdit={() => goToReviewStep(3)}
+                    interactionsLocked={identityGenerating}
+                  >
+                    {reviewDemoRows.length > 0 ? (
+                      reviewDemoRows.map(([label, value]) => (
+                        <p key={label} className="mb-2 leading-relaxed last:mb-0">
+                          <span className="text-white/55">{label}: </span>
+                          <span className="text-white/[0.88]">{value.trim()}</span>
+                        </p>
+                      ))
+                    ) : (
+                      <p className="text-white/50">Nothing captured yet.</p>
+                    )}
+                  </ReviewSummaryCard>
+
+                  <ReviewSummaryCard
+                    heading="Their Goals & Fears"
+                    onEdit={() => goToReviewStep(4)}
+                    interactionsLocked={identityGenerating}
+                  >
+                    <div className="flex flex-col gap-5">
+                      <div>
+                        <p className="text-[13px] font-semibold text-white/70">Goals</p>
+                        <p className="mt-1.5">{formatChipsProse(zsAudienceGoals ?? [])}</p>
+                      </div>
+                      <div>
+                        <p className="text-[13px] font-semibold text-white/70">Fears</p>
+                        <p className="mt-1.5">{formatChipsProse(zsAudienceFears ?? [])}</p>
+                      </div>
+                      <div>
+                        <p className="text-[13px] font-semibold text-white/70">Internal Dialogue</p>
+                        <p className="mt-1.5">{formatChipsProse(zsAudienceInternalDialogue ?? [])}</p>
+                      </div>
+                    </div>
+                  </ReviewSummaryCard>
+
+                  <ReviewSummaryCard
+                    heading="Their Interests"
+                    onEdit={() => goToReviewStep(5)}
+                    interactionsLocked={identityGenerating}
+                  >
+                    <p>
+                      <span className="text-white/55">Interests: </span>
+                      {formatChipsProse(zsAudienceInterests ?? [])}
+                    </p>
+                    <p className="mt-4">
+                      <span className="text-white/55">Content they consume: </span>
+                      {formatChipsProse(zsAudienceContentConsumed ?? [])}
+                    </p>
+                    <p className="mt-4">
+                      <span className="text-white/55">Decision style: </span>
+                      {zsAudienceDecisionStyle.trim().length > 0
+                        ? zsAudienceDecisionStyle.trim()
+                        : 'Not specified.'}
+                    </p>
+                  </ReviewSummaryCard>
+
+                  <ReviewSummaryCard
+                    heading="Their Wants"
+                    onEdit={() => goToReviewStep(6)}
+                    interactionsLocked={identityGenerating}
+                  >
+                    <p>
+                      <span className="text-white/55">What they want: </span>
+                      {formatChipsProse(zsAudienceWants ?? [])}
+                    </p>
+                    <p className="mt-4">
+                      <span className="text-white/55">What they want to avoid: </span>
+                      {formatChipsProse(zsAudienceDoesntWant ?? [])}
+                    </p>
+                  </ReviewSummaryCard>
+
+                  <div className="mx-auto my-12 w-full max-w-2xl text-center">
+                    <p className="text-xl italic text-[#D4A93C]" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                      Want to sharpen the portrait?
+                    </p>
+                    <p className="mt-3 text-[15px] leading-relaxed text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      {
+                        'Add one sentence about who this person really is - in your own words. This is optional, but it\'s the single biggest thing that turns a generic profile into one that feels like a real human.'
+                      }
+                    </p>
+                    <textarea
+                      rows={2}
+                      maxLength={AUDIENCE_FINGERPRINT_MAX}
+                      value={audienceFingerprint}
+                      onChange={(e) =>
+                        setAudienceFingerprintStore(e.target.value.slice(0, AUDIENCE_FINGERPRINT_MAX))
+                      }
+                      onBlur={() => void persistAudienceFingerprintBlur()}
+                      className={`${SELECT_FIELD_CLASS} mx-auto mt-6 w-full resize-y text-left leading-relaxed`}
+                      style={{ fontFamily: 'Inter, sans-serif' }}
+                      placeholder={
+                        'e.g. A 40-year-old Nigerian immigrant mom working two jobs, exhausted, no time for her kids, desperate for one income stream that finally works.'
+                      }
+                      aria-label="Optional audience fingerprint"
+                    />
+                    {audienceFingerprint.length > 0 ? (
+                      <p className="mt-2 text-right text-xs text-white/40" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        {audienceFingerprint.length} / {AUDIENCE_FINGERPRINT_MAX}
+                      </p>
+                    ) : null}
+                    <p className="mt-4 text-center text-sm italic text-[#D4A93C]/70" style={{ fontFamily: 'Inter, sans-serif' }}>
+                      Empty is fine - your chips will do the work.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col items-center pt-2">
+                    <button
+                      type="button"
+                      onClick={() => void runIdentityGeneration()}
+                      disabled={identityGenerating}
+                      className="rounded-lg border-0 px-10 py-4 text-[12px] font-semibold uppercase tracking-[0.14em] transition-opacity"
+                      style={{
+                        fontFamily: 'Inter, sans-serif',
+                        background: GOLD,
+                        color: MIDNIGHT,
+                        cursor: identityGenerating ? 'default' : 'pointer',
+                        opacity: identityGenerating ? 0.72 : 1,
+                        boxShadow: identityGenerating ? 'none' : '0 8px 28px rgba(212,169,60,0.35)',
+                      }}
+                    >
+                      {identityGenerating ? (
+                        <span className="inline-flex items-center justify-center gap-3">
+                          <span
+                            className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-[#1A1F4A] border-t-[#D4A93C]"
+                            aria-hidden
+                          />
+                          Generating...
+                        </span>
+                      ) : (
+                        'GENERATE AUDIENCE PROFILE'
+                      )}
+                    </button>
+                    {identityGenerating ? (
+                      <div
+                        className="mt-4 h-1.5 w-full max-w-[220px] rounded-full bg-[#D4A93C]/25 animate-pulse"
+                        aria-hidden
+                      />
+                    ) : null}
+                  </div>
+
+                  {identityError ? (
+                    <div
+                      className="rounded-xl border border-red-400/35 px-4 py-4 text-center"
+                      style={{ background: 'rgba(80, 20, 30, 0.35)', fontFamily: 'Inter, sans-serif' }}
+                    >
+                      <p className="text-[14px] text-red-200/95">{identityError}</p>
+                      {identityErrorDetail ? (
+                        <p className="mt-2 break-words text-[12px] text-red-200/55">{identityErrorDetail}</p>
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  {showIdentityOutputs ? (
+                    <>
+                      <div
+                        className={`rounded-2xl border border-[rgba(212,169,60,0.18)] p-5 sm:p-6 ${FORM_CARD_SHADOW}`}
+                        style={{ ...REVIEW_SECTION_BG_STYLE, fontFamily: 'Inter, sans-serif' }}
+                      >
+                        <h4 className="text-[16px] font-semibold" style={{ color: GOLD }}>
+                          Short version (for headers and hooks)
+                        </h4>
+                        <textarea
+                          value={audienceIdentityShort ?? ''}
+                          onChange={(e) => setAudienceIdentityStatementShort(e.target.value)}
+                          rows={6}
+                          className={`${SELECT_FIELD_CLASS} mt-4 min-h-[140px] resize-y leading-relaxed`}
+                          aria-label="Short identity statement"
+                        />
+                        <div className="mt-3 flex flex-col gap-1 text-[12px] text-white/45 sm:flex-row sm:items-center sm:justify-between">
+                          <span>About {countWords(audienceIdentityShort ?? '')} words. Aim for under 50.</span>
+                          <span>{(audienceIdentityShort ?? '').length} characters</span>
+                        </div>
+                      </div>
+
+                      <div
+                        className={`rounded-2xl border border-[rgba(212,169,60,0.18)] p-5 sm:p-6 ${FORM_CARD_SHADOW}`}
+                        style={{ ...REVIEW_SECTION_BG_STYLE, fontFamily: 'Inter, sans-serif' }}
+                      >
+                        <h4 className="text-[16px] font-semibold" style={{ color: GOLD }}>
+                          Long version (for narrative reference)
+                        </h4>
+                        <textarea
+                          value={audienceIdentityLong ?? ''}
+                          onChange={(e) => setAudienceIdentityStatementLong(e.target.value)}
+                          rows={8}
+                          className={`${SELECT_FIELD_CLASS} mt-4 min-h-[180px] resize-y leading-relaxed`}
+                          aria-label="Long identity statement"
+                        />
+                        <div className="mt-3 flex flex-col gap-1 text-[12px] text-white/45 sm:flex-row sm:items-center sm:justify-between">
+                          <span>About {countWords(audienceIdentityLong ?? '')} words. Aim for under 100.</span>
+                          <span>{(audienceIdentityLong ?? '').length} characters</span>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-center pt-2">
+                        <button
+                          type="button"
+                          onClick={handleRegenerateIdentity}
+                          disabled={identityGenerating}
+                          className="rounded-lg border-2 bg-transparent px-8 py-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] transition-opacity"
+                          style={{
+                            borderColor: GOLD,
+                            color: GOLD,
+                            fontFamily: 'Inter, sans-serif',
+                            opacity: identityGenerating ? 0.45 : 1,
+                            cursor: identityGenerating ? 'default' : 'pointer',
+                          }}
+                        >
+                          REGENERATE
+                        </button>
+                      </div>
+
+                      <div className="flex justify-center pb-2 pt-6">
+                        <button
+                          type="button"
+                          disabled
+                          className="rounded-lg border-0 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.12em]"
+                          style={{
+                            fontFamily: 'Inter, sans-serif',
+                            background: GOLD,
+                            color: MIDNIGHT,
+                            opacity: 0.38,
+                            cursor: 'default',
+                            boxShadow: 'none',
+                          }}
+                        >
+                          SAVE & FINISH
+                        </button>
+                      </div>
+                    </>
+                  ) : null}
                 </div>
               ) : null}
             </div>
+              </>
+            )}
           </main>
         </div>
       </div>
@@ -1577,7 +2090,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
         className="fixed bottom-0 left-0 right-0 z-40 flex flex-col items-stretch border-t border-[rgba(212,169,60,0.12)] px-5 py-4 md:px-10"
         style={{ background: 'rgba(26,31,74,0.96)' }}
       >
-        <div className="flex w-full items-center justify-between gap-4">
+        <div className={`flex w-full items-center gap-4 ${currentStep === 2 ? 'justify-start' : 'justify-between'}`}>
           <button
             type="button"
             onClick={goBack}
@@ -1593,6 +2106,7 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           >
             {'<- Back'}
           </button>
+          {currentStep !== 2 ? (
           <button
             type="button"
             onClick={handleContinueClick}
@@ -1609,20 +2123,21 @@ export default function ProfileFlow({ onExitToGate }: ProfileFlowProps) {
           >
             {'Continue ->'}
           </button>
+          ) : null}
         </div>
         {(currentStep === 1 && step1SaveError) ||
-        (currentStep === 2 && step2SaveError) ||
-        (currentStep === 3 && step3SaveError) ||
-        (currentStep === 4 && step4SaveError) ||
-        (currentStep === 5 && step5SaveError) ? (
+        (currentStep === 3 && step2SaveError) ||
+        (currentStep === 4 && step3SaveError) ||
+        (currentStep === 5 && step4SaveError) ||
+        (currentStep === 6 && step5SaveError) ? (
           <p className="mt-3 text-center text-[13px] text-red-300/90" style={{ fontFamily: 'Inter, sans-serif' }}>
             {currentStep === 1
               ? step1SaveError
-              : currentStep === 2
+              : currentStep === 3
                 ? step2SaveError
-                : currentStep === 3
+                : currentStep === 4
                   ? step3SaveError
-                  : currentStep === 4
+                  : currentStep === 5
                     ? step4SaveError
                     : step5SaveError}
           </p>

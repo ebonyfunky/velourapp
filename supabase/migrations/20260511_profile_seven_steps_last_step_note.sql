@@ -1,0 +1,6 @@
+-- Pre-launch migration note only (run statements manually when your team decides).
+-- Audience Avatar profile expanded from six steps to seven. Rows with profile_last_step 2 through 6
+-- were keyed to older screens so resume-after-reload can land on the wrong step.
+-- Recommended for dev databases before testing the new flow, e.g. reset everyone to Step 1:
+--   UPDATE public.profiles SET profile_last_step = 1 WHERE profile_last_step IS NOT NULL;
+-- Avoid running destructive updates from Cursor; apply in Supabase SQL editor or your tooling.

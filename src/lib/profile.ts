@@ -24,6 +24,7 @@ export type VelourProfileRow = {
   audience_doesnt_want: string[] | null;
   audience_identity_statement_short: string | null;
   audience_identity_statement_long: string | null;
+  audience_fingerprint: string | null;
   profile_completed_at: string | null;
   profile_last_step: number | null;
   created_at: string;
@@ -60,22 +61,34 @@ export async function updateProfileStep(step: number): Promise<void> {
   if (error) throw error;
 }
 
-/** Step 1 Audience Avatar: creator profession + offer copy. Returns the updated profile row. */
-export async function saveStep1Profession(
-  profession: string,
-  offerDescription: string
-): Promise<VelourProfileRow> {
+/** Persists optional Step 7 audience fingerprint + keeps profile_last_step at review. */
+export async function saveStep7Fingerprint(userId: string, payload: { audienceFingerprint: string }): Promise<void> {
+  const trimmed = payload.audienceFingerprint.trim();
+  const { error } = await supabase
+    .from('profiles')
+    .update({
+      audience_fingerprint: trimmed !== '' ? trimmed : null,
+      profile_last_step: 7,
+    })
+    .eq('id', userId);
+
+  if (error) throw error;
+}
+
+/** Step 1 Audience Avatar: creator profession and offer copy only. Returns the updated profile row. */
+export async function saveStep1Profession(profession: string, offerDescription: string): Promise<VelourProfileRow> {
   const {
     data: { session },
   } = await supabase.auth.getSession();
   const userId = session?.user?.id;
   if (!userId) throw new Error('Not signed in');
 
+  const offerTrim = offerDescription.trim();
   const { data, error } = await supabase
     .from('profiles')
     .update({
-      creator_profession: profession,
-      creator_offer_description: offerDescription,
+      creator_profession: profession.trim() !== '' ? profession.trim() : null,
+      creator_offer_description: offerTrim !== '' ? offerTrim : null,
     })
     .eq('id', userId)
     .select()
@@ -174,7 +187,7 @@ export async function saveStep4Interests(values: {
   return data as VelourProfileRow;
 }
 
-/** Step 5 Audience Avatar: outcomes they want vs. what they want to avoid. When advance is true (default), sets profile_last_step = 6. */
+/** Step 5 Audience Avatar: outcomes they want vs. what they want to avoid. When advance is true (default), sets profile_last_step = 7 (Review). */
 export async function saveStep5Wants(
   values: { wants: string[]; doesntWant: string[] },
   options?: { advance?: boolean }
@@ -190,7 +203,7 @@ export async function saveStep5Wants(
     audience_wants: values.wants,
     audience_doesnt_want: values.doesntWant,
   };
-  if (advance) payload.profile_last_step = 6;
+  if (advance) payload.profile_last_step = 7;
 
   const { data, error } = await supabase
     .from('profiles')

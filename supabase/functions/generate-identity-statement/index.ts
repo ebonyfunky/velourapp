@@ -25,7 +25,7 @@ interface ProfilePayload {
   audience_children: string | null;
   audience_education: string | null;
   audience_career_field: string | null;
-  audience_location: string | nul
+  audience_location: string | null;
   audience_goals: string[] | null;
   audience_fears: string[] | null;
   audience_internal_dialogue: string[] | null;
@@ -34,54 +34,144 @@ interface ProfilePayload {
   audience_decision_style: string | null;
   audience_wants: string[] | null;
   audience_doesnt_want: string[] | null;
+  audience_fingerprint: string | null;
 }
 
-function buildPrompt(p: ProfilePayload): string {
-  const list = (label: string, val: string[] | null) =>
-    val && val.length > 0 ? `${label}: ${val.join(", ")}` : `${label}: (not specified)`;
-  const v = (label: string, val: string | null) =>
-    val ? `${label}: ${val}` : `${label}: (not specified)`;
+function buildPrompt(data: ProfilePayload): string {
+  const {
+    creator_profession,
+    creator_offer_description,
+    audience_fingerprint,
+    audience_age_range,
+    audience_gender,
+    audience_marital_status,
+    audience_children,
+    audience_education,
+    audience_career_field,
+    audience_location,
+    audience_goals,
+    audience_fears,
+    audience_internal_dialogue,
+    audience_interests,
+    audience_content_consumed,
+    audience_decision_style,
+    audience_wants,
+    audience_doesnt_want,
+  } = data;
 
-  return `You are synthesizing a Perfect Audience Profile for a content creator on the Velour platform. Velour is a luxury AI content generator with a calm, authoritative tone — think Cormorant Garamond elegance, warm gold accents, never hype-driven or salesy.
+  const sep = "=".repeat(59);
+  const fingerprint = (audience_fingerprint || "").trim();
+  const hasFingerprint = fingerprint.length > 0;
 
-Below is everything the creator entered about themselves and their target audience.
+  const fingerprintBlock = hasFingerprint
+    ? `${sep}
+PRIMARY ANCHOR - THE CREATOR'S OWN WORDS:
+${sep}
+The creator described their perfect audience in their own voice:
 
-CREATOR:
-${v("Profession", p.creator_profeion)}
-${v("What they offer", p.creator_offer_description)}
+"${fingerprint}"
 
-AUDIENCE DEMOGRAPHICS:
-${v("Age range", p.audience_age_range)}
-${v("Gender", p.audience_gender)}
-${v("Marital status", p.audience_marital_status)}
-${v("Children", p.audience_children)}
-${v("Education", p.audience_education)}
-${v("Career field", p.audience_career_field)}
-${v("Location", p.audience_location)}
+This sentence is the spine. Build around this human. The chip data below is supporting detail.
+`
+    : "";
 
-AUDIENCE PSYCHOLOGY:
-${list("Goals", p.audience_goals)}
-${list("Fears", p.audience_fears)}
-${list("Internal dialogue", p.audience_internal_dialogue)}
+  return `You are writing an identity statement about ONE specific person: the AUDIENCE that a content creator serves. The audience is a hypothetical composite - the creator's ideal viewer.
 
-AUDIENCE BEHAVIOR:
-${list("Interests", p.audience_interests)}
-${list("Content they consume", p.audience_content_consumed)}
-${v("Decision-making style", p.audience_decision_style)}
+${sep}
+CONTEXT (DO NOT DESCRIBE THIS PERSON):
+${sep}
+The creator is a ${creator_profession || "content creator"} who offers: ${creator_offer_description || "guidance and education"}.
 
-AUDIENCE DESIRES:
-${list("What they want", p.audience_wants)}
-${list("What they want to avoid", p.audience_doesnt_want)}
+The audience may be a version of the creator at an earlier stage, or someone completely different. If the audience appears to be a version of the creator (similar profession, similar life stage), write with recognition - like the creator is looking back at who they used to be. Tender and specific, not clinical.
 
-Generate a Perfect Audience Profile in TWO formats:
+${fingerprintBlock}
+${sep}
+AUDIENCE CHIP DATA:
+${sep}
+- Age: ${audience_age_range || "unspecified"}
+- Gender: ${audience_gender || "unspecified"}
+- Relationship status: ${audience_marital_status || "unspecified"}
+- Children: ${audience_children || "unspecified"}
+- Education: ${audience_education || "unspecified"}
+- Career field: ${audience_career_field || "unspecified"}
+- Location: ${audience_location || "unspecified"}
 
-1. **SHORT** — 2-3 sentences, max 50 words. Sharp, vivid, written in Velour's calm authority. Captures who this person fundamentally is.
+What they want: ${(audience_goals || []).join(", ") || "unspecified"}
+What they fear: ${(audience_fears || []).join(", ") || "unspecified"}
+What they tell themselves: ${(audience_internal_dialogue || []).join(", ") || "unspecified"}
+Interests: ${(audience_interests || []).join(", ") || "unspecified"}
+Content they consume: ${(audience_content_consumed || []).join(", ") || "unspecified"}
+How they decide: ${audience_decision_style || "unspecified"}
+Wants: ${(audience_wants || []).join(", ") || "unspecified"}
+Avoids: ${(audience_doesnt_want || []).join(", ") || "unspecified"}
 
-2. **LO** — A single paragraph, max 100 words. Reads like a confident character study. Weaves demographics, psychology, and desires into a portrait the creator can hold in their head while writing content.
+${sep}
+FORBIDDEN LANGUAGE - DO NOT USE THESE WORDS OR PHRASES:
+${sep}
+The following words are banned because every coaching brand uses them. They are verbal wallpaper. If you reach for one of these, stop and write something concrete instead.
 
-Return ONLY valid JSON in this exact shape, no markdown, no preamble:
+- financial freedom
+- sustainable income
+- authentic / authenticity / authentically
+- evidence-based
+- empty promises
+- rigorous logic
+- crave / craves / craving (when describing wants)
+- pathway / pathways
+- imposter syndrome
+- time-starved
+- ambitious yet [anything]
+- journey / journeying
+- dignified / dignity (when paired with money or work)
+- hustle / grind
+- transform / transformation
+- unlock / unlocking
+- empower / empowerment
 
-{"short": "...", "long": "..."}`;
+The chip data may contain these words (e.g. "Financial Freedom" as a chip label). You may NOT pass them through verbatim. Translate the IDEA into concrete human specifics.
+
+${sep}
+VOICE DIRECTION - WRITE LIKE THIS INSTEAD:
+${sep}
+
+WRITE CONCRETE SENSORY SPECIFICS, not abstract aspirations.
+
+BAD: "She craves authority in her field."
+GOOD: "She wants to be the one people text when they have a question about their thyroid."
+
+BAD: "Time-starved professional balancing motherhood."
+GOOD: "She checks her phone in the parking lot before walking into work."
+
+BAD: "She wrestles with imposter syndrome about online ventures."
+GOOD: "She can explain a complex diagnosis to a stranger in three minutes and cannot bring herself to record a 30-second video."
+
+BAD: "She seeks evidence-based pathways to financial freedom."
+GOOD: "She has watched seventeen videos this week. None of them felt safe enough to try."
+
+BAD: "Raising young children while seeking sustainable income."
+GOOD: "The baby monitor is on while she watches another creator's livestream at 11pm."
+
+NAME THE INTERNAL CONTRADICTION plainly. The most compelling thing about any audience is the gap between what they have and what they want. Show that gap with one concrete contrast - not with abstract emotional vocabulary.
+
+WRITE LIKE THE AUDIENCE WOULD DESCRIBE THEMSELVES AT 11PM ON A TUESDAY, not like a marketing deck describes them.
+
+${sep}
+YOUR TASK:
+${sep}
+Return ONLY valid JSON in this exact shape - no preamble, no markdown, no code fences:
+
+{
+  "short": "A 2-3 sentence portrait. Under 60 words. Specific, evocative, human. Used for headers and hooks.",
+  "long": "A 4-6 sentence portrait. Under 100 words. Captures the emotional truth and the internal contradiction. Used for narrative reference."
+}
+
+Final check before you write:
+- Did you use any banned word? Rewrite.
+- Did you describe the AUDIENCE, not the creator? If audience traits overlap with creator traits, that is fine - just describe the audience.
+- Is there at least one concrete sensory specific (a parking lot, a baby monitor, a number, a time of day, a physical object)? If not, add one.
+- Does the portrait feel like a real person at a specific moment, or like a category?
+
+Return only the JSON object.`;
 }
 
 Deno.serve(async (req) => {

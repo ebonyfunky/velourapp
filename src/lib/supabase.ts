@@ -23,7 +23,6 @@ export type Profile = {
   email: string;
   profession: string | null;
   profession_other: string | null;
-  audience_description: string | null;
   audience_pain: string | null;
   audience_pain_other: string | null;
   audience_want: string | null;

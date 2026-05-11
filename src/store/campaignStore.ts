@@ -33,6 +33,9 @@ const audienceAvatarProfileDefaults = {
   audienceWants: [] as string[],
   audienceDoesntWant: [] as string[],
   audienceIdentityStatement: '',
+  audienceIdentityStatementShort: null as string | null,
+  audienceIdentityStatementLong: null as string | null,
+  audienceFingerprint: '',
 };
 
 export interface CampaignStore {
@@ -133,7 +136,6 @@ export interface CampaignStore {
   // Velour setup (Profession, Audience, Voice)
   profession: string;
   professionOther: string;
-  audienceDescription: string;
   audiencePain: string;
   audiencePainOther: string;
   audienceWant: string;
@@ -162,6 +164,9 @@ export interface CampaignStore {
   audienceWants: string[];
   audienceDoesntWant: string[];
   audienceIdentityStatement: string;
+  audienceIdentityStatementShort: string | null;
+  audienceIdentityStatementLong: string | null;
+  audienceFingerprint: string;
   profileCompletedAt: string | null;
   profileLastStep: number;
 
@@ -469,7 +474,6 @@ export interface CampaignStore {
   resetMode: () => void;
   setProfession: (value: string) => void;
   setProfessionOther: (value: string) => void;
-  setAudienceDescription: (value: string) => void;
   setAudiencePain: (value: string) => void;
   setAudiencePainOther: (value: string) => void;
   setAudienceWant: (value: string) => void;
@@ -501,6 +505,9 @@ export interface CampaignStore {
   setAudienceWants: (value: string[]) => void;
   setAudienceDoesntWant: (value: string[]) => void;
   setAudienceIdentityStatement: (value: string) => void;
+  setAudienceIdentityStatementShort: (value: string | null) => void;
+  setAudienceIdentityStatementLong: (value: string | null) => void;
+  setAudienceFingerprint: (val: string) => void;
   setProfileLastStep: (step: number) => void;
   markProfileComplete: () => void;
   resetProfile: () => void;
@@ -732,7 +739,6 @@ const initialState = {
   },
   profession: '',
   professionOther: '',
-  audienceDescription: '',
   audiencePain: '',
   audiencePainOther: '',
   audienceWant: '',
@@ -774,7 +780,6 @@ export const useCampaignStore = (() => {
 
           setProfession: (value) => set({ profession: value }),
           setProfessionOther: (value) => set({ professionOther: value }),
-          setAudienceDescription: (value) => set({ audienceDescription: value }),
           setAudiencePain: (value) => set({ audiencePain: value }),
           setAudiencePainOther: (value) => set({ audiencePainOther: value }),
           setAudienceWant: (value) => set({ audienceWant: value }),
@@ -790,7 +795,6 @@ export const useCampaignStore = (() => {
               ...state,
               profession: '',
               professionOther: '',
-              audienceDescription: '',
               audiencePain: '',
               audiencePainOther: '',
               audienceWant: '',
@@ -807,7 +811,6 @@ export const useCampaignStore = (() => {
           resetStep2: () =>
             set((state) => ({
               ...state,
-              audienceDescription: '',
               audiencePain: '',
               audiencePainOther: '',
               audienceWant: '',
@@ -837,6 +840,9 @@ export const useCampaignStore = (() => {
           setAudienceWants: (value) => set({ audienceWants: value }),
           setAudienceDoesntWant: (value) => set({ audienceDoesntWant: value }),
           setAudienceIdentityStatement: (value) => set({ audienceIdentityStatement: value }),
+          setAudienceIdentityStatementShort: (value) => set({ audienceIdentityStatementShort: value }),
+          setAudienceIdentityStatementLong: (value) => set({ audienceIdentityStatementLong: value }),
+          setAudienceFingerprint: (val) => set({ audienceFingerprint: val }),
           setProfileLastStep: (step) => set({ profileLastStep: step }),
           markProfileComplete: () =>
             set({
@@ -889,11 +895,17 @@ export const useCampaignStore = (() => {
               const s = state as Record<string, unknown>;
               if (typeof s.profession !== 'string') s.profession = '';
               if (typeof s.professionOther !== 'string') s.professionOther = '';
-              if (typeof s.audienceDescription !== 'string') s.audienceDescription = '';
               if (typeof s.audiencePain !== 'string') s.audiencePain = '';
               if (typeof s.audiencePainOther !== 'string') s.audiencePainOther = '';
               if (typeof s.audienceWant !== 'string') s.audienceWant = '';
               if (typeof s.audienceWantOther !== 'string') s.audienceWantOther = '';
+              if (typeof s.audienceIdentityStatementShort !== 'string' && s.audienceIdentityStatementShort !== null) {
+                s.audienceIdentityStatementShort = null;
+              }
+              if (typeof s.audienceIdentityStatementLong !== 'string' && s.audienceIdentityStatementLong !== null) {
+                s.audienceIdentityStatementLong = null;
+              }
+              if (typeof s.audienceFingerprint !== 'string') s.audienceFingerprint = '';
               if (typeof s.voice !== 'string') s.voice = '';
               if (!Array.isArray(s.generationHistory)) {
                 s.generationHistory = [];

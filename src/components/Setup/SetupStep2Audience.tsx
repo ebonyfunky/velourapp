@@ -111,12 +111,11 @@ interface Props {
 
 export default function SetupStep2Audience({ onNext, onBack }: Props) {
   const profession = useCampaignStore((s) => s.profession);
-  const audienceDescription = useCampaignStore((s) => s.audienceDescription);
+  const [idealAudiencePhrase, setIdealAudiencePhrase] = useState('');
   const audiencePain = useCampaignStore((s) => s.audiencePain);
   const audiencePainOther = useCampaignStore((s) => s.audiencePainOther);
   const audienceWant = useCampaignStore((s) => s.audienceWant);
   const audienceWantOther = useCampaignStore((s) => s.audienceWantOther);
-  const setAudienceDescription = useCampaignStore((s) => s.setAudienceDescription);
   const setAudiencePain = useCampaignStore((s) => s.setAudiencePain);
   const setAudiencePainOther = useCampaignStore((s) => s.setAudiencePainOther);
   const setAudienceWant = useCampaignStore((s) => s.setAudienceWant);
@@ -130,7 +129,7 @@ export default function SetupStep2Audience({ onNext, onBack }: Props) {
     return AUDIENCE_EXAMPLES[p] ?? AUDIENCE_EXAMPLES.Other;
   }, [profession]);
 
-  const descLen = audienceDescription.length;
+  const descLen = idealAudiencePhrase.length;
 
   let counterStyle: CSSProperties = {
     fontFamily: 'Inter, sans-serif',
@@ -153,7 +152,7 @@ export default function SetupStep2Audience({ onNext, onBack }: Props) {
     audienceWant !== WANT_OPTIONS[0].value &&
     (audienceWant !== 'Other' || audienceWantOther.trim().length > 0);
 
-  const descriptionOk = audienceDescription.trim().length > 0;
+  const descriptionOk = idealAudiencePhrase.trim().length > 0;
   const valid = descriptionOk && painOk && wantOk;
 
   const handleResetThisStep = () => {
@@ -206,9 +205,9 @@ export default function SetupStep2Audience({ onNext, onBack }: Props) {
         <input
           id="aud-desc"
           type="text"
-          value={audienceDescription}
+          value={idealAudiencePhrase}
           onChange={(e) => {
-            setAudienceDescription(e.target.value);
+            setIdealAudiencePhrase(e.target.value);
             setError(false);
           }}
           placeholder="e.g. First-time home buyers in Dallas"
@@ -232,7 +231,7 @@ export default function SetupStep2Audience({ onNext, onBack }: Props) {
               key={example}
               type="button"
               onClick={() => {
-                setAudienceDescription(example);
+                setIdealAudiencePhrase(example);
                 setError(false);
               }}
               className="rounded-lg border border-[rgba(212,169,60,0.45)] bg-transparent px-[14px] py-2 text-left text-xs transition-[box-shadow,color] hover:shadow-[0_0_14px_rgba(212,169,60,0.25)]"
